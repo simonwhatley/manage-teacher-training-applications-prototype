@@ -1,4 +1,3 @@
-
 const organisations = require('../organisations.json')
 
 exports.findOrg = (name) => {

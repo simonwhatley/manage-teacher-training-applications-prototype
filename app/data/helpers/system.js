@@ -6,9 +6,11 @@ const fs = require('fs')
 const dataDirectoryPath = path.join(__dirname, '../')
 
 exports.getCheckboxValues = (name, data) => {
-  return name && (Array.isArray(name) ? name : [name].filter((name) => {
-    return name !== '_unchecked'
-  })) || data
+  return name && (Array.isArray(name)
+    ? name
+    : [name].filter((name) => {
+        return name !== '_unchecked'
+      })) || data
 }
 
 exports.now = () => {

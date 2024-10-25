@@ -1,7 +1,7 @@
 const utils = require('./utils')
 
 const locations = require('../locations')
-let courses = require('../courses')
+const courses = require('../courses')
 const user = require('../user')
 const { createUser } = require('../content')
 
@@ -11,7 +11,7 @@ exports.getProviderRadioOptions = (selectedItem) => {
 
   user.organisations.forEach((org) => {
     if (org.isAccreditedBody) {
-      let partners = user.relationships.map(relationship => relationship.org2)
+      const partners = user.relationships.map(relationship => relationship.org2)
       partners.forEach((partner) => {
         providers.push(partner)
       })
@@ -29,7 +29,7 @@ exports.getProviderRadioOptions = (selectedItem) => {
     items.push(item)
   })
 
-  items.sort((a,b) => {
+  items.sort((a, b) => {
     return a.text.localeCompare(b.text)
   })
 
@@ -68,7 +68,7 @@ exports.getCourseRadioOptions = (selectedItem, trainingProviderId) => {
     items.push(item)
   })
 
-  items.sort((a,b) => {
+  items.sort((a, b) => {
     return a.text.localeCompare(b.text)
   })
 
@@ -111,15 +111,15 @@ exports.getCourseLocationRadioOptions = (courseId, selectedItem) => {
 
     item.hint = {}
     item.hint.text = utils.arrayToList(
-        array = Object.values(location.address),
-        join = ', ',
-        final = ', '
-      )
+      array = Object.values(location.address),
+      join = ', ',
+      final = ', '
+    )
 
     items.push(item)
   })
 
-  items.sort((a,b) => {
+  items.sort((a, b) => {
     return a.text.localeCompare(b.text)
   })
 

@@ -7,7 +7,7 @@ exports.hasApplicationAssignmentEvents = (application) => {
 
   const events = application.events.items.filter(item => item.title === 'User assigned' || item.title === 'Users assigned' || item.title === 'Assigned users updated')
 
-  return events.length > 0 ? true : false
+  return events.length > 0
 }
 
 exports.saveEvent = (application, event) => {
@@ -19,9 +19,9 @@ exports.saveEvent = (application, event) => {
   const events = application.events
 
   const assignedUsers = event.assignedUsers
-    .sort((a, b) => a.firstName.localeCompare(b.firstName)
-      || a.lastName.localeCompare(b.lastName)
-      || a.emailAddress.localeCompare(b.emailAddress))
+    .sort((a, b) => a.firstName.localeCompare(b.firstName) ||
+      a.lastName.localeCompare(b.lastName) ||
+      a.emailAddress.localeCompare(b.emailAddress))
 
   events.items.push({
     title: event.title,

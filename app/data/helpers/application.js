@@ -6,7 +6,7 @@ const content = require('../content')
 exports.getApplicationWithdrawnReasons = (data) => {
   return {
     // withdraw application
-    'reason': data.reason,
+    reason: data.reason,
     'has-reason': data['has-reason']
   }
 }
@@ -15,7 +15,7 @@ exports.getRejectReasons = (data) => {
   return {
 
     // top level
-    'categories': data.categories,
+    categories: data.categories,
 
     // Qualifications
     'qualifications-reasons': data['qualifications-reasons'],
@@ -55,7 +55,7 @@ exports.getRejectReasons = (data) => {
     'sponsorship-reasons-details': data['sponsorship-reasons-details'],
 
     // Other
-    'other-reasons-details': data['other-reasons-details'],
+    'other-reasons-details': data['other-reasons-details']
 
   }
 }
@@ -76,7 +76,7 @@ exports.getConditions = (offer) => {
 }
 
 exports.hasPendingConditions = (offer) => {
-  return this.getConditions(offer).some(c => c.status == "Pending")
+  return this.getConditions(offer).some(c => c.status == 'Pending')
 }
 
 exports.getCondition = (offer, conditionId) => {
@@ -106,29 +106,29 @@ exports.calculateDeclineDate = (application) => {
 
 exports.calculateDaysToDecline = (application) => {
   if (application.status != 'Offered') {
-    return null;
+    return null
   }
-  let now = SystemHelper.now();
+  const now = SystemHelper.now()
   let diff = DateTime.fromISO(application.offer.declineByDate).diff(now, 'days').toObject().days
   diff = Math.round(diff)
   if (diff < 1) {
     diff = 0
   }
-  return diff;
+  return diff
 }
 
 exports.getUpcomingInterviews = (application) => {
-  let now = SystemHelper.now()
+  const now = SystemHelper.now()
 
   return application.interviews.items.filter(interview => {
-    return DateTime.fromISO(interview.date) >= now;
+    return DateTime.fromISO(interview.date) >= now
   })
 }
 
 exports.cancelInterview = (params) => {
   params.application.events.items.push({
     title: content.cancelInterview.event.title,
-    user: "Angela Mode",
+    user: 'Angela Mode',
     date: new Date().toISOString(),
     meta: {
       interview: params.application.interviews.items.find(item => item.id === params.interview.id),
@@ -163,7 +163,6 @@ exports.getAssignedUsers = (application, userId, userOrganisationId) => {
       // put 'you' as the first person in the list of assigned users
       assignedUsers.splice(0, 0, you)
     }
-
   }
 
   return assignedUsers

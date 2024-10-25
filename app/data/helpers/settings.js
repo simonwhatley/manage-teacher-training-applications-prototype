@@ -6,9 +6,9 @@ exports.getMidCycleApplications = (applications) => {
   return applications.filter(app => {
     // Remove any applications that are deferred from the previous cycle
     if (app.status === 'Deferred' && app.cycle === CycleHelper.PREVIOUS_CYCLE.code) {
-      return false;
+      return false
     } else {
-      return true;
+      return true
     }
   })
   // .filter(app => {
@@ -23,8 +23,7 @@ exports.getMidCycleApplications = (applications) => {
 }
 
 exports.getStartOfCycleApplications = (applications) => {
-
-  let deferredPast = applications
+  const deferredPast = applications
     .filter(app => {
       return app.cycle == CycleHelper.PREVIOUS_CYCLE.code
     })
@@ -32,11 +31,11 @@ exports.getStartOfCycleApplications = (applications) => {
       return app.status == 'Deferred'
     })
 
-  let acceptedPast = applications
+  const acceptedPast = applications
     .filter(app => app.cycle == CycleHelper.PREVIOUS_CYCLE.code)
     .filter(app => (app.status == 'Conditions pending'))
 
-  let other = applications
+  const other = applications
     .filter(app => app.status !== 'Received')
     .filter(app => app.status !== 'Interviewing')
     .filter(app => app.status !== 'Deferred')
@@ -46,6 +45,5 @@ exports.getStartOfCycleApplications = (applications) => {
 
   return deferredPast
     .concat(acceptedPast)
-    .concat(other);
+    .concat(other)
 }
-
