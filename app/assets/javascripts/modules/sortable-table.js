@@ -2,16 +2,16 @@
 ;(function (global) {
   'use strict'
 
-  var GOVUK = global.GOVUK || {}
+  const GOVUK = global.GOVUK || {}
   GOVUK.Modules = GOVUK.Modules || {}
 
   // Based on https://github.com/frankieroberto/sortable-table
   GOVUK.Modules.SortableTable = function () {
     this.start = element => {
-      var table = $(element).get(0)
-      var status
+      const table = $(element).get(0)
+      let status
 
-      var options = {}
+      const options = {}
       options.statusMessage = 'Sort by %heading% (%direction%)'
       options.ascendingText = 'ascending'
       options.descendingText = 'descending'
@@ -20,10 +20,10 @@
       createStatusBox()
 
       function createHeadingButtons () {
-        var headings = table.querySelectorAll('thead th')
-        var heading
+        const headings = table.querySelectorAll('thead th')
+        let heading
 
-        for (var i = 0; i < headings.length; i++) {
+        for (let i = 0; i < headings.length; i++) {
           heading = headings[i]
           if (heading.getAttribute('aria-sort')) {
             createHeadingButton(heading, i)
@@ -32,8 +32,8 @@
       };
 
       function createHeadingButton (heading, i) {
-        var text = heading.textContent
-        var button = document.createElement('button')
+        const text = heading.textContent
+        const button = document.createElement('button')
         button.setAttribute('type', 'button')
         button.setAttribute('data-index', i)
         button.textContent = text
@@ -43,22 +43,22 @@
       };
 
       function sortButtonClicked (event) {
-        var columnNumber = event.target.getAttribute('data-index')
-        var sortDirection = event.target.parentElement.getAttribute('aria-sort')
-        var newSortDirection
+        const columnNumber = event.target.getAttribute('data-index')
+        const sortDirection = event.target.parentElement.getAttribute('aria-sort')
+        let newSortDirection
         if (sortDirection === 'none' || sortDirection === 'ascending') {
           newSortDirection = 'descending'
         } else {
           newSortDirection = 'ascending'
         }
 
-        var tBodies = table.querySelectorAll('tbody')
+        const tBodies = table.querySelectorAll('tbody')
 
         sortTBodies(tBodies, columnNumber, newSortDirection)
 
-        for (var i = tBodies.length - 1; i >= 0; i--) {
-          var rows = getTableRowsArray(tBodies[i])
-          var sortedRows = sort(rows, columnNumber, newSortDirection)
+        for (let i = tBodies.length - 1; i >= 0; i--) {
+          const rows = getTableRowsArray(tBodies[i])
+          const sortedRows = sort(rows, columnNumber, newSortDirection)
           addRows(tBodies[i], sortedRows)
         }
 
@@ -67,25 +67,25 @@
       }
 
       function sortTBodies (tBodies, columnNumber, sortDirection) {
-        var tBodiesAsArray = []
+        const tBodiesAsArray = []
 
-        for (var i = 0; i < tBodies.length; i++) {
+        for (let i = 0; i < tBodies.length; i++) {
           tBodiesAsArray.push(tBodies[i])
         };
 
-        var newTbodies = tBodiesAsArray.sort(function (tBodyA, tBodyB) {
-          var tBodyAHeaderRow = tBodyA.querySelector('th[scope="rowgroup"]')
-          var tBodyBHeaderRow = tBodyB.querySelector('th[scope="rowgroup"]')
+        const newTbodies = tBodiesAsArray.sort(function (tBodyA, tBodyB) {
+          let tBodyAHeaderRow = tBodyA.querySelector('th[scope="rowgroup"]')
+          let tBodyBHeaderRow = tBodyB.querySelector('th[scope="rowgroup"]')
 
           if (tBodyAHeaderRow && tBodyBHeaderRow) {
             tBodyAHeaderRow = tBodyAHeaderRow.parentElement
             tBodyBHeaderRow = tBodyBHeaderRow.parentElement
 
-            var tBodyACell = tBodyAHeaderRow.querySelectorAll('td, th')[columnNumber]
-            var tBodyBCell = tBodyBHeaderRow.querySelectorAll('td, th')[columnNumber]
+            const tBodyACell = tBodyAHeaderRow.querySelectorAll('td, th')[columnNumber]
+            const tBodyBCell = tBodyBHeaderRow.querySelectorAll('td, th')[columnNumber]
 
-            var tBodyAValue = getCellValue(tBodyACell)
-            var tBodyBValue = getCellValue(tBodyBCell)
+            const tBodyAValue = getCellValue(tBodyACell)
+            const tBodyBValue = getCellValue(tBodyBCell)
 
             return compareValues(tBodyAValue, tBodyBValue, sortDirection)
           } else {
@@ -100,8 +100,8 @@
       }
 
       function getTableRowsArray (tbody) {
-        var rows = []
-        var trs = tbody.querySelectorAll('tr')
+        const rows = []
+        const trs = tbody.querySelectorAll('tr')
         for (let i = 0; i < trs.length; i++) {
           rows.push(trs[i])
         }
@@ -109,15 +109,15 @@
       }
 
       function sort (rows, columnNumber, sortDirection) {
-        var newRows = rows.sort(function (rowA, rowB) {
-          var tdA = rowA.querySelectorAll('td, th')[columnNumber]
-          var tdB = rowB.querySelectorAll('td, th')[columnNumber]
+        const newRows = rows.sort(function (rowA, rowB) {
+          const tdA = rowA.querySelectorAll('td, th')[columnNumber]
+          const tdB = rowB.querySelectorAll('td, th')[columnNumber]
 
-          var rowAIsHeader = rowA.querySelector('th[scope="rowgroup"]')
-          var rowBIsHeader = rowB.querySelector('th[scope="rowgroup"]')
+          const rowAIsHeader = rowA.querySelector('th[scope="rowgroup"]')
+          const rowBIsHeader = rowB.querySelector('th[scope="rowgroup"]')
 
-          var valueA = getCellValue(tdA)
-          var valueB = getCellValue(tdB)
+          const valueA = getCellValue(tdA)
+          const valueB = getCellValue(tdB)
 
           if (rowAIsHeader) {
             return -1
@@ -148,20 +148,20 @@
       }
 
       function getCellValue (cell) {
-        var cellValue = cell.getAttribute('data-sort-value') || cell.textContent
+        let cellValue = cell.getAttribute('data-sort-value') || cell.textContent
         cellValue = parseFloat(cellValue) || cellValue
 
         return cellValue
       }
 
       function addRows (tbody, rows) {
-        for (var i = 0; i < rows.length; i++) {
+        for (let i = 0; i < rows.length; i++) {
           tbody.append(rows[i])
         }
       };
 
       function removeButtonStates () {
-        var tableHeaders = table.querySelectorAll('thead th')
+        const tableHeaders = table.querySelectorAll('thead th')
 
         for (let i = tableHeaders.length - 1; i >= 0; i--) {
           tableHeaders[i].setAttribute('aria-sort', 'none')
@@ -170,7 +170,7 @@
 
       function updateButtonState (button, direction) {
         button.parentElement.setAttribute('aria-sort', direction)
-        var message = options.statusMessage
+        let message = options.statusMessage
         message = message.replace(/%heading%/, button.textContent)
         message = message.replace(/%direction%/, options[direction + 'Text'])
         status.textContent = message
