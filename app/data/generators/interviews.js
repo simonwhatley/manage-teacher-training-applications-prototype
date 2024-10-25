@@ -7,11 +7,11 @@ function getInterview(params) {
     hour: faker.helpers.arrayElement([9, 10, 11]),
     minute: faker.helpers.arrayElement([0, 15, 30, 45])
   })
-  const past = now.minus({ days: faker.number.int({ 'min': 1, 'max': 20 }) }).set({
+  const past = now.minus({ days: faker.number.int({ min: 1, max: 20 }) }).set({
     hour: faker.helpers.arrayElement([9, 10, 11]),
     minute: faker.helpers.arrayElement([0, 15, 30, 45])
   });
-  const future = now.plus({ days: faker.number.int({ 'min': 0, 'max': 10 }) }).set({
+  const future = now.plus({ days: faker.number.int({ min: 0, max: 10 }) }).set({
     hour: faker.helpers.arrayElement([9, 10, 11]),
     minute: faker.helpers.arrayElement([0, 15, 30, 45])
   });

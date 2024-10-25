@@ -38,8 +38,8 @@ const generateFakeUsers = (count) => {
 
   organisations.forEach(organisation => {
     for(var i = 0; i < 5; i++) {
-      let firstName = generatorHelpers.firstName(faker.helpers.arrayElement([0,1]))
-      let lastName = generatorHelpers.lastName()
+      const firstName = generatorHelpers.firstName(faker.helpers.arrayElement([0,1]))
+      const lastName = generatorHelpers.lastName()
       users.push({
         id: faker.string.uuid(),
         firstName,
