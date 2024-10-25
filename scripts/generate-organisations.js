@@ -2,7 +2,6 @@ const fs = require('fs')
 const path = require('path')
 const { fakerEN_GB: faker } = require('@faker-js/faker')
 
-
 const generateOrganisation = require('../app/data/generators/organisation')
 
 const universities = require('../app/data/seed/universities')
@@ -350,7 +349,6 @@ const generateFakeOrganisations = (count) => {
     isAccreditedBody: false,
     domain: 'sydneyrussellschool.com'
   }))
-
 
   organisations.push(generateFakeOrganisation({
     name: 'Hillingdon SCITT',

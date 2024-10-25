@@ -23,7 +23,7 @@ const generateFakeLocations = (count) => {
       town: 'Some town',
       postcode: 'AB1 2CD'
     },
-    organisation: organisation
+    organisation
   }, {
     id: faker.string.uuid(),
     name: 'Queen’s campus',
@@ -34,7 +34,7 @@ const generateFakeLocations = (count) => {
       town: 'Big City',
       postcode: 'SW1A 4AA'
     },
-    organisation: organisation
+    organisation
   }, {
     id: faker.string.uuid(),
     name: 'Malet Place',
@@ -45,7 +45,7 @@ const generateFakeLocations = (count) => {
       town: 'Small City',
       postcode: 'BA2 3DC'
     },
-    organisation: organisation
+    organisation
   }]
 
   return locations

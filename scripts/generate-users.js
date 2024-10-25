@@ -22,9 +22,9 @@ const generateFakeUsers = (count) => {
 
   users.push({
     id: faker.string.uuid(),
-    firstName: firstName,
-    lastName: lastName,
-    emailAddress: emailAddress,
+    firstName,
+    lastName,
+    emailAddress,
     organisation: mainOrg,
     permissions: {
       manageOrganisation: true,
@@ -37,8 +37,8 @@ const generateFakeUsers = (count) => {
   })
 
   organisations.forEach(organisation => {
-    for(let i = 0; i < 5; i++) {
-      const firstName = generatorHelpers.firstName(faker.helpers.arrayElement([0,1]))
+    for (let i = 0; i < 5; i++) {
+      const firstName = generatorHelpers.firstName(faker.helpers.arrayElement([0, 1]))
       const lastName = generatorHelpers.lastName()
       users.push({
         id: faker.string.uuid(),

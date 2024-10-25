@@ -33,10 +33,7 @@ const generateFakeCourses = (count) => {
           courses.push(course)
         }
       })
-
     }
-
-
   })
 
   return courses

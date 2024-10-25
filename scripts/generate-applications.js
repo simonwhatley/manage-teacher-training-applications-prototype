@@ -9,7 +9,7 @@ const CycleHelper = require('../app/data/helpers/cycles')
 const GeneratorsHelper = require('../app/data/helpers/generators')
 const user = require('../app/data/user')
 const relationships = user.relationships
-let partners = relationships.map(relationship => relationship.org2)
+const partners = relationships.map(relationship => relationship.org2)
 
 const generateCycle = require('../app/data/generators/cycle')
 const generatePersonalDetails = require('../app/data/generators/personal-details')
@@ -51,7 +51,7 @@ const generateFakeApplication = (params = {}) => {
 
   let accreditedBody
   let provider
-  let organisation = faker.helpers.arrayElement(organisations)
+  const organisation = faker.helpers.arrayElement(organisations)
   if (organisation.isAccreditedBody) {
     accreditedBody = organisation
     // we want to sometimes make the provider the accredited body for self ratified courses
@@ -86,7 +86,6 @@ const generateFakeApplication = (params = {}) => {
   const subjectLevel = tempCourse.subjectLevel
   const fundingType = tempCourse.fundingType
   const qualifications = tempCourse.qualifications
-
 
   let offer = null
   if (['Deferred', 'Offered', 'Conditions pending', 'Recruited', 'Declined', 'Offer withdrawn', 'Conditions not met'].includes(status)) {
@@ -131,11 +130,11 @@ const generateFakeApplication = (params = {}) => {
   })
 
   // delete any interviews that have been cancelled
-  let cancelledInterviewEvents = events.items
+  const cancelledInterviewEvents = events.items
     .filter(event => event.title == 'Interview cancelled')
 
   cancelledInterviewEvents.forEach(event => {
-    _.remove(interviews.items, function(interview) {
+    _.remove(interviews.items, function (interview) {
       return interview.id == event.meta.interview.id
     })
   })
@@ -183,14 +182,16 @@ const generateFakeApplication = (params = {}) => {
 
   let englishLanguageQualification
   if (personalDetails.isInternationalCandidate) {
-    englishLanguageQualification = (params.englishLanguageQualification) ? params.englishLanguageQualification : generateEnglishLanguageQualification({
-      englishGcseQualification: gcse.english,
-      dateOfBirth: personalDetails.dateOfBirth
-    })
+    englishLanguageQualification = (params.englishLanguageQualification)
+      ? params.englishLanguageQualification
+      : generateEnglishLanguageQualification({
+        englishGcseQualification: gcse.english,
+        dateOfBirth: personalDetails.dateOfBirth
+      })
   }
 
   return {
-    id: params.id || ('' + faker.number.int({min: 123456, max: 999999})),
+    id: params.id || ('' + faker.number.int({ min: 123456, max: 999999 })),
     assignedUsers: params.assignedUsers || assignedUsers,
     deferredOfferUnavailable,
     cycle,
@@ -208,9 +209,9 @@ const generateFakeApplication = (params = {}) => {
     status,
     submittedDate,
     offer,
-    rejectedDate: rejectedDate,
-    rejectedReasons: rejectedReasons,
-    rejectedFeedbackDate: rejectedFeedbackDate,
+    rejectedDate,
+    rejectedReasons,
+    rejectedFeedbackDate,
     interviews,
     notes,
     events,
@@ -218,7 +219,7 @@ const generateFakeApplication = (params = {}) => {
     contactDetails: params.contactDetails || generateContactDetails(personalDetails),
     interviewNeeds: params.interviewNeeds || generateInterviewNeeds(),
     workHistory: params.workHistory || generateWorkHistory(submittedDate),
-    schoolExperience:  params.schoolExperience || generateSchoolExperience(submittedDate),
+    schoolExperience: params.schoolExperience || generateSchoolExperience(submittedDate),
     degree: params.degree || degree,
     gcse: params.gcse || gcse,
     englishLanguageQualification,
@@ -552,7 +553,7 @@ const generateFakeApplications = () => {
       dateOfBirth: '1991-05-01'
     },
     safeguarding: {
-      "response": false
+      response: false
     },
     workHistory: {
       answer: 'no',
@@ -561,12 +562,12 @@ const generateFakeApplications = () => {
     },
     schoolExperience: [
       {
-        "role": "Peer support",
-        "org": "Bradshaw mental health charity",
-        "workedWithChildren": "No",
-        "startDate": "2017-08-01T23:14:28.205Z",
-        "endDate": "2018-08-09T05:13:38.382Z",
-        "timeCommitment": "1 evening a week"
+        role: 'Peer support',
+        org: 'Bradshaw mental health charity',
+        workedWithChildren: 'No',
+        startDate: '2017-08-01T23:14:28.205Z',
+        endDate: '2018-08-09T05:13:38.382Z',
+        timeCommitment: '1 evening a week'
       }
 
     ]
@@ -621,7 +622,7 @@ const generateFakeApplications = () => {
       items: [{
         id: faker.string.uuid(),
         date: past,
-        details: "Some details of the interview go here"
+        details: 'Some details of the interview go here'
       }]
     }
   }))
@@ -689,7 +690,7 @@ const generateFakeApplications = () => {
     }
   }))
 
- applications.push(generateFakeApplication({
+  applications.push(generateFakeApplication({
     status: 'Conditions pending',
     cycle: CycleHelper.CURRENT_CYCLE.code,
     personalDetails: {
@@ -2542,8 +2543,8 @@ const generateFakeApplications = () => {
       rightToWorkStudyHow: 'Another route',
       rightToWorkStudyHowDetails: 'I am applying for a visa',
       dateEnteredUK: DateTime.fromJSDate(
-          faker.date.between({ from: '2007-01-01', to: '2021-08-31' })
-        ).toFormat('yyyy-LL-dd')
+        faker.date.between({ from: '2007-01-01', to: '2021-08-31' })
+      ).toFormat('yyyy-LL-dd')
     },
     contactDetails: {
       tel: '07700 900978',
@@ -2661,8 +2662,8 @@ const generateFakeApplications = () => {
       rightToWorkStudyHow: 'Another route',
       rightToWorkStudyHowDetails: 'I am applying for a visa',
       dateEnteredUK: DateTime.fromJSDate(
-          faker.date.between({ from: '2007-01-01', to: '2021-08-31' })
-        ).toFormat('yyyy-LL-dd')
+        faker.date.between({ from: '2007-01-01', to: '2021-08-31' })
+      ).toFormat('yyyy-LL-dd')
     },
     contactDetails: {
       tel: '+61 (08) 7225 5825',
@@ -2741,8 +2742,8 @@ const generateFakeApplications = () => {
       rightToWorkStudyHow: 'Another route',
       rightToWorkStudyHowDetails: 'I am applying for a visa',
       dateEnteredUK: DateTime.fromJSDate(
-          faker.date.between({ from: '2007-01-01', to: '2021-08-31' })
-        ).toFormat('yyyy-LL-dd')
+        faker.date.between({ from: '2007-01-01', to: '2021-08-31' })
+      ).toFormat('yyyy-LL-dd')
     },
     degree: [{
       type: 'BCA',
@@ -2787,14 +2788,13 @@ const generateFakeApplications = () => {
     otherQualifications: {}
   }))
 
-
   for (const [key, value] of Object.entries(STATUS)) {
     const count = faker.number.int({ min: 10, max: 15 })
     let application
 
-    if (key === "DEFERRED") continue;
-    if (key === "RECEIVED") continue;
-    if (key === "SHORTLISTED") continue;
+    if (key === 'DEFERRED') continue
+    if (key === 'RECEIVED') continue
+    if (key === 'SHORTLISTED') continue
 
     for (let i = 0; i < count; i++) {
       if (value === 'Offered') {
