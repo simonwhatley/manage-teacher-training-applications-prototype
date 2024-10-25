@@ -18,21 +18,21 @@ function getBreakdown (params) {
   }
 
   let applications = params.applications
-    .filter(app => app.cycle == CycleHelper.CURRENT_CYCLE.code)
-    .filter(app => app[orgType] == organisation.name)
+    .filter(app => app.cycle === CycleHelper.CURRENT_CYCLE.code)
+    .filter(app => app[orgType] === organisation.name)
 
   if (location && location.name) {
     applications = applications
-      .filter(app => app.location && app.location.name == location.name)
+      .filter(app => app.location && app.location.name === location.name)
   }
 
-  const received = applications.filter(app => app.status == 'Received')
-  const shortlisted = applications.filter(app => app.status == 'Shortlisted')
-  const interviewing = applications.filter(app => app.status == 'Interviewing')
+  const received = applications.filter(app => app.status === 'Received')
+  const shortlisted = applications.filter(app => app.status === 'Shortlisted')
+  const interviewing = applications.filter(app => app.status === 'Interviewing')
 
-  const offered = applications.filter(app => app.status == 'Offered')
-  const conditionsPending = applications.filter(app => app.status == 'Conditions pending')
-  const recruited = applications.filter(app => app.status == 'Recruited')
+  const offered = applications.filter(app => app.status === 'Offered')
+  const conditionsPending = applications.filter(app => app.status === 'Conditions pending')
+  const recruited = applications.filter(app => app.status === 'Recruited')
 
   return {
     organisation,
@@ -55,19 +55,19 @@ module.exports = router => {
     }).length
 
     const aboutToBeAutomaticallyRejectedCount = applications.filter((app) => {
-      return app.daysToRespond < 5 && (app.status == 'Received' || app.status == 'Shortlisted' || app.status == 'Interviewing')
+      return app.daysToRespond < 5 && (app.status === 'Received' || app.status === 'Shortlisted' || app.status === 'Interviewing')
     }).length
 
     const needsFeedbackCount = applications.filter((app) => {
-      return app.status == 'Rejected' && !app.rejectedReasons
+      return app.status === 'Rejected' && !app.rejectedReasons
     }).length
 
     const deferredOffersReadyToConfirm = applications.filter((app) => {
-      return app.status == 'Deferred' && app.cycle == CycleHelper.PREVIOUS_CYCLE.code
+      return app.status === 'Deferred' && app.cycle === CycleHelper.PREVIOUS_CYCLE.code
     }).length
 
     const conditionsPending = applications.filter((app) => {
-      return app.status == 'Conditions pending'
+      return app.status === 'Conditions pending'
     }).length
 
     const activeApplicationsSections = []

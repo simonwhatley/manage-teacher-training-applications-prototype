@@ -14,7 +14,7 @@ module.exports = router => {
       const item = { org, partners: [] }
 
       const orgRelationships = params.orgRelationships.filter(relationship => {
-        return relationship.org1.id == org.id
+        return relationship.org1.id === org.id
       })
 
       // for each relationship found put it in partners array
@@ -76,7 +76,7 @@ module.exports = router => {
 
   router.get('/onboard/:relationshipId', (req, res) => {
     const relationship = req.session.data.relationships.filter(relationship => {
-      return relationship.id == req.params.relationshipId
+      return relationship.id === req.params.relationshipId
     })[0]
 
     res.render('onboard/relationship', {
@@ -91,7 +91,7 @@ module.exports = router => {
     Object.entries(req.session.data.orgpermissions).forEach(item => {
       const [key, value] = item
       const relationshipId = parseInt(key.split('a')[1], 10)
-      const relationship = req.session.data.relationships.find(relationship => relationship.id == relationshipId)
+      const relationship = req.session.data.relationships.find(relationship => relationship.id === relationshipId)
 
       relationship.org1Permissions = {
         makeDecisions: value.makeDecisions && value.makeDecisions.includes(relationship.org1.name),
@@ -109,14 +109,14 @@ module.exports = router => {
   })
 
   router.post('/onboard/:relationshipId', (req, res) => {
-    if (req.body.referrer == 'check') {
+    if (req.body.referrer === 'check') {
       console.log(1)
       res.redirect('/onboard/check')
     } else {
       const nextRelationshipId = parseInt(req.params.relationshipId, 10) + 1
 
       const relationship = req.session.data.relationships.filter(relationship => {
-        return relationship.id == nextRelationshipId
+        return relationship.id === nextRelationshipId
       })[0]
 
       // there's another relationship

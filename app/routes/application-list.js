@@ -264,39 +264,39 @@ const getLocationItems = (selectedItems) => {
 const sortApplications = (applications, sort) => {
   let newApplications = []
 
-  if (sort == 'Updated most recently') {
+  if (sort === 'Updated most recently') {
     newApplications = applications.sort((a, b) => {
       const aEvents = a.events.items
       const bEvents = b.events.items
       return new Date(bEvents[bEvents.length - 1].date) - new Date(aEvents[aEvents.length - 1].date)
     })
-  } else if (sort == 'Updated least recently') {
+  } else if (sort === 'Updated least recently') {
     newApplications = applications.sort((a, b) => {
       const aEvents = a.events.items
       const bEvents = b.events.items
       return new Date(aEvents[aEvents.length - 1].date) - new Date(bEvents[bEvents.length - 1].date)
     })
   } else {
-    newApplications = newApplications.concat(applications.filter((app) => app.status == 'Received').sort(function (a, b) {
+    newApplications = newApplications.concat(applications.filter((app) => app.status === 'Received').sort(function (a, b) {
       return a.daysToRespond - b.daysToRespond
     }))
-    newApplications = newApplications.concat(applications.filter((app) => app.status == 'Shortlisted').sort(function (a, b) {
+    newApplications = newApplications.concat(applications.filter((app) => app.status === 'Shortlisted').sort(function (a, b) {
       return a.daysToRespond - b.daysToRespond
     }))
-    newApplications = newApplications.concat(applications.filter((app) => app.status == 'Interviewing').sort(function (a, b) {
+    newApplications = newApplications.concat(applications.filter((app) => app.status === 'Interviewing').sort(function (a, b) {
       return a.daysToRespond - b.daysToRespond
     }))
-    newApplications = newApplications.concat(applications.filter((app) => app.status == 'Offered').sort((a, b) => {
+    newApplications = newApplications.concat(applications.filter((app) => app.status === 'Offered').sort((a, b) => {
       return a.daysToDecline - b.daysToDecline
     }))
-    newApplications = newApplications.concat(applications.filter((app) => app.status == 'Conditions pending'))
-    newApplications = newApplications.concat(applications.filter((app) => app.status == 'Recruited'))
-    newApplications = newApplications.concat(applications.filter((app) => app.status == 'Deferred'))
-    newApplications = newApplications.concat(applications.filter((app) => app.status == 'Declined'))
-    newApplications = newApplications.concat(applications.filter((app) => app.status == 'Rejected'))
-    newApplications = newApplications.concat(applications.filter((app) => app.status == 'Application withdrawn'))
-    newApplications = newApplications.concat(applications.filter((app) => app.status == 'Offer withdrawn'))
-    newApplications = newApplications.concat(applications.filter((app) => app.status == 'Conditions not met'))
+    newApplications = newApplications.concat(applications.filter((app) => app.status === 'Conditions pending'))
+    newApplications = newApplications.concat(applications.filter((app) => app.status === 'Recruited'))
+    newApplications = newApplications.concat(applications.filter((app) => app.status === 'Deferred'))
+    newApplications = newApplications.concat(applications.filter((app) => app.status === 'Declined'))
+    newApplications = newApplications.concat(applications.filter((app) => app.status === 'Rejected'))
+    newApplications = newApplications.concat(applications.filter((app) => app.status === 'Application withdrawn'))
+    newApplications = newApplications.concat(applications.filter((app) => app.status === 'Offer withdrawn'))
+    newApplications = newApplications.concat(applications.filter((app) => app.status === 'Conditions not met'))
   }
   return newApplications
 }
@@ -354,7 +354,7 @@ module.exports = router => {
 
     // for use in the filters
     const users = req.session.data.users.filter(user => {
-      return user.organisation.id == req.session.data.user.organisation.id
+      return user.organisation.id === req.session.data.user.organisation.id
     })
 
     let { cycle, status, provider, accreditedBody, keywords, location, studyMode, subject, assignedUser, daysLeftToMakeDecisionItem, dateReceivedItem, noteItem, feedbackItem } = req.query
@@ -440,8 +440,8 @@ module.exports = router => {
 
           // [1] the user selected unassigned from the filter and the application
           // has no assigned users
-          if (assignedUsers.includes('unassigned') && appAssignedUserIds.length == 0) {
-            unassignedUserValid = (appAssignedUserIds.length == 0)
+          if (assignedUsers.includes('unassigned') && appAssignedUserIds.length === 0) {
+            unassignedUserValid = (appAssignedUserIds.length === 0)
           }
           // [2] the user selected some assigned users from the filter and the
           // application has that person in their assigned list
@@ -474,13 +474,13 @@ module.exports = router => {
           daysLeftToMakeDecisionItemValid = false
 
           if (daysLeftToMakeDecisionItems.includes('5 days or fewer')) {
-            if ((app.status == 'Received' || app.status == 'Shortlisted' || app.status == 'Interviewing') && app.daysToRespond <= 5) {
+            if ((app.status === 'Received' || app.status === 'Shortlisted' || app.status === 'Interviewing') && app.daysToRespond <= 5) {
               daysLeftToMakeDecisionItemValid = true
             }
           }
 
           if (daysLeftToMakeDecisionItems.includes('More than 5 days')) {
-            if ((app.status == 'Received' || app.status == 'Shortlisted' || app.status == 'Interviewing') && app.daysToRespond > 5) {
+            if ((app.status === 'Received' || app.status === 'Shortlisted' || app.status === 'Interviewing') && app.daysToRespond > 5) {
               daysLeftToMakeDecisionItemValid = true
             }
           }
@@ -524,13 +524,13 @@ module.exports = router => {
           feedbackItemValid = false
 
           if (feedbackItems.includes('Needs feedback')) {
-            if (app.status == 'Rejected' && !app.rejectedReasons) {
+            if (app.status === 'Rejected' && !app.rejectedReasons) {
               feedbackItemValid = true
             }
           }
 
           if (feedbackItems.includes('Does not need feedback')) {
-            if (app.status == 'Rejected' && app.rejectedReasons) {
+            if (app.status === 'Rejected' && app.rejectedReasons) {
               feedbackItemValid = true
             }
           }
@@ -543,7 +543,7 @@ module.exports = router => {
             noteItemValid = true
           }
 
-          if (noteItems.includes('Does not have note') && app.notes.items.length == 0) {
+          if (noteItems.includes('Does not have note') && app.notes.items.length === 0) {
             noteItemValid = true
           }
         }

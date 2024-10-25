@@ -10,7 +10,7 @@ module.exports = router => {
     let conditions = []
 
     // if it's been submitted then build conditions from data
-    if (req.session.data['confirm-deferred-offer'] && req.session.data['confirm-deferred-offer']['submitted-conditions-page'] == 'true') {
+    if (req.session.data['confirm-deferred-offer'] && req.session.data['confirm-deferred-offer']['submitted-conditions-page'] === 'true') {
       // standard conditions
       if (req.session.data['confirm-deferred-offer']['standard-conditions'] && req.session.data['confirm-deferred-offer']['standard-conditions'].length) {
         conditions = conditions.concat(req.session.data['confirm-deferred-offer']['standard-conditions'])
@@ -50,7 +50,7 @@ module.exports = router => {
     application.offer.studyMode = req.session.data['confirm-deferred-offer'] && req.session.data['confirm-deferred-offer'].studyMode || application.offer.studyMode
 
     // if it's been submitted then save conditions from data
-    if (req.session.data['confirm-deferred-offer'] && req.session.data['confirm-deferred-offer']['submitted-conditions-page'] == 'true') {
+    if (req.session.data['confirm-deferred-offer'] && req.session.data['confirm-deferred-offer']['submitted-conditions-page'] === 'true') {
       // save standard conditions
       application.offer.standardConditions = []
       if (req.session.data['confirm-deferred-offer']['standard-conditions'] && req.session.data['confirm-deferred-offer']['standard-conditions'].length) {
@@ -152,7 +152,7 @@ module.exports = router => {
     }
 
     // if the form has been used in some way
-    if (req.session.data['confirm-deferred-offer'] && req.session.data['confirm-deferred-offer']['submitted-conditions-page'] == 'true') {
+    if (req.session.data['confirm-deferred-offer'] && req.session.data['confirm-deferred-offer']['submitted-conditions-page'] === 'true') {
       conditions = req.session.data['confirm-deferred-offer'].conditions
     } else {
       if (application.offer.conditions) {
@@ -199,7 +199,7 @@ module.exports = router => {
     const application = req.session.data.applications.find(app => app.id === applicationId)
     const conditions = ApplicationHelper.getConditions(application.offer)
     if (data.allConditionsMet) {
-      const allConditionsMet = (data.allConditionsMet == 'true')
+      const allConditionsMet = (data.allConditionsMet === 'true')
       delete data.allConditionsMet
       conditions.forEach((condition, index) => condition.status = (allConditionsMet) ? 'Met' : 'Pending')
     }

@@ -224,7 +224,7 @@ module.exports = router => {
 
     // if it's been submitted then build conditions from data
     if (req.session.data['edit-offer'] &&
-      req.session.data['edit-offer']['submitted-conditions-page'] == 'true') {
+      req.session.data['edit-offer']['submitted-conditions-page'] === 'true') {
       // standard conditions
       if (req.session.data['edit-offer']['standard-conditions'] &&
         req.session.data['edit-offer']['standard-conditions'].length) {
@@ -326,7 +326,7 @@ module.exports = router => {
       application.offer.conditions = []
 
       req.session.data['edit-offer'].conditions
-        .filter(condition => condition != '')
+        .filter(condition => condition !== '')
         .forEach(condition => {
           application.offer.conditions.push({
             id: uuidv4(),
