@@ -66,7 +66,7 @@ AppFrontend.SortableTable.prototype.removeButtonStates = function() {
 };
 
 AppFrontend.SortableTable.prototype.addRows = function(rows) {
-	for(var i = 0; i < rows.length; i++) {
+	for(var i=0; i<rows.length; i++) {
 		this.body.append(rows[i]);
 	}
 };

@@ -7,14 +7,13 @@ const users = require('./users.json')
 const user = require('./user')
 const relationships = user.relationships
 let applications = require('./applications.json')
-let defaults = {}
+const defaults = {}
 
 const trainingProviders = []
 const accreditedBodies = []
 
 user.organisations.forEach(org => {
-  if(org.isAccreditedBody) {
-
+  if (org.isAccreditedBody) {
     // An accredied body can also run its own courses (self ratified)
     // And so they can also be considered the training provider
     // So populate it
@@ -40,23 +39,23 @@ const organisations = trainingProviders.concat(accreditedBodies)
 
 applications = applications.map(application => {
   Object.defineProperty(application.personalDetails, 'name', {
-    get() {
+    get () {
       return `${this.givenName} ${this.familyName}`
     },
     enumerable: true
   })
 
   Object.defineProperty(application, 'respondByDate', {
-    get() {
+    get () {
       return DateTime.fromISO(application.submittedDate).plus({ days: 40 }).toISO()
     },
     enumerable: true
   })
 
   Object.defineProperty(application, 'daysToRespond', {
-    get() {
-      if(application.status != 'Received' && application.status != 'Interviewing') {
-        return null;
+    get () {
+      if (application.status != 'Received' && application.status != 'Interviewing') {
+        return null
       }
       const now = SystemHelper.now()
       let diff = DateTime.fromISO(application.respondByDate).diff(now, 'days').toObject().days
@@ -64,12 +63,12 @@ applications = applications.map(application => {
       if (diff < 1) {
         diff = 0
       }
-      return diff;
+      return diff
     },
     enumerable: true
   })
 
-  if(application.offer) {
+  if (application.offer) {
     application.offer.declineByDate = ApplicationHelper.calculateDeclineDate(application)
     application.offer.daysToDecline = ApplicationHelper.calculateDaysToDecline(application)
   }
@@ -88,15 +87,15 @@ defaults.emailsettings = [
 
 defaults.user = user
 
-defaults["standard-conditions"] = [
-  "Fitness to train to teach check",
-  "Disclosure and Barring Service (DBS) check"
+defaults['standard-conditions'] = [
+  'Fitness to train to teach check',
+  'Disclosure and Barring Service (DBS) check'
 ]
 
 defaults['new-offer'] = {
   'standard-conditions': [
-    "Fitness to train to teach check",
-    "Disclosure and Barring Service (DBS) check"
+    'Fitness to train to teach check',
+    'Disclosure and Barring Service (DBS) check'
   ]
 }
 
