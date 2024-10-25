@@ -70,5 +70,10 @@
   },
   "jest": {
     "testRunner": "jest-jasmine2"
+  },
+  "standard": {
+    "ignore": [
+      "app/views/_components/**/*.js"
+    ]
   }
 }
