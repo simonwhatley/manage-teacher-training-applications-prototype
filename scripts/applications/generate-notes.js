@@ -7,11 +7,9 @@ const { NOTE_ADDED } = EVENTS
 exports.generateNotes = (applications) => applications.map((application) => {
   const notes = []
 
-  if (application.events){
+  if (application.events) {
     application.events = application.events.map((event) => {
-
-      if (event.title === NOTE_ADDED){
-
+      if (event.title === NOTE_ADDED) {
         const { date } = event
         const newNote = {
           id: faker.string.uuid(),
@@ -20,7 +18,7 @@ exports.generateNotes = (applications) => applications.map((application) => {
             'Waiting on academic tutor to confirm availability before scheduling an interview'
           ]),
           sender: faker.person.fullName(),
-          date,
+          date
         }
 
         notes.push(newNote)
@@ -35,7 +33,7 @@ exports.generateNotes = (applications) => applications.map((application) => {
     })
   }
 
-  if (notes.length){
+  if (notes.length) {
     application.notes = notes.reverse()
   }
 

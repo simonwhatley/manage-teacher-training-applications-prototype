@@ -10,7 +10,7 @@ const {
   INTERVIEW_SET_UP,
   INTERVIEW_CHANGED,
   INTERVIEW_CANCELLED,
-  OFFER_MADE,// affects interview date
+  OFFER_MADE, // affects interview date
   OFFER_CHANGED,
   OFFER_ACCEPTED,
   OFFER_DECLINED,
@@ -23,16 +23,15 @@ const {
   FEEDBACK_SENT,
   WITHDRAWN,
   OFFER_CONDITIONS_UPDATED,
-  NOTE_ADDED,
+  NOTE_ADDED
 } = EVENTS
 
-
-function getNextEventList(event, currentEvents){
-  switch(event){
+function getNextEventList (event, currentEvents) {
+  switch (event) {
     case INTERVIEW_SET_UP:
       const interviewsSetup = currentEvents.filter((ev) => ev.title === INTERVIEW_SET_UP)
 
-      if (interviewsSetup.length === 2 || Math.random() < 0.8){ // allow a max of 2 INTERVIEW_SET_UP events, randomly reduce the chance of a second INTERVIEW_SET_UP event
+      if (interviewsSetup.length === 2 || Math.random() < 0.8) { // allow a max of 2 INTERVIEW_SET_UP events, randomly reduce the chance of a second INTERVIEW_SET_UP event
         return [SUBMITTED]
       }
 
@@ -42,7 +41,7 @@ function getNextEventList(event, currentEvents){
       return [INTERVIEW_SET_UP]
 
     case INTERVIEW_CANCELLED:
-      return[INTERVIEW_CHANGED, INTERVIEW_SET_UP]
+      return [INTERVIEW_CHANGED, INTERVIEW_SET_UP]
 
     case OFFER_MADE:
       return [INTERVIEW_SET_UP, INTERVIEW_CHANGED, INTERVIEW_CANCELLED]
@@ -79,10 +78,9 @@ function getNextEventList(event, currentEvents){
   }
 }
 
-function generateEvents(currentEvents, event, metadata){
-
+function generateEvents (currentEvents, event, metadata) {
   currentEvents.push({
-    title: event,
+    title: event
   })
 
   const nextEvents = getNextEventList(event, currentEvents)
@@ -91,18 +89,20 @@ function generateEvents(currentEvents, event, metadata){
   return currentEvents
 }
 
-function generateLastEvent({ metadata, status }){
+function generateLastEvent ({ metadata, status }) {
   const createRootEvent = (events) => generateEvents([], randomize(events), metadata)
 
-  switch(status){
+  switch (status) {
     case STATUS.REJECTED:
-      return createRootEvent(metadata.isAutomaticRejection ? [
-        REJECTED,
-        FEEDBACK_SENT,
-      ]: [REJECTED])
+      return createRootEvent(metadata.isAutomaticRejection
+        ? [
+            REJECTED,
+            FEEDBACK_SENT
+          ]
+        : [REJECTED])
     case STATUS.INTERVIEWING:
       return createRootEvent([
-        INTERVIEW_SET_UP,
+        INTERVIEW_SET_UP
       ])
     case STATUS.APPLICATION_WITHDRAWN:
       return createRootEvent([WITHDRAWN])
@@ -118,26 +118,26 @@ function generateLastEvent({ metadata, status }){
   }
 }
 
-function createMetadata(){
+function createMetadata () {
   return {
     isAutomaticRejection: faker.datatype.boolean(),
     isAutomaticDecline: faker.datatype.boolean(),
-    numberOfConditions: randomNumber(0,2),
-    numberOfStandardConditions: randomNumber(0,2)
+    numberOfConditions: randomNumber(0, 2),
+    numberOfStandardConditions: randomNumber(0, 2)
   }
 }
 
-function addNotes(events){
+function addNotes (events) {
   const numberOfEvents = events ? events.length : 0
   const maxNotes = numberOfEvents < 4 ? 1 : numberOfEvents < 8 ? 2 : 3
-  const numberOfNotes = randomNumber(0,maxNotes)
+  const numberOfNotes = randomNumber(0, maxNotes)
 
-  if (numberOfNotes === 0 || numberOfEvents <= 1){
+  if (numberOfNotes === 0 || numberOfEvents <= 1) {
     return events
   }
 
-  for(i = 0; i < numberOfNotes; i++){
-    events.splice(randomNumber(1, events.length - 1), 0, { title: NOTE_ADDED } )
+  for (i = 0; i < numberOfNotes; i++) {
+    events.splice(randomNumber(1, events.length - 1), 0, { title: NOTE_ADDED })
   }
 
   return events
@@ -145,15 +145,14 @@ function addNotes(events){
 
 exports.generateSkeleton = () => FINAL_STATUS_VALUES.reduce((config, status) => {
   const totalStatusItems = randomNumber(2, 5)
-  for(let i = 0; i < totalStatusItems; i++){
-
-    const date = randomDate(1,100)
+  for (let i = 0; i < totalStatusItems; i++) {
+    const date = randomDate(1, 100)
     const metadata = createMetadata(status)
     config.push({
       status,
       date,
       metadata,
-      events: addNotes(generateLastEvent({status, metadata}))
+      events: addNotes(generateLastEvent({ status, metadata }))
     })
   }
 
