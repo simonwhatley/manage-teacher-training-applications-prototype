@@ -43,7 +43,7 @@ exports.getCourseRadioOptions = (selectedItem, trainingProviderId) => {
 
   if (trainingProviderId) {
     courses = courses.filter((course) => {
-      return course.trainingProvider.id == trainingProviderId
+      return course.trainingProvider.id === trainingProviderId
     })
   }
 

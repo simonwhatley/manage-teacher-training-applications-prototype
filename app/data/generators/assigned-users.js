@@ -12,7 +12,7 @@ module.exports = (accreditedBody, provider, status) => {
   if (status.toLowerCase() !== 'received') {
     // add one or many users for accredited body
     const accreditedBodyUsers = users.filter(user => {
-      return user.organisation.id == accreditedBody.id
+      return user.organisation.id === accreditedBody.id
     })
 
     const accreditedBodyUserCount = faker.number.int({ min: 1, max: 3 })
@@ -38,7 +38,7 @@ module.exports = (accreditedBody, provider, status) => {
 
     // add one or many users for training provider
     const providerUsers = users.filter(user => {
-      return user.organisation.id == provider.id
+      return user.organisation.id === provider.id
     })
 
     const providerUserCount = faker.number.int({ min: 1, max: 3 })

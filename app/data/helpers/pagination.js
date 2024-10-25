@@ -54,8 +54,8 @@ exports.getPagination = (data, pageNumber = 1, pageSize = 50) => {
   const prevPage = (pageNumber - 1) ? (pageNumber - 1) : 1
   const nextPage = ((pageNumber + 1) > pageCount) ? pageCount : (pageNumber + 1)
 
-  const startItem = (pageNumber == 1) ? pageNumber : ((pageNumber * pageSize) - pageSize) + 1
-  let endItem = (pageNumber == 1) ? (pageNumber * pageSize) : ((startItem + pageSize) - 1)
+  const startItem = (pageNumber === 1) ? pageNumber : ((pageNumber * pageSize) - pageSize) + 1
+  let endItem = (pageNumber === 1) ? (pageNumber * pageSize) : ((startItem + pageSize) - 1)
 
   // We don't want the end item number shown to go beyond the total count
   endItem = (endItem > totalCount) ? totalCount : endItem

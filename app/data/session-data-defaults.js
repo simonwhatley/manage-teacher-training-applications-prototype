@@ -21,14 +21,14 @@ user.organisations.forEach(org => {
 
     accreditedBodies.push(org)
     relationships
-      .filter(relationship => relationship.org1.id == org.id)
+      .filter(relationship => relationship.org1.id === org.id)
       .map(relationship => relationship.org2).forEach(org => {
         trainingProviders.push(org)
       })
   } else {
     trainingProviders.push(org)
     relationships
-      .filter(relationship => relationship.org1.id == org.id)
+      .filter(relationship => relationship.org1.id === org.id)
       .map(relationship => relationship.org2).forEach(org => {
         accreditedBodies.push(org)
       })
@@ -54,7 +54,7 @@ applications = applications.map(application => {
 
   Object.defineProperty(application, 'daysToRespond', {
     get () {
-      if (application.status != 'Received' && application.status != 'Interviewing') {
+      if (application.status !== 'Received' && application.status !== 'Interviewing') {
         return null
       }
       const now = SystemHelper.now()

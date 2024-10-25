@@ -15,7 +15,7 @@ module.exports = (submittedDate) => {
       endDate = DateHelper.getPastDate(endDate)
 
       // get a start date that is between 30 and 500 days prior to the end date
-      startDate = DateHelper.getPastDate(endDate, 30, 500)
+      const startDate = DateHelper.getPastDate(endDate, 30, 500)
 
       items.push({
         role: faker.person.jobTitle(),

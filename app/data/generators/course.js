@@ -383,11 +383,11 @@ module.exports = (params = {}) => {
     two: 0.05
   })
 
-  const courseLength = courseLengthOptions[selectedCourseLength]
+  let courseLength = courseLengthOptions[selectedCourseLength]
 
   // Override the course length if the course is only full time
   if (studyModes[0] === 'Full time') {
-    courseLength === courseLengthOptions.one
+    courseLength = courseLengthOptions.one
   }
 
   // ---------------------------------------------------------------------------
