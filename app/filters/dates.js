@@ -2,7 +2,7 @@
 // Imports and setup
 // -------------------------------------------------------------------
 const _ = require('lodash')
-const { DateTime, Info } = require("luxon")
+const { DateTime, Info } = require('luxon')
 
 // Leave this filters line
 const filters = {}
@@ -23,7 +23,7 @@ const filters = {}
 */
 
 filters.arrayToDateObject = (array) => {
-  return new Date(array[2], array[1] -1, array[0])
+  return new Date(array[2], array[1] - 1, array[0])
 }
 
 // Output date array - for use in design system macros
@@ -89,7 +89,7 @@ filters.todayGovuk = () => {
 
 filters.dateToGovukDate = (date) => {
   if (date) {
-    let theDate = DateTime.fromISO(date)
+    const theDate = DateTime.fromISO(date)
     if (theDate.isValid) {
       return theDate.toFormat('d MMMM yyyy')
     }
@@ -107,7 +107,7 @@ filters.govukDate = (date) => {
 
 filters.dateToGovukShortDate = (date) => {
   if (date) {
-    let theDate = DateTime.fromISO(date)
+    const theDate = DateTime.fromISO(date)
     if (theDate.isValid) {
       return theDate.toFormat('d MMM yyyy')
     }
@@ -121,11 +121,9 @@ filters.govukExampleHintDate = (date) => {
 
 filters.minusDays = (date, days) => {
   return DateTime.fromISO(date).minus({
-    days: days
+    days
   })
 }
-
-
 
 /*
   ====================================================================
@@ -143,8 +141,8 @@ filters.minusDays = (date, days) => {
 */
 
 filters.arrayToGovukDate = (array) => {
-  let dateObject = filters.arrayToDateObject(array)
-  let govukDate = filters.dateToGovukDate(dateObject.toISOString())
+  const dateObject = filters.arrayToDateObject(array)
+  const govukDate = filters.dateToGovukDate(dateObject.toISOString())
   return govukDate
 }
 
@@ -165,7 +163,7 @@ filters.arrayToGovukDate = (array) => {
 
 filters.prettyMonth = (monthNumber) => {
   if (monthNumber) {
-    return Info.months()[(monthNumber-1)]
+    return Info.months()[(monthNumber - 1)]
   } else {
     return null
   }
@@ -184,7 +182,7 @@ filters.prettyMonth = (monthNumber) => {
 
 //
 filters.sortDateArrays = (arr, reversed, attr) => {
-  let array = _.map(arr, v => v)
+  const array = _.map(arr, v => v)
 
   array.sort((a, b) => {
     let x = (attr) ? a[attr] : a
@@ -208,7 +206,6 @@ filters.sortDateArrays = (arr, reversed, attr) => {
 
 // https://momentjs.com/docs/#/displaying/format/
 filters.formatDate = (date, format, dateFormat) => {
-
   let returnDate
   // No date provided.
   if (!date) {
@@ -220,13 +217,12 @@ filters.formatDate = (date, format, dateFormat) => {
   else if (_.isString(dateFormat) && DateTime.fromISO(date).isValid) {
     // returnDate = moment(date, dateFormat)
     returnDate = DateTime.fromISO(date).toFormat(dateFormat)
-  }
-  else if ( DateTime.fromISO(date).isValid ) {
+  } else if (DateTime.fromISO(date).isValid) {
     returnDate = DateTime.fromISO(date)
   }
   // Invalid date
   else {
-    throw "Error in formatDate: invalid date"
+    throw 'Error in formatDate: invalid date'
   }
 
   switch (format) {
@@ -262,7 +258,6 @@ filters.formatDate = (date, format, dateFormat) => {
     default:
       return _.isString(format) ? returnDate.toFormat(format) : returnDate.toString()
   }
-
 }
 
 // -------------------------------------------------------------------
