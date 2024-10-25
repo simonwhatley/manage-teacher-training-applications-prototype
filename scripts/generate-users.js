@@ -37,7 +37,7 @@ const generateFakeUsers = (count) => {
   })
 
   organisations.forEach(organisation => {
-    for(var i = 0; i < 5; i++) {
+    for(let i = 0; i < 5; i++) {
       const firstName = generatorHelpers.firstName(faker.helpers.arrayElement([0,1]))
       const lastName = generatorHelpers.lastName()
       users.push({

@@ -1,10 +1,10 @@
-const { fakerEN_GB: faker } = require('@faker-js/faker');
+const { fakerEN_GB: faker } = require('@faker-js/faker')
 
-const { STATUS, EVENTS } = require('./constants');
-const { randomDate, randomNumber } = require('./helpers');
+const { STATUS, EVENTS } = require('./constants')
+const { randomDate, randomNumber } = require('./helpers')
 
-const { randomize } = faker.helpers;
-const FINAL_STATUS_VALUES = Object.values(STATUS).filter((value) => value !== STATUS.RECEIVED);
+const { randomize } = faker.helpers
+const FINAL_STATUS_VALUES = Object.values(STATUS).filter((value) => value !== STATUS.RECEIVED)
 const {
   SUBMITTED,
   INTERVIEW_SET_UP,
@@ -24,16 +24,16 @@ const {
   WITHDRAWN,
   OFFER_CONDITIONS_UPDATED,
   NOTE_ADDED,
-} = EVENTS;
+} = EVENTS
 
 
 function getNextEventList(event, currentEvents){
   switch(event){
     case INTERVIEW_SET_UP:
-      const interviewsSetup = currentEvents.filter((ev) => ev.title === INTERVIEW_SET_UP);
+      const interviewsSetup = currentEvents.filter((ev) => ev.title === INTERVIEW_SET_UP)
 
-      if(interviewsSetup.length === 2 || Math.random() < 0.8){ // allow a max of 2 INTERVIEW_SET_UP events, randomly reduce the chance of a second INTERVIEW_SET_UP event
-        return [SUBMITTED];
+      if (interviewsSetup.length === 2 || Math.random() < 0.8){ // allow a max of 2 INTERVIEW_SET_UP events, randomly reduce the chance of a second INTERVIEW_SET_UP event
+        return [SUBMITTED]
       }
 
       return [SUBMITTED, INTERVIEW_SET_UP]
@@ -83,29 +83,29 @@ function generateEvents(currentEvents, event, metadata){
 
   currentEvents.push({
     title: event,
-  });
+  })
 
-  const nextEvents = getNextEventList(event, currentEvents);
-  nextEvents && generateEvents(currentEvents, randomize(nextEvents), metadata);
+  const nextEvents = getNextEventList(event, currentEvents)
+  nextEvents && generateEvents(currentEvents, randomize(nextEvents), metadata)
 
-  return currentEvents;
+  return currentEvents
 }
 
 function generateLastEvent({ metadata, status }){
-  const createRootEvent = (events) => generateEvents([], randomize(events), metadata);
+  const createRootEvent = (events) => generateEvents([], randomize(events), metadata)
 
   switch(status){
     case STATUS.REJECTED:
       return createRootEvent(metadata.isAutomaticRejection ? [
         REJECTED,
         FEEDBACK_SENT,
-      ]: [REJECTED]);
+      ]: [REJECTED])
     case STATUS.INTERVIEWING:
       return createRootEvent([
         INTERVIEW_SET_UP,
       ])
     case STATUS.APPLICATION_WITHDRAWN:
-      return createRootEvent([WITHDRAWN]);
+      return createRootEvent([WITHDRAWN])
 
     case STATUS.DECLINED:
       return createRootEvent([OFFER_DECLINED])
@@ -128,34 +128,34 @@ function createMetadata(){
 }
 
 function addNotes(events){
-  const numberOfEvents = events ? events.length : 0;
-  const maxNotes = numberOfEvents < 4 ? 1 : numberOfEvents < 8 ? 2 : 3;
-  const numberOfNotes = randomNumber(0,maxNotes);
+  const numberOfEvents = events ? events.length : 0
+  const maxNotes = numberOfEvents < 4 ? 1 : numberOfEvents < 8 ? 2 : 3
+  const numberOfNotes = randomNumber(0,maxNotes)
 
-  if(numberOfNotes === 0 || numberOfEvents <= 1){
-    return events;
+  if (numberOfNotes === 0 || numberOfEvents <= 1){
+    return events
   }
 
   for(i = 0; i < numberOfNotes; i++){
-    events.splice(randomNumber(1, events.length - 1), 0, { title: NOTE_ADDED } );
+    events.splice(randomNumber(1, events.length - 1), 0, { title: NOTE_ADDED } )
   }
 
-  return events;
+  return events
 }
 
 exports.generateSkeleton = () => FINAL_STATUS_VALUES.reduce((config, status) => {
-  const totalStatusItems = randomNumber(2, 5);
+  const totalStatusItems = randomNumber(2, 5)
   for(let i = 0; i < totalStatusItems; i++){
 
-    const date = randomDate(1,100);
-    const metadata = createMetadata(status);
+    const date = randomDate(1,100)
+    const metadata = createMetadata(status)
     config.push({
       status,
       date,
       metadata,
       events: addNotes(generateLastEvent({status, metadata}))
-    });
+    })
   }
 
-  return config;
+  return config
 }, [])

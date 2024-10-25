@@ -52,11 +52,11 @@ const generateFakeApplication = (params = {}) => {
   let accreditedBody
   let provider
   let organisation = faker.helpers.arrayElement(organisations)
-  if(organisation.isAccreditedBody) {
+  if (organisation.isAccreditedBody) {
     accreditedBody = organisation
     // we want to sometimes make the provider the accredited body for self ratified courses
     // so lets sometimes use that
-    if(faker.helpers.arrayElement([true, false])) {
+    if (faker.helpers.arrayElement([true, false])) {
       provider = organisation
     } else {
       provider = faker.helpers.arrayElement(partners)
@@ -78,7 +78,7 @@ const generateFakeApplication = (params = {}) => {
   const course = `${tempCourse.name} (${tempCourse.code})`
   const subjects = tempCourse.subjects
   let location
-  if(provider.locations) {
+  if (provider.locations) {
     location = faker.helpers.arrayElement(provider.locations)
   }
 
@@ -143,29 +143,29 @@ const generateFakeApplication = (params = {}) => {
   let rejectedDate
   let rejectedFeedbackDate
   let rejectedReasons
-  if(status === 'Rejected') {
+  if (status === 'Rejected') {
     rejectedDate = params.rejectedDate || faker.date.past()
 
-    if(typeof params.rejectedReasons !== 'undefined') {
+    if (typeof params.rejectedReasons !== 'undefined') {
       rejectedReasons = params.rejectedReasons
     } else {
       rejectedReasons = generateRejection(status)
     }
 
     // this might be null to signal an automatic rejection
-    if(rejectedReasons) {
+    if (rejectedReasons) {
       rejectedFeedbackDate = rejectedDate
     }
   }
 
   let withdrawal
-  if(status === 'Application withdrawn') {
+  if (status === 'Application withdrawn') {
     withdrawal = generateWithdrawal()
   }
 
   let otherQualifications
 
-  if(params.otherQualifications === null) {
+  if (params.otherQualifications === null) {
     otherQualifications = null
   } else {
     otherQualifications = generateOtherQualifications()
@@ -2792,9 +2792,9 @@ const generateFakeApplications = () => {
     const count = faker.number.int({ min: 10, max: 15 })
     let application
 
-    if(key === "DEFERRED") continue;
-    if(key === "RECEIVED") continue;
-    if(key === "SHORTLISTED") continue;
+    if (key === "DEFERRED") continue;
+    if (key === "RECEIVED") continue;
+    if (key === "SHORTLISTED") continue;
 
     for (let i = 0; i < count; i++) {
       if (value === 'Offered') {

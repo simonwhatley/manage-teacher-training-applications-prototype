@@ -1,18 +1,18 @@
-const { fakerEN_GB: faker } = require('@faker-js/faker');
+const { fakerEN_GB: faker } = require('@faker-js/faker')
 
-const { EVENTS } = require('./constants');
+const { EVENTS } = require('./constants')
 
-const { NOTE_ADDED } = EVENTS;
+const { NOTE_ADDED } = EVENTS
 
 exports.generateNotes = (applications) => applications.map((application) => {
-  const notes = [];
+  const notes = []
 
-  if(application.events){
+  if (application.events){
     application.events = application.events.map((event) => {
 
-      if(event.title === NOTE_ADDED){
+      if (event.title === NOTE_ADDED){
 
-        const { date } = event;
+        const { date } = event
         const newNote = {
           id: faker.string.uuid(),
           message: faker.helpers.arrayElement([
@@ -23,21 +23,21 @@ exports.generateNotes = (applications) => applications.map((application) => {
           date,
         }
 
-        notes.push(newNote);
+        notes.push(newNote)
 
         return {
           ...event,
           ...newNote
-        };
+        }
       }
 
-      return event;
+      return event
     })
   }
 
-  if(notes.length){
-    application.notes = notes.reverse();
+  if (notes.length){
+    application.notes = notes.reverse()
   }
 
-  return application;
-});
+  return application
+})
