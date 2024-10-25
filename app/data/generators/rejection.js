@@ -1,8 +1,7 @@
 const { fakerEN_GB: faker } = require('@faker-js/faker')
 
-function buildReasons(params) {
-
-  let reasons = {
+function buildReasons (params) {
+  const reasons = {
     categories: []
   }
 
@@ -19,11 +18,9 @@ function buildReasons(params) {
       reasons['qualifications-reasons-degree-does-not-meet-course-requirements'] = faker.lorem.paragraph(1)
     }
 
-
     if (reasons['qualifications-reasons'].find(item => 'Other')) {
       reasons['qualifications-reasons-other'] = faker.lorem.paragraph(1)
     }
-
   }
 
   if (params.personalStatement) {
@@ -41,29 +38,24 @@ function buildReasons(params) {
     if (reasons['personal-statement-reasons'].find(item => 'Other')) {
       reasons['personal-statement-reasons-other'] = faker.lorem.paragraph(1)
     }
-
   }
 
-  return reasons;
-
+  return reasons
 }
 
 module.exports = () => {
-
-  let qualifications = buildReasons({
+  const qualifications = buildReasons({
     qualifications: true
   })
 
-  let personalStatement = buildReasons({
+  const personalStatement = buildReasons({
     personalStatement: true
   })
 
-  let all = buildReasons({
+  const all = buildReasons({
     qualifications: true,
     personalStatement: true
   })
 
   return faker.helpers.arrayElement([all, qualifications, personalStatement])
-
-
 }

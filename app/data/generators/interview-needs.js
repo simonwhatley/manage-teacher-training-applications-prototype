@@ -1,9 +1,9 @@
 const { fakerEN_GB: faker } = require('@faker-js/faker')
 
 module.exports = () => {
-  let response = faker.helpers.arrayElement([true, false])
+  const response = faker.helpers.arrayElement([true, false])
 
-  let details;
+  let details
 
   if (response) {
     details = faker.helpers.arrayElement([

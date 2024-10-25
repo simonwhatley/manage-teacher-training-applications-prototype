@@ -1,8 +1,7 @@
 const { fakerEN_GB: faker } = require('@faker-js/faker')
 
 module.exports = () => {
-
-  let qualifications = []
+  const qualifications = []
 
   if (faker.helpers.arrayElement([true, false])) {
     qualifications.push({

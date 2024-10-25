@@ -2,7 +2,7 @@ const { fakerEN_GB: faker } = require('@faker-js/faker')
 
 const _ = require('lodash')
 
-let users = require('../users.json')
+const users = require('../users.json')
 
 module.exports = (accreditedBody, provider, status) => {
   const assignedUsers = []
@@ -10,7 +10,6 @@ module.exports = (accreditedBody, provider, status) => {
   // if the application is not received, assign a user from the
   // accredited body and training provider
   if (status.toLowerCase() !== 'received') {
-
     // add one or many users for accredited body
     const accreditedBodyUsers = users.filter(user => {
       return user.organisation.id == accreditedBody.id
@@ -30,7 +29,7 @@ module.exports = (accreditedBody, provider, status) => {
       delete accreditedBodyUser.organisations
       delete accreditedBodyUser.permissions
 
-      const hasAssignedUser = assignedUsers.find(user => user.id === accreditedBodyUser.id) ? true : false
+      const hasAssignedUser = !!assignedUsers.find(user => user.id === accreditedBodyUser.id)
 
       if (!hasAssignedUser) {
         assignedUsers.push(accreditedBodyUser)
@@ -56,13 +55,12 @@ module.exports = (accreditedBody, provider, status) => {
       delete providerUser.organisations
       delete providerUser.permissions
 
-      const hasAssignedUser = assignedUsers.find(user => user.id === providerUser.id) ? true : false
+      const hasAssignedUser = !!assignedUsers.find(user => user.id === providerUser.id)
 
       if (!hasAssignedUser) {
         assignedUsers.push(providerUser)
       }
     }
-
   }
 
   return assignedUsers

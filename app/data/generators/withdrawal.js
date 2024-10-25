@@ -1,8 +1,7 @@
 const { fakerEN_GB: faker } = require('@faker-js/faker')
 
 module.exports = () => {
-
-  let withdrawal = {
+  const withdrawal = {
     date: faker.date.past(),
     feedback: {
       reason: faker.helpers.arrayElement([

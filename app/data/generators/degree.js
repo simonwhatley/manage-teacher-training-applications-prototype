@@ -5,10 +5,9 @@ const weighted = require('weighted')
 const DegreeHelper = require('../helpers/degrees')
 
 module.exports = (params) => {
-
   // Start year - 18 or 19 years after date of birth
   let year = DateTime.fromISO(params.dateOfBirth).toObject().year
-  year += faker.helpers.arrayElement([18,19])
+  year += faker.helpers.arrayElement([18, 19])
 
   const currentYear = DateTime.now().year
 
@@ -21,13 +20,13 @@ module.exports = (params) => {
   const degrees = []
 
   for (let i = 0; i < count; i++) {
-    let degree = {}
+    const degree = {}
 
     degree.subject = faker.helpers.arrayElement(DegreeHelper.getSubjects())
 
     // Start year for second degree must be after first
     if (i > 0) {
-      degree.startYear = degrees[i-1].startYear + faker.number.int({ min: 1, max: 10 })
+      degree.startYear = degrees[i - 1].startYear + faker.number.int({ min: 1, max: 10 })
     } else {
       degree.startYear = year
     }
@@ -36,10 +35,9 @@ module.exports = (params) => {
     degree.graduationYear = degree.startYear + faker.number.int({ min: 3, max: 4 })
 
     // If graduation year is after the current year, set predicted to true
-    degree.predicted = (degree.graduationYear > currentYear) ? true : false
+    degree.predicted = (degree.graduationYear > currentYear)
 
     if (params.isInternationalCandidate) {
-
       degree.type = 'Diplôme'
       degree.institution = 'University of Paris'
       degree.country = 'France'
@@ -48,9 +46,7 @@ module.exports = (params) => {
       degree.naric = {}
       degree.naric.reference = '4000228363'
       degree.naric.comparable = 'Bachelor (Honours) degree'
-
     } else {
-
       const qualification = faker.helpers.arrayElement(DegreeHelper.getQualifications())
 
       degree.level = qualification.level

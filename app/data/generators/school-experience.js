@@ -1,5 +1,5 @@
 const { fakerEN_GB: faker } = require('@faker-js/faker')
-const DateHelper = require('../helpers/dates');
+const DateHelper = require('../helpers/dates')
 
 module.exports = (submittedDate) => {
   const hasExperience = faker.helpers.arrayElement([true, false])
@@ -10,8 +10,7 @@ module.exports = (submittedDate) => {
     // get a date previously to the application submitted date
     let endDate = DateHelper.getPastDate(submittedDate, 30, 150)
 
-    for (var i = 0; i < count; i++) {
-
+    for (let i = 0; i < count; i++) {
       // get an end date that is prior to the previous start date item
       endDate = DateHelper.getPastDate(endDate)
 
@@ -22,8 +21,8 @@ module.exports = (submittedDate) => {
         role: faker.person.jobTitle(),
         org: faker.company.name(),
         workedWithChildren: faker.helpers.arrayElement(['Yes', 'No']),
-        startDate: startDate,
-        endDate: endDate,
+        startDate,
+        endDate,
         timeCommitment: faker.lorem.sentences(1)
       })
 
@@ -32,5 +31,4 @@ module.exports = (submittedDate) => {
     }
     return items
   }
-
 }

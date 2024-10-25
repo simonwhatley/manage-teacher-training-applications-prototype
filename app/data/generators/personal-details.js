@@ -5,7 +5,6 @@ const weighted = require('weighted')
 const generatorHelpers = require('../helpers/generators')
 
 module.exports = () => {
-
   // ---------------------------------------------------------------------------
   // Nationalities
   // ---------------------------------------------------------------------------
@@ -31,8 +30,8 @@ module.exports = () => {
   // International candidate
   // Flag international candidate (does not have British/Irish nationality)
   // ---------------------------------------------------------------------------
-  const isInternationalCandidate = !(nationalities.includes('British')
-    || nationalities.includes('Irish'))
+  const isInternationalCandidate = !(nationalities.includes('British') ||
+    nationalities.includes('Irish'))
 
   // ---------------------------------------------------------------------------
   // Length of stay
@@ -41,7 +40,6 @@ module.exports = () => {
   let lengthOfStay
 
   if (!isInternationalCandidate) {
-
     const lengthOfStayOptions = {
       yes: 'Yes',
       no: 'No'
@@ -63,7 +61,6 @@ module.exports = () => {
   let rightToWorkStudyHowDetails
 
   if (isInternationalCandidate) {
-
     const rightToWorkStudyOptions = {
       yes: 'Yes',
       no: 'Not yet'
@@ -90,8 +87,7 @@ module.exports = () => {
       rightToWorkStudyHow = rightToWorkStudyHowOptions[selectedRightToWorkStudyHow]
 
       if (rightToWorkStudyHow === 'Another route') {
-
-        let rightToWorkStudyHowChoices = [
+        const rightToWorkStudyHowChoices = [
           'I’m applying for a permanent residence card',
           'I’m applying for a visa',
           'I have refugee status',
@@ -99,7 +95,7 @@ module.exports = () => {
           'I’m applying for a spousal visa'
         ]
 
-        let rightToWorkStudyHowDetails = faker.helpers.arrayElement(rightToWorkStudyHowChoices)
+        const rightToWorkStudyHowDetails = faker.helpers.arrayElement(rightToWorkStudyHowChoices)
       }
     }
   }
@@ -111,9 +107,7 @@ module.exports = () => {
   let immigrationStatusDetails
 
   if (isInternationalCandidate) {
-
     if (rightToWorkStudy === 'Yes') {
-
       const immigrationStatusOptions = {
         settled: 'EU settled status',
         presettled: 'EU pre-settled status',
@@ -140,9 +134,8 @@ module.exports = () => {
   let dateEnteredUK
 
   if (isInternationalCandidate) {
-
     if (rightToWorkStudy === 'Yes') {
-      dateEnteredUK = faker.date.between({ from: '2000-01-01', to: '2016-08-31'})
+      dateEnteredUK = faker.date.between({ from: '2000-01-01', to: '2016-08-31' })
       // faker creates a time, which isn't necessary, so we remove it
       dateEnteredUK = DateTime.fromJSDate(dateEnteredUK).toFormat('yyyy-LL-dd')
     }
@@ -152,17 +145,17 @@ module.exports = () => {
   // Date of birth
   // ---------------------------------------------------------------------------
   const dateOfBirthOptions = {
-    y21_under: faker.date.between({ from: '2000-01-01', to: '2001-12-31'}),
-    y22_to_24: faker.date.between({ from: '1997-01-01', to: '1999-12-31'}),
-    y25_to_29: faker.date.between({ from: '1992-01-01', to: '1996-12-31'}),
-    y30_to_34: faker.date.between({ from: '1987-01-01', to: '1991-12-31'}),
-    y35_to_39: faker.date.between({ from: '1982-01-01', to: '1986-12-31'}),
-    y40_to_44: faker.date.between({ from: '1977-01-01', to: '1981-12-31'}),
-    y45_to_49: faker.date.between({ from: '1972-01-01', to: '1976-12-31'}),
-    y50_to_54: faker.date.between({ from: '1967-01-01', to: '1971-12-31'}),
-    y55_to_59: faker.date.between({ from: '1962-01-01', to: '1966-12-31'}),
-    y60_to_64: faker.date.between({ from: '1957-01-01', to: '1961-12-31'}),
-    y65_over: faker.date.between({ from: '1950-01-01', to: '1956-12-31'})
+    y21_under: faker.date.between({ from: '2000-01-01', to: '2001-12-31' }),
+    y22_to_24: faker.date.between({ from: '1997-01-01', to: '1999-12-31' }),
+    y25_to_29: faker.date.between({ from: '1992-01-01', to: '1996-12-31' }),
+    y30_to_34: faker.date.between({ from: '1987-01-01', to: '1991-12-31' }),
+    y35_to_39: faker.date.between({ from: '1982-01-01', to: '1986-12-31' }),
+    y40_to_44: faker.date.between({ from: '1977-01-01', to: '1981-12-31' }),
+    y45_to_49: faker.date.between({ from: '1972-01-01', to: '1976-12-31' }),
+    y50_to_54: faker.date.between({ from: '1967-01-01', to: '1971-12-31' }),
+    y55_to_59: faker.date.between({ from: '1962-01-01', to: '1966-12-31' }),
+    y60_to_64: faker.date.between({ from: '1957-01-01', to: '1961-12-31' }),
+    y65_over: faker.date.between({ from: '1950-01-01', to: '1956-12-31' })
   }
 
   const selectedDateOfBirth = weighted.select({
@@ -315,14 +308,13 @@ module.exports = () => {
   }
 
   if (diversityQuestionnaireAnswered === 'Yes') {
-
     sex = sexOptions[selectedSex]
 
     disabled = disabledOptions[selectedDisabled]
 
-    let disabilityCount = faker.number.int(3) // up to 3 disabilities
+    const disabilityCount = faker.number.int(3) // up to 3 disabilities
 
-    let disabilityChoices = [
+    const disabilityChoices = [
       'Blind',
       'Deaf',
       'Learning difficulty',
@@ -333,7 +325,7 @@ module.exports = () => {
       'Other'
     ]
 
-    let shuffledDisabilities = disabilityChoices.sort(() => 0.5 - Math.random())
+    const shuffledDisabilities = disabilityChoices.sort(() => 0.5 - Math.random())
 
     if (disabled === 'Yes' && disabilityCount) {
       disabilities = shuffledDisabilities.slice(0, disabilityCount).sort()
@@ -379,6 +371,6 @@ module.exports = () => {
     disabled,
     disabilities,
     ethnicGroup,
-    ethnicBackground,
+    ethnicBackground
   }
 }

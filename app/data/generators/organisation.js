@@ -1,6 +1,5 @@
 const { fakerEN_GB: faker } = require('@faker-js/faker')
 
-
 module.exports = (params = {}) => {
   return {
     id: faker.string.uuid(),

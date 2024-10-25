@@ -1,11 +1,11 @@
 const { fakerEN_GB: faker } = require('@faker-js/faker')
 const { DateTime } = require('luxon')
-let generateWithdrawal = require('./withdrawal')
+const generateWithdrawal = require('./withdrawal')
 
 module.exports = (params) => {
-  let status = params.status
-  let submittedDate = params.submittedDate
-  let madeDate = DateTime.fromISO(submittedDate).plus({ days: faker.number.int({ min: 3, max: 19 }) }).toISO()
+  const status = params.status
+  const submittedDate = params.submittedDate
+  const madeDate = DateTime.fromISO(submittedDate).plus({ days: faker.number.int({ min: 3, max: 19 }) }).toISO()
 
   let conditionStatus = 'Pending'
   if (status === 'Recruited') {
@@ -18,16 +18,16 @@ module.exports = (params) => {
     conditionStatus = 'Met'
   }
 
-  let withdrawalDate = null;
-  let withdrawalReasons = null;
+  let withdrawalDate = null
+  let withdrawalReasons = null
   if (status === 'Offer withdrawn') {
-    withdrawalDate = DateTime.fromISO(madeDate).plus({ days: faker.number.int({ min: 1, max: 5 })}).toISO()
+    withdrawalDate = DateTime.fromISO(madeDate).plus({ days: faker.number.int({ min: 1, max: 5 }) }).toISO()
     withdrawalReasons = generateWithdrawal()
   }
 
   let acceptedDate = null
   if (status === 'Conditions pending' || status === 'Recruited' || status === 'Conditions not met' || status === 'Deferred') {
-    acceptedDate = DateTime.fromISO(madeDate).plus({ days: faker.number.int({ min: 1, max: 3 })}).toISO()
+    acceptedDate = DateTime.fromISO(madeDate).plus({ days: faker.number.int({ min: 1, max: 3 }) }).toISO()
   }
 
   let standardConditions
@@ -49,7 +49,6 @@ module.exports = (params) => {
       status: 'Pending'
     }
     ]
-
   }
 
   return {

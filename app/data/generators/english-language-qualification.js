@@ -4,12 +4,11 @@ const { DateTime } = require('luxon')
 const weighted = require('weighted')
 
 module.exports = (params) => {
-
   const currentYear = DateTime.now().year
 
   // To create qaulification year add n years after date of birth
   let year = DateTime.fromISO(params.dateOfBirth).toObject().year
-  year += faker.helpers.arrayElement([18,19,20,21,22])
+  year += faker.helpers.arrayElement([18, 19, 20, 21, 22])
 
   if (year > currentYear) {
     year = currentYear
@@ -72,8 +71,8 @@ module.exports = (params) => {
     if (params.englishGcseQualification.missing.isStudying === 'Yes') {
       hasQualification = 'No'
     }
-    if (params.englishGcseQualification.missing.otherReason
-      && params.englishGcseQualification.missing.otherReason.includes('I am a native English speaker')) {
+    if (params.englishGcseQualification.missing.otherReason &&
+      params.englishGcseQualification.missing.otherReason.includes('I am a native English speaker')) {
       hasQualification = 'Not needed'
     }
   }

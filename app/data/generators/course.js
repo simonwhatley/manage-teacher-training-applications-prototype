@@ -14,7 +14,6 @@ const arrayToList = (array, join = ', ', final = ' and ') => {
 }
 
 module.exports = (params = {}) => {
-
   // ---------------------------------------------------------------------------
   // Subject level
   // ---------------------------------------------------------------------------
@@ -82,7 +81,7 @@ module.exports = (params = {}) => {
       S34: { code: '22', name: 'Spanish' }
     },
     further: {
-      F01: { code: '41', name: 'Further education'}
+      F01: { code: '41', name: 'Further education' }
     }
   }
 
@@ -231,7 +230,7 @@ module.exports = (params = {}) => {
       }
     }
 
-    if (['French','German','Italian','Spanish'].includes(subject.name)) {
+    if (['French', 'German', 'Italian', 'Spanish'].includes(subject.name)) {
       const languageCount = faker.number.int({ min: 1, max: 2 })
 
       const languageChoices = [
@@ -246,13 +245,13 @@ module.exports = (params = {}) => {
       const languages = shuffledLanguages.slice(0, languageCount).sort()
 
       languages.forEach((language, i) => {
-        if (!subjects.filter( subject => subject.name === language.name ).length) {
+        if (!subjects.filter(subject => subject.name === language.name).length) {
           subjects.push(language)
         }
       })
     }
 
-    if (['Japanese','Mandarin','Russian'].includes(subject.name)) {
+    if (['Japanese', 'Mandarin', 'Russian'].includes(subject.name)) {
       const languageCount = faker.number.int({ min: 1, max: 2 })
 
       const languageChoices = [
@@ -266,13 +265,13 @@ module.exports = (params = {}) => {
       const languages = shuffledLanguages.slice(0, languageCount).sort()
 
       languages.forEach((language, i) => {
-        if (!subjects.filter( subject => subject.name === language.name ).length) {
+        if (!subjects.filter(subject => subject.name === language.name).length) {
           subjects.push(language)
         }
       })
     }
 
-    if (['Biology','Chemistry','Physics'].includes(subject.name)) {
+    if (['Biology', 'Chemistry', 'Physics'].includes(subject.name)) {
       const scienceCount = faker.number.int({ min: 1, max: 2 })
 
       const scienceChoices = [
@@ -286,7 +285,7 @@ module.exports = (params = {}) => {
       const sciences = shuffledSciences.slice(0, scienceCount).sort()
 
       sciences.forEach((science, i) => {
-        if (!subjects.filter( subject => subject.name === science.name ).length) {
+        if (!subjects.filter(subject => subject.name === science.name).length) {
           subjects.push(science)
         }
       })
@@ -345,7 +344,7 @@ module.exports = (params = {}) => {
   const studyModeOptions = {
     full: ['Full time'],
     part: ['Part time'],
-    both: ['Full time','Part time']
+    both: ['Full time', 'Part time']
   }
 
   const selectedStudyMode = weighted.select({
@@ -384,7 +383,7 @@ module.exports = (params = {}) => {
     two: 0.05
   })
 
-  let courseLength = courseLengthOptions[selectedCourseLength]
+  const courseLength = courseLengthOptions[selectedCourseLength]
 
   // Override the course length if the course is only full time
   if (studyModes[0] === 'Full time') {
@@ -398,8 +397,8 @@ module.exports = (params = {}) => {
     pgce: ['PGCE'],
     pgde: ['PGDE'],
     qts: ['QTS'],
-    qts_pgce: ['PGCE','QTS'],
-    qts_pgde: ['PGDE','QTS']
+    qts_pgce: ['PGCE', 'QTS'],
+    qts_pgde: ['PGDE', 'QTS']
   }
 
   const selectedQualification = weighted.select({
@@ -487,7 +486,7 @@ module.exports = (params = {}) => {
   // ---------------------------------------------------------------------------
   // Course name
   // ---------------------------------------------------------------------------
-  let subjectNames = subjects.map(subject => { return subject.name })
+  const subjectNames = subjects.map(subject => { return subject.name })
   subjectNames.sort((a, b) => a.localeCompare(b))
 
   let courseName = arrayToList(subjectNames)
@@ -567,7 +566,7 @@ module.exports = (params = {}) => {
   // ---------------------------------------------------------------------------
   const course = {}
 
-  course.code = faker.string.alphanumeric({length: 4, casing: 'upper'})
+  course.code = faker.string.alphanumeric({ length: 4, casing: 'upper' })
   course.name = courseName
 
   course.subjects = subjects

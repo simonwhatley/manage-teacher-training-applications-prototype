@@ -1,5 +1,5 @@
-const DateHelper = require('../helpers/dates');
-const ApplicationHelper = require('../helpers/application');
+const DateHelper = require('../helpers/dates')
+const ApplicationHelper = require('../helpers/application')
 const { fakerEN_GB: faker } = require('@faker-js/faker')
 
 const _ = require('lodash')
@@ -13,7 +13,7 @@ module.exports = (params) => {
   events.items.push({
     title: 'Application received',
     user: 'Candidate',
-    date: date,
+    date,
     meta: {
       course: {
         provider: params.provider,
@@ -31,22 +31,21 @@ module.exports = (params) => {
   // accredited body and training provider
   if (params.status.toLowerCase() !== 'received') {
     if (params.assignedUsers.length) {
-
       date = DateHelper.getFutureDate(date)
 
       let assignedUsers = params.assignedUsers.filter(user => user.organisation.id === params.organisation.id)
 
-      assignedUsers = assignedUsers.sort((a, b) => a.firstName.localeCompare(b.firstName)
-          || a.lastName.localeCompare(b.lastName)
-          || a.emailAddress.localeCompare(b.emailAddress))
+      assignedUsers = assignedUsers.sort((a, b) => a.firstName.localeCompare(b.firstName) ||
+          a.lastName.localeCompare(b.lastName) ||
+          a.emailAddress.localeCompare(b.emailAddress))
 
       const eventTitle = (assignedUsers.length > 1) ? 'Users assigned' : 'User assigned'
 
       events.items.push({
         title: eventTitle,
         user: faker.person.fullName(),
-        date: date,
-        assignedUsers: assignedUsers
+        date,
+        assignedUsers
       })
     }
   }
@@ -57,7 +56,7 @@ module.exports = (params) => {
     events.items.push({
       title: 'Shortlisted',
       user: faker.person.fullName(),
-      date: date,
+      date,
       meta: {
         course: {
           provider: params.provider,
@@ -80,7 +79,7 @@ module.exports = (params) => {
     events.items.push({
       title: 'Interview set up',
       user: faker.person.fullName(),
-      date: date,
+      date,
       meta: {
         interview: params.interviews.items[0],
         interviewId: params.interviews.items[0].id
@@ -94,7 +93,7 @@ module.exports = (params) => {
     events.items.push({
       title: 'Interview set up',
       user: faker.person.fullName(),
-      date: date,
+      date,
       meta: {
         interview: params.interviews.items[1],
         interviewId: params.interviews.items[0].id
@@ -110,13 +109,12 @@ module.exports = (params) => {
       events.items.push({
         title: 'Interview updated',
         user: faker.person.fullName(),
-        date: date,
+        date,
         meta: {
-          interview: interview,
+          interview,
           interviewId: interview.id
         }
       })
-
     }
 
     if (faker.helpers.arrayElement([true])) {
@@ -125,11 +123,11 @@ module.exports = (params) => {
       events.items.push({
         title: 'Interview cancelled',
         user: faker.person.fullName(),
-        date: date,
+        date,
         meta: {
-          interview: interview,
+          interview,
           interviewId: interview.id,
-          cancellationReason: "We cannot interview you this week. We’ll call you to reschedule."
+          cancellationReason: 'We cannot interview you this week. We’ll call you to reschedule.'
         }
       })
     }
@@ -144,7 +142,7 @@ module.exports = (params) => {
     events.items.push({
       title: 'Note added',
       user: params.notes.items[0].sender,
-      date: date,
+      date,
       meta: {
         note: params.notes.items[0]
       }
@@ -154,12 +152,11 @@ module.exports = (params) => {
   if (params.status === 'Rejected') {
     date = DateHelper.getFutureDate(date)
 
-      events.items.push({
+    events.items.push({
       title: 'Application rejected',
       user: faker.person.fullName(),
-      date: date
+      date
     })
-
   }
 
   if (params.status === 'Application withdrawn') {
@@ -168,7 +165,7 @@ module.exports = (params) => {
     events.items.push({
       title: 'Application withdrawn',
       user: 'Candidate',
-      date: date
+      date
     })
   }
 
@@ -180,7 +177,7 @@ module.exports = (params) => {
     events.items.push({
       title: 'Offer made',
       user: faker.person.fullName(),
-      date: date,
+      date,
       meta: {
         offer: {
           provider: params.provider,
@@ -199,15 +196,15 @@ module.exports = (params) => {
   if (params.status === 'Offer withdrawn') {
     date = DateHelper.getFutureDate(date)
 
-    let user = weighted.select({
+    const user = weighted.select({
       'Sally Jones': 0.7,
-      'Support team': 0.3,
+      'Support team': 0.3
     })
 
     events.items.push({
       title: 'Offer withdrawn',
-      user: user,
-      date: date,
+      user,
+      date,
       meta: {
         offer: {
           provider: params.provider,
@@ -229,7 +226,7 @@ module.exports = (params) => {
     events.items.push({
       title: 'Offer accepted',
       user: 'Candidate',
-      date: date,
+      date,
       meta: {
         offer: {
           provider: params.provider,
@@ -249,7 +246,7 @@ module.exports = (params) => {
     if (faker.helpers.arrayElement([true, false])) {
       events.items.push({
         title: 'Offer automatically declined',
-        date: date,
+        date,
         meta: {
           offer: {
             provider: params.provider,
@@ -267,7 +264,7 @@ module.exports = (params) => {
       events.items.push({
         title: 'Offer declined',
         user: 'Candidate',
-        date: date,
+        date,
         meta: {
           offer: {
             provider: params.provider,
@@ -282,8 +279,6 @@ module.exports = (params) => {
         }
       })
     }
-
-
   }
 
   if (params.status === 'Recruited') {
@@ -292,7 +287,7 @@ module.exports = (params) => {
       events.items.push({
         title: 'Offer accepted',
         user: faker.person.fullName(),
-        date: date,
+        date,
         meta: {
           offer: {
             provider: params.provider,
@@ -310,7 +305,7 @@ module.exports = (params) => {
       events.items.push({
         title: 'Conditions marked as met',
         user: faker.person.fullName(),
-        date: date,
+        date,
         meta: {
           offer: {
             provider: params.provider,
@@ -329,7 +324,7 @@ module.exports = (params) => {
       events.items.push({
         title: 'Offer accepted',
         user: faker.person.fullName(),
-        date: date,
+        date,
         meta: {
           offer: {
             provider: params.provider,
@@ -338,13 +333,11 @@ module.exports = (params) => {
             studyMode: params.studyMode,
             accreditedBody: params.accreditedBody,
             fundingType: params.fundingType,
-            qualifications: params.qualifications,
+            qualifications: params.qualifications
           }
         }
       })
     }
-
-
   }
 
   if (params.status === 'Conditions not met' && conditions.length) {
@@ -353,7 +346,7 @@ module.exports = (params) => {
     events.items.push({
       title: 'Conditions marked as not met',
       user: faker.person.fullName(),
-      date: date,
+      date,
       meta: {
         offer: {
           provider: params.provider,
@@ -375,7 +368,7 @@ module.exports = (params) => {
     events.items.push({
       title: 'Offer deferred',
       user: faker.person.fullName(),
-      date: date,
+      date,
       meta: {
         offer: {
           provider: params.provider,

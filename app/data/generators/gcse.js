@@ -5,7 +5,6 @@ const weighted = require('weighted')
 const GcseHelper = require('../helpers/gcses')
 
 module.exports = (params) => {
-
   // ---------------------------------------------------------------------------
   // Qualification year
   // ---------------------------------------------------------------------------
@@ -16,10 +15,12 @@ module.exports = (params) => {
   // Qualification type
   // GCSEs were only awarded from 1988 onwards
   // ---------------------------------------------------------------------------
-  let type = (year <= 1988) ? 'O level' : weighted.select({
-    GCSE: 0.9,
-    'Scottish National 5': 0.1
-  })
+  let type = (year <= 1988)
+    ? 'O level'
+    : weighted.select({
+      GCSE: 0.9,
+      'Scottish National 5': 0.1
+    })
 
   if (params.isInternationalCandidate) {
     type = 'Baccalauréat Général'
@@ -357,9 +358,9 @@ module.exports = (params) => {
   let isRetakingEnglish
   let evidenceRetakingEnglish
 
-  const hasToRetakeEnglish = englishGrade.filter(grade => grade.grade.includes('D')
-    || grade.grade.includes('E')
-    || grade.grade.includes('F')).length ? true : false
+  const hasToRetakeEnglish = !!englishGrade.filter(grade => grade.grade.includes('D') ||
+    grade.grade.includes('E') ||
+    grade.grade.includes('F')).length
 
   if (hasToRetakeEnglish) {
     const isRetakingEnglishOptions = {
@@ -387,9 +388,9 @@ module.exports = (params) => {
   let isRetakingMaths
   let evidenceRetakingMaths
 
-  const hasToRetakeMaths = mathsGrade.filter(grade => grade.grade.includes('D')
-    || grade.grade.includes('E')
-    || grade.grade.includes('F')).length ? true : false
+  const hasToRetakeMaths = !!mathsGrade.filter(grade => grade.grade.includes('D') ||
+    grade.grade.includes('E') ||
+    grade.grade.includes('F')).length
 
   if (hasToRetakeMaths) {
     const isRetakingMathsOptions = {
@@ -419,9 +420,9 @@ module.exports = (params) => {
   let evidenceRetakingScience
 
   if (params.subjectLevel === 'Primary') {
-    hasToRetakeScience = scienceGrade.filter(grade => grade.grade.includes('D')
-      || grade.grade.includes('E')
-      || grade.grade.includes('F')).length ? true : false
+    hasToRetakeScience = !!scienceGrade.filter(grade => grade.grade.includes('D') ||
+      grade.grade.includes('E') ||
+      grade.grade.includes('F')).length
 
     if (hasToRetakeScience) {
       const isRetakingScienceOptions = {
@@ -455,7 +456,6 @@ module.exports = (params) => {
   let science
 
   if (params.isInternationalCandidate) {
-
     if (hasEnglishQualification === 'Yes') {
       english = {
         hasQualification: 'Yes',
@@ -526,9 +526,7 @@ module.exports = (params) => {
         }
       }
     }
-
   } else {
-
     if (hasEnglishQualification === 'Yes') {
       english = {
         hasQualification: 'Yes',
@@ -602,7 +600,6 @@ module.exports = (params) => {
         }
       }
     }
-
   }
 
   let data
