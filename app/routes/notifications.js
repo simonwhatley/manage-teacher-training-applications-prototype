@@ -46,7 +46,7 @@ function getNotifications(applications, userOrganisationId) {
     //   var returnValue = false
 
     //   // filter out items that are rejected manually with feedback
-    //   if(event.event.title == 'Application rejected' && event.application.rejectedReasons) {
+    //   if (event.event.title == 'Application rejected' && event.application.rejectedReasons) {
     //     returnValue = true
     //   }
     //   return returnValue
@@ -102,7 +102,7 @@ const getCheckboxValues = (name, data) => {
 const removeFilter = (value, data) => {
   // do this check because if coming from overview page for example,
   // the query/param will be a string value, not an array containing a string
-  if(Array.isArray(data)) {
+  if (Array.isArray(data)) {
     return data.filter(item => item !== value)
   } else {
     return null
@@ -116,9 +116,9 @@ module.exports = router => {
       'type'
     ]
 
-    if(req.query.referrer === 'overview') {
+    if (req.query.referrer === 'overview') {
       filters.forEach(filter => {
-        if(req.query[filter]) {
+        if (req.query[filter]) {
           req.session.data[filter] = req.query[filter]
         } else {
           req.session.data[filter] = null

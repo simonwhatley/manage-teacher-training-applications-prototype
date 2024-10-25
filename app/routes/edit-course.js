@@ -42,12 +42,12 @@ module.exports = router => {
 
     if (req.query.referrer === 'check') {
       back += '/course/edit/check'
-    } else if(req.query.referrer === 'provider') {
+    } else if (req.query.referrer === 'provider') {
       back += '/course/edit/provider'
     }
 
     let providerId;
-    if(req.session.data['edit-course'] && req.session.data['edit-course'].provider) {
+    if (req.session.data['edit-course'] && req.session.data['edit-course'].provider) {
       providerId = req.session.data['edit-course'].provider
     }
 
@@ -214,7 +214,7 @@ module.exports = router => {
 
     let provider = application.provider
 
-    if(req.session.data['edit-course'].provider) {
+    if (req.session.data['edit-course'].provider) {
       provider = OrgHelper.findOrgById(req.session.data['edit-course'].provider).name
     }
 

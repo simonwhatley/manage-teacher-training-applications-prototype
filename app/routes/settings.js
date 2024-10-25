@@ -7,7 +7,7 @@ module.exports = router => {
     var settings = req.session.data.settings
 
     // Disable start of new cycle
-    if(settings.includes('new-cycle')) {
+    if (settings.includes('new-cycle')) {
       req.session.data.applications = SettingsHelper.getMidCycleApplications(applications)
       _.remove(settings, function(item) { return item == 'new-cycle' })
 

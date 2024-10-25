@@ -10,10 +10,10 @@ function getTimeObject(time) {
   var hours;
   var mins;
   var isAm = time.indexOf('am') > -1;
-  if(isAm) {
+  if (isAm) {
 
     time = time.split('am')[0].trim()
-    if(time.indexOf(":") > -1) {
+    if (time.indexOf(":") > -1) {
       hours = time.split(":")[0]
       mins = time.split(":")[1]
     } else {
@@ -22,12 +22,12 @@ function getTimeObject(time) {
     }
 
     // if they selected 12am
-    if(hours == "12") {
+    if (hours == "12") {
       hours = "00"
     }
   } else {
     time = time.split('pm')[0].trim()
-    if(time.indexOf(":") > -1) {
+    if (time.indexOf(":") > -1) {
       hours = time.split(":")[0]
       mins = time.split(":")[1]
     } else {
@@ -36,7 +36,7 @@ function getTimeObject(time) {
     }
 
     // convert to 24 hour only if not 12, if it's 12pm it's fine as 12
-    if(hours != "12") {
+    if (hours != "12") {
       hours = parseInt(hours, 10) + 12;
     }
   }
@@ -130,7 +130,7 @@ module.exports = router => {
     let upcomingInterviews = [];
     let pastInterviews = [];
 
-    if(application.status == "Received" || application.status == "Interviewing") {
+    if (application.status == "Received" || application.status == "Interviewing") {
       upcomingInterviews = ApplicationHelper.getUpcomingInterviews(application)
 
       pastInterviews = application.interviews.items.filter(interview => {
@@ -222,7 +222,7 @@ module.exports = router => {
 
     let interview;
 
-    if(req.session.data.interview) {
+    if (req.session.data.interview) {
       let time = getTimeObject(req.session.data.interview.time)
       interview = req.session.data.interview
       interview.date = DateTime.local(parseInt(req.session.data.interview.date.year, 10), parseInt(req.session.data.interview.date.month, 10), parseInt(req.session.data.interview.date.day, 10), parseInt(time.hours, 10), parseInt(time.mins, 10))
@@ -327,7 +327,7 @@ module.exports = router => {
 
     req.flash('success', content.cancelInterview.successMessage)
 
-    if(application.interviews.items.length) {
+    if (application.interviews.items.length) {
       res.redirect(`/applications/${req.params.applicationId}/interviews/`)
     } else {
       res.redirect(`/applications/${req.params.applicationId}`)

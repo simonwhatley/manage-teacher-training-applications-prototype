@@ -146,7 +146,7 @@ const getUserItems = (users, assignedUsers = [], you = {}) => {
 
     const hasDuplicateName = users.filter(u => u.firstName === user.firstName && u.lastName === user.lastName).length > 1 ? true : false
 
-    if(hasDuplicateName) {
+    if (hasDuplicateName) {
       option.hint = {}
       option.hint.text = user.emailAddress
       option.hint.classes = 'app-checkboxes__hint'
@@ -264,13 +264,13 @@ const getLocationItems = (selectedItems) => {
 const sortApplications = (applications, sort) => {
   let newApplications = []
 
-  if(sort == 'Updated most recently') {
+  if (sort == 'Updated most recently') {
     newApplications = applications.sort((a, b) => {
       let aEvents = a.events.items
       let bEvents = b.events.items
       return new Date(bEvents[bEvents.length-1].date) - new Date(aEvents[aEvents.length-1].date)
     })
-  } else if(sort == 'Updated least recently') {
+  } else if (sort == 'Updated least recently') {
     newApplications = applications.sort((a, b) => {
       let aEvents = a.events.items
       let bEvents = b.events.items
@@ -311,7 +311,7 @@ const getCheckboxValues = (name, data) => {
 const removeFilter = (value, data) => {
   // do this check because if coming from overview page for example,
   // the query/param will be a string value, not an array containing a string
-  if(Array.isArray(data)) {
+  if (Array.isArray(data)) {
     return data.filter(item => item !== value)
   } else {
     return null
@@ -340,9 +340,9 @@ module.exports = router => {
       'note'
     ]
 
-    if(req.query.referrer === 'overview') {
+    if (req.query.referrer === 'overview') {
       filters.forEach(filter => {
-        if(req.query[filter]) {
+        if (req.query[filter]) {
           req.session.data[filter] = req.query[filter]
         } else {
           req.session.data[filter] = null
@@ -475,14 +475,14 @@ module.exports = router => {
         if (daysLeftToMakeDecisionItems && daysLeftToMakeDecisionItems.length) {
           daysLeftToMakeDecisionItemValid = false
 
-          if(daysLeftToMakeDecisionItems.includes('5 days or fewer')) {
-            if((app.status == 'Received' || app.status == 'Shortlisted' || app.status == 'Interviewing') && app.daysToRespond <= 5) {
+          if (daysLeftToMakeDecisionItems.includes('5 days or fewer')) {
+            if ((app.status == 'Received' || app.status == 'Shortlisted' || app.status == 'Interviewing') && app.daysToRespond <= 5) {
               daysLeftToMakeDecisionItemValid = true
             }
           }
 
-          if(daysLeftToMakeDecisionItems.includes('More than 5 days')) {
-            if((app.status == 'Received' || app.status == 'Shortlisted' || app.status == 'Interviewing') && app.daysToRespond > 5) {
+          if (daysLeftToMakeDecisionItems.includes('More than 5 days')) {
+            if ((app.status == 'Received' || app.status == 'Shortlisted' || app.status == 'Interviewing') && app.daysToRespond > 5) {
               daysLeftToMakeDecisionItemValid = true
             }
           }
@@ -494,29 +494,29 @@ module.exports = router => {
           let submittedDate = DateTime.fromISO(app.submittedDate)
 
           // Received today
-          if(dateReceivedItems.includes('Today')) {
-            if(submittedDate.diffNow('days').days >= -1) {
+          if (dateReceivedItems.includes('Today')) {
+            if (submittedDate.diffNow('days').days >= -1) {
               dateReceivedItemValid = true
             }
           }
 
           // Received today
-          if(dateReceivedItems.includes('Yesterday')) {
-            if(submittedDate.diffNow('days').days >= -2) {
+          if (dateReceivedItems.includes('Yesterday')) {
+            if (submittedDate.diffNow('days').days >= -2) {
               dateReceivedItemValid = true
             }
           }
 
           // received within last 3 days
-          if(dateReceivedItems.includes('2 days ago')) {
-            if(submittedDate.diffNow('days').days >= -3) {
+          if (dateReceivedItems.includes('2 days ago')) {
+            if (submittedDate.diffNow('days').days >= -3) {
               dateReceivedItemValid = true
             }
           }
 
           // received within last 3 days
-          if(dateReceivedItems.includes('3 days ago')) {
-            if(submittedDate.diffNow('days').days >= -4) {
+          if (dateReceivedItems.includes('3 days ago')) {
+            if (submittedDate.diffNow('days').days >= -4) {
               dateReceivedItemValid = true
             }
           }
@@ -526,14 +526,14 @@ module.exports = router => {
         if (feedbackItems && feedbackItems.length) {
           feedbackItemValid = false
 
-          if(feedbackItems.includes('Needs feedback')) {
-            if(app.status == 'Rejected' && !app.rejectedReasons) {
+          if (feedbackItems.includes('Needs feedback')) {
+            if (app.status == 'Rejected' && !app.rejectedReasons) {
               feedbackItemValid = true
             }
           }
 
-          if(feedbackItems.includes('Does not need feedback')) {
-            if(app.status == 'Rejected' && app.rejectedReasons) {
+          if (feedbackItems.includes('Does not need feedback')) {
+            if (app.status == 'Rejected' && app.rejectedReasons) {
               feedbackItemValid = true
             }
           }
@@ -543,11 +543,11 @@ module.exports = router => {
         if (noteItems && noteItems.length) {
           noteItemValid = false
 
-          if(noteItems.includes('Has note') && app.notes.items.length) {
+          if (noteItems.includes('Has note') && app.notes.items.length) {
             noteItemValid = true
           }
 
-          if(noteItems.includes('Does not have note') && app.notes.items.length == 0) {
+          if (noteItems.includes('Does not have note') && app.notes.items.length == 0) {
             noteItemValid = true
           }
         }

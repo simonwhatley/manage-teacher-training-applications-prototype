@@ -75,7 +75,7 @@ module.exports = router => {
           }
         }
       })
-    } else if(ApplicationHelper.getConditions(application.offer).some(c => c.status == "Not met")) {
+    } else if (ApplicationHelper.getConditions(application.offer).some(c => c.status == "Not met")) {
       application.status = 'Conditions not met';
       flash = content.markConditionsAsNotMet.successMessage;
       ApplicationHelper.addEvent(application, {

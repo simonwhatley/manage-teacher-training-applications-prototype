@@ -25,7 +25,7 @@ const parseUsers = (users, assignedUsers = [], you = {}) => {
 
     const hasDuplicateName = users.filter(u => u.firstName === user.firstName && u.lastName === user.lastName).length > 1 ? true : false
 
-    if(hasDuplicateName) {
+    if (hasDuplicateName) {
       option.hint = {}
       option.hint.text = user.emailAddress
     }

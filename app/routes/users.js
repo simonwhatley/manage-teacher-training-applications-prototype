@@ -23,25 +23,25 @@ function getOrganisationPermission(org, relationships) {
     var orgKey = relationship.org1.id == org.id ? 'org2' : 'org1';
     let permissionsKey = relationship.org1.id == org.id ? 'org1Permissions' : 'org2Permissions';
 
-    if(relationship[permissionsKey].setupInterviews) {
+    if (relationship[permissionsKey].setupInterviews) {
       permissions.applicableOrgs.setupInterviews.push(relationship[orgKey])
     } else {
       permissions.nonApplicableOrgs.setupInterviews.push(relationship[orgKey])
     }
 
-    if(relationship[permissionsKey].makeDecisions) {
+    if (relationship[permissionsKey].makeDecisions) {
       permissions.applicableOrgs.makeDecisions.push(relationship[orgKey])
     } else {
       permissions.nonApplicableOrgs.makeDecisions.push(relationship[orgKey])
     }
 
-    if(relationship[permissionsKey].viewSafeguardingInformation) {
+    if (relationship[permissionsKey].viewSafeguardingInformation) {
       permissions.applicableOrgs.viewSafeguardingInformation.push(relationship[orgKey])
     } else {
       permissions.nonApplicableOrgs.viewSafeguardingInformation.push(relationship[orgKey])
     }
 
-    if(relationship[permissionsKey].viewDiversityInformation) {
+    if (relationship[permissionsKey].viewDiversityInformation) {
       permissions.applicableOrgs.viewDiversityInformation.push(relationship[orgKey])
     } else {
       permissions.nonApplicableOrgs.viewDiversityInformation.push(relationship[orgKey])
@@ -112,7 +112,7 @@ module.exports = router => {
 
     user.permissions = {}
 
-    if(data.permissions) {
+    if (data.permissions) {
       user.permissions.manageOrganisation = data.permissions.indexOf('manageOrganisation') > -1
       user.permissions.manageUsers = data.permissions.indexOf('manageUsers') > -1
       user.permissions.setupInterviews = data.permissions.indexOf('setupInterviews') > -1
@@ -146,26 +146,26 @@ module.exports = router => {
 
     let data = req.session.data.editpermissions
 
-    if(!data || !data.permissions) {
+    if (!data || !data.permissions) {
       // get from user object
       res.locals.data.editpermissions = { permissions: [] }
 
-      if(user.permissions && user.permissions.manageOrganisation) {
+      if (user.permissions && user.permissions.manageOrganisation) {
         res.locals.data.editpermissions.permissions.push('manageOrganisation')
       }
-      if(user.permissions && user.permissions.manageUsers) {
+      if (user.permissions && user.permissions.manageUsers) {
         res.locals.data.editpermissions.permissions.push('manageUsers')
       }
-      if(user.permissions && user.permissions.setupInterviews) {
+      if (user.permissions && user.permissions.setupInterviews) {
         res.locals.data.editpermissions.permissions.push('setupInterviews')
       }
-      if(user.permissions && user.permissions.makeDecisions) {
+      if (user.permissions && user.permissions.makeDecisions) {
         res.locals.data.editpermissions.permissions.push('makeDecisions')
       }
-      if(user.permissions && user.permissions.viewSafeguardingInformation) {
+      if (user.permissions && user.permissions.viewSafeguardingInformation) {
         res.locals.data.editpermissions.permissions.push('viewSafeguardingInformation')
       }
-      if(user.permissions && user.permissions.viewDiversityInformation) {
+      if (user.permissions && user.permissions.viewDiversityInformation) {
         res.locals.data.editpermissions.permissions.push('viewDiversityInformation')
       }
     }
@@ -195,11 +195,11 @@ module.exports = router => {
 
     var data = req.session.data.editpermissions
 
-    if(!user.permissions) {
+    if (!user.permissions) {
       user.permissions = {}
     }
 
-    if(data.permissions) {
+    if (data.permissions) {
       user.permissions.manageOrganisation = data.permissions.indexOf('manageOrganisation') > -1
       user.permissions.manageUsers = data.permissions.indexOf('manageUsers') > -1
       user.permissions.setupInterviews = data.permissions.indexOf('setupInterviews') > -1

@@ -14,7 +14,7 @@ module.exports = router => {
       // see if the note has been updated by most recent
       const event = application.events.items.find(event => event.title == content.updateNote.event.title && event.meta.note.id == note.id)
 
-      if(event) {
+      if (event) {
         note.lastUpdatedDate = event.date
       }
       return note

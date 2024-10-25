@@ -117,7 +117,7 @@ module.exports = router => {
 
   router.post('/onboard/:relationshipId', (req, res) => {
 
-    if(req.body.referrer == 'check') {
+    if (req.body.referrer == 'check') {
       console.log(1)
       res.redirect('/onboard/check')
     } else {
@@ -128,7 +128,7 @@ module.exports = router => {
       })[0]
 
       // there's another relationship
-      if(relationship) {
+      if (relationship) {
         res.redirect(`/onboard/${nextRelationshipId}`)
       } else {
         res.redirect('/onboard/check')

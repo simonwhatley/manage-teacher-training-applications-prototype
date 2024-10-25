@@ -29,7 +29,7 @@ module.exports = router => {
       ApplicationHelper.cancelInterview({ application, interview, cancellationReason: "Your application was unsuccessful." })
     })
 
-    if(application.status == "Rejected") {
+    if (application.status == "Rejected") {
       application.rejectedReasons = ApplicationHelper.getRejectReasons(req.session.data.rejection)
       application.rejectedFeedbackDate = new Date().toISOString()
       req.flash('success', content.giveFeedback.successMessage)

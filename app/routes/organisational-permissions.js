@@ -8,7 +8,7 @@ function getRelationships(params) {
       return relationship.org1.id == params.org.id || relationship.org2.id == params.org.id
     })
     .forEach(relationship => {
-      if(relationship.org1.id == params.org.id) {
+      if (relationship.org1.id == params.org.id) {
         relationships.push({
           id: relationship.id,
           org: relationship.org1,
@@ -53,22 +53,22 @@ module.exports = router => {
       viewDiversityInformation: []
     }
 
-    if(relationship.org1Permissions.makeDecisions) {
+    if (relationship.org1Permissions.makeDecisions) {
       orgpermissions.makeDecisions.push(relationship.org1.name)
     }
-    if(relationship.org2Permissions.makeDecisions) {
+    if (relationship.org2Permissions.makeDecisions) {
       orgpermissions.makeDecisions.push(relationship.org2.name)
     }
-    if(relationship.org1Permissions.viewSafeguardingInformation) {
+    if (relationship.org1Permissions.viewSafeguardingInformation) {
       orgpermissions.viewSafeguardingInformation.push(relationship.org1.name)
     }
-    if(relationship.org2Permissions.viewSafeguardingInformation) {
+    if (relationship.org2Permissions.viewSafeguardingInformation) {
       orgpermissions.viewSafeguardingInformation.push(relationship.org2.name)
     }
-    if(relationship.org1Permissions.viewDiversityInformation) {
+    if (relationship.org1Permissions.viewDiversityInformation) {
       orgpermissions.viewDiversityInformation.push(relationship.org1.name)
     }
-    if(relationship.org2Permissions.viewDiversityInformation) {
+    if (relationship.org2Permissions.viewDiversityInformation) {
       orgpermissions.viewDiversityInformation.push(relationship.org2.name)
     }
 

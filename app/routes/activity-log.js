@@ -12,9 +12,9 @@ function getActivity(applications, userOrganisationId) {
       .map(item => {
       let interview = null
       // interview
-      if(item.title == 'Interview set up') {
+      if (item.title == 'Interview set up') {
         interview = application.interviews.items.find(interview => interview.id === item.meta.interviewId)
-        if(interview) {
+        if (interview) {
           item.meta.interviewExists = true
         } else {
           item.meta.interviewExists = false
@@ -22,9 +22,9 @@ function getActivity(applications, userOrganisationId) {
       }
 
       // interview
-      if(item.title == 'Interview updated') {
+      if (item.title == 'Interview updated') {
         interview = application.interviews.items.find(interview => interview.id === item.meta.interviewId)
-        if(interview) {
+        if (interview) {
           item.meta.interviewExists = true
         } else {
           item.meta.interviewExists = false
@@ -32,9 +32,9 @@ function getActivity(applications, userOrganisationId) {
       }
 
       // note
-      if(item.title == 'Note added' || item.title == 'Note updated') {
+      if (item.title == 'Note added' || item.title == 'Note updated') {
         let note = application.notes.items.find(note => note.id === item.meta.note.id)
-        if(note) {
+        if (note) {
           item.meta.note.exists = true
         } else {
           item.meta.note.exists = false

@@ -8,12 +8,12 @@ function getBreakdown(params) {
   let location = params.location
 
   let orgType = 'provider'
-  if(organisation.isAccreditedBody) {
+  if (organisation.isAccreditedBody) {
     orgType = 'accreditedBody'
   }
 
   // override
-  if(params.actingAsTrainingProvider) {
+  if (params.actingAsTrainingProvider) {
     orgType = 'provider'
   }
 
@@ -21,7 +21,7 @@ function getBreakdown(params) {
     .filter(app => app.cycle == CycleHelper.CURRENT_CYCLE.code)
     .filter(app => app[orgType] == organisation.name)
 
-  if(location && location.name) {
+  if (location && location.name) {
     applications = applications
       .filter(app => app.location && app.location.name == location.name)
   }
@@ -87,7 +87,7 @@ module.exports = router => {
       }
 
       // Create locations table
-      if(!userOrganisation.isAccreditedBody && userOrganisation.locations) {
+      if (!userOrganisation.isAccreditedBody && userOrganisation.locations) {
         userOrganisation.locations.forEach(location => {
           activeApplicationsSection.locationsTable.items.push(getBreakdown({ organisation: userOrganisation, applications, location }))
         })
@@ -96,13 +96,13 @@ module.exports = router => {
       // create partners table
 
       // Populate the SCITT even though they are acting as a training provider for self ratified courses in this case
-      if(userOrganisation.isAccreditedBody) {
+      if (userOrganisation.isAccreditedBody) {
         // populate the user org if it's an accredited body
 
         activeApplicationsSection.partnersTable.items.push(getBreakdown({ organisation: userOrganisation, applications, actingAsTrainingProvider: true }))
 
         // populate any locations as rows too
-        if(userOrganisation.locations) {
+        if (userOrganisation.locations) {
           userOrganisation.locations.forEach(location => {
             activeApplicationsSection.partnersTable.items.push(getBreakdown({ organisation: userOrganisation, applications, location, actingAsTrainingProvider: true }))
           })
@@ -117,7 +117,7 @@ module.exports = router => {
         activeApplicationsSection.partnersTable.items.push(getBreakdown({ organisation, applications }))
 
         // populate any locations as rows too
-        if(!organisation.isAccreditedBody && organisation.locations) {
+        if (!organisation.isAccreditedBody && organisation.locations) {
           organisation.locations.forEach(location => {
             activeApplicationsSection.partnersTable.items.push(getBreakdown({ organisation, applications, location }))
           })

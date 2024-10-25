@@ -13,7 +13,7 @@ module.exports = router => {
 
     // combine work history and school experience
     let experience = application.workHistory.items
-    if(application.schoolExperience) {
+    if (application.schoolExperience) {
       experience = experience.concat(application.schoolExperience)
     }
 
@@ -23,7 +23,7 @@ module.exports = router => {
 
     const hasOtherNonUkQualifications = application.otherQualifications && application.otherQualifications.find(qualification => qualification.country != 'United Kingdom')
 
-    if(application.otherQualifications) {
+    if (application.otherQualifications) {
       application.otherQualifications = application.otherQualifications.sort((a, b) => {
         return b.year - a.year
       })
@@ -48,9 +48,9 @@ module.exports = router => {
       let interview = null;
 
       // interview
-      if(item.title == 'Interview set up') {
+      if (item.title == 'Interview set up') {
         interview = application.interviews.items.find(interview => interview.id === item.meta.interviewId)
-        if(interview) {
+        if (interview) {
           item.meta.interviewExists = true
         } else {
           item.meta.interviewExists = false
@@ -58,9 +58,9 @@ module.exports = router => {
       }
 
       // interview
-      if(item.title == 'Interview updated') {
+      if (item.title == 'Interview updated') {
         interview = application.interviews.items.find(interview => interview.id === item.meta.interviewId)
-        if(interview) {
+        if (interview) {
           item.meta.interviewExists = true
         } else {
           item.meta.interviewExists = false
@@ -68,9 +68,9 @@ module.exports = router => {
       }
 
       // note
-      if(item.title == 'Note added' || item.title == 'Note updated') {
+      if (item.title == 'Note added' || item.title == 'Note updated') {
         let note = application.notes.items.find(note => note.id === item.meta.note.id)
-        if(note) {
+        if (note) {
           item.meta.note.exists = true
         } else {
           item.meta.note.exists = false
