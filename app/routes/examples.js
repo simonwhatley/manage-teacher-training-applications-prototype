@@ -1,5 +1,4 @@
 module.exports = router => {
-
   router.get('/examples', (req, res) => {
     res.render('_examples/index', {
 
@@ -8,7 +7,7 @@ module.exports = router => {
 
   router.get('/examples/courses', (req, res) => {
     const courses = require('../data/courses')
-    courses.sort((a,b) => {
+    courses.sort((a, b) => {
       return a.name.localeCompare(b.name)
     })
 

@@ -4,7 +4,6 @@ const CourseHelper = require('../data/helpers/courses')
 const content = require('../data/content')
 
 module.exports = router => {
-
   // ---------------------------------------------------------------------------
   // Change course flow
   // ---------------------------------------------------------------------------
@@ -43,7 +42,7 @@ module.exports = router => {
       application,
       courses: CourseHelper.getCourseRadioOptions(selectedCourse),
       actions: {
-        back: back,
+        back,
         cancel: `/applications/${req.params.applicationId}/offer/edit/course/cancel`,
         save: `/applications/${req.params.applicationId}/offer/edit/course`
       }
@@ -89,9 +88,9 @@ module.exports = router => {
       application,
       studyModes: CourseHelper.getCourseStudyModeRadioOptions(course.code, selectedStudyMode),
       actions: {
-        back: back,
+        back,
         cancel: `/applications/${req.params.applicationId}/offer/edit/course/cancel`,
-        save: save
+        save
       }
     })
   })
@@ -126,12 +125,9 @@ module.exports = router => {
     }
 
     if (course.locations.length <= 1) {
-
       req.session.data['edit-offer'].location = req.session.data.course.locations[0].id
       res.redirect(`/applications/${req.params.applicationId}/offer/edit/check?referrer=${req.query.referrer}`)
-
     } else {
-
       let selectedLocation
       if (req.session.data['edit-offer'] && req.session.data['edit-offer'].location) {
         selectedLocation = req.session.data['edit-offer'].location
@@ -153,9 +149,9 @@ module.exports = router => {
         application,
         locations: CourseHelper.getCourseLocationRadioOptions(course.code, selectedLocation),
         actions: {
-          back: back,
+          back,
           cancel: `/applications/${req.params.applicationId}/offer/edit/course/cancel`,
-          save: save
+          save
         }
       })
     }
@@ -174,9 +170,8 @@ module.exports = router => {
     let standardConditions
     let conditions
 
-    if (!(req.session.data['edit-offer']
-      && req.session.data['edit-offer']['standard-conditions'])) {
-
+    if (!(req.session.data['edit-offer'] &&
+      req.session.data['edit-offer']['standard-conditions'])) {
       if (application.offer.standardConditions) {
         standardConditions = application.offer.standardConditions.map(condition => {
           return condition.description
@@ -185,15 +180,15 @@ module.exports = router => {
     }
 
     // cleanse data gah
-    if (req.session.data['edit-offer']
-      && req.session.data['edit-offer']['conditions']) {
-      req.session.data['edit-offer']['conditions'] = req.session.data['edit-offer']['conditions'].filter(condition => condition !== '')
+    if (req.session.data['edit-offer'] &&
+      req.session.data['edit-offer'].conditions) {
+      req.session.data['edit-offer'].conditions = req.session.data['edit-offer'].conditions.filter(condition => condition !== '')
     }
 
     // if the form has been used in some way
-    if (req.session.data['edit-offer']
-      && req.session.data['edit-offer']['submitted-conditions-page'] === 'true') {
-      conditions = req.session.data['edit-offer']['conditions']
+    if (req.session.data['edit-offer'] &&
+      req.session.data['edit-offer']['submitted-conditions-page'] === 'true') {
+      conditions = req.session.data['edit-offer'].conditions
     } else {
       if (application.offer.conditions) {
         conditions = application.offer.conditions.map(condition => {
@@ -228,28 +223,27 @@ module.exports = router => {
     let conditions = []
 
     // if it's been submitted then build conditions from data
-    if (req.session.data['edit-offer']
-      && req.session.data['edit-offer']['submitted-conditions-page'] == 'true') {
-
+    if (req.session.data['edit-offer'] &&
+      req.session.data['edit-offer']['submitted-conditions-page'] == 'true') {
       // standard conditions
-      if (req.session.data['edit-offer']['standard-conditions']
-        && req.session.data['edit-offer']['standard-conditions'].length) {
+      if (req.session.data['edit-offer']['standard-conditions'] &&
+        req.session.data['edit-offer']['standard-conditions'].length) {
         conditions = conditions.concat(req.session.data['edit-offer']['standard-conditions'])
       }
 
-      if (req.session.data['edit-offer']['conditions']
-        && req.session.data['edit-offer']['conditions'].length) {
-        req.session.data['edit-offer']['conditions']
+      if (req.session.data['edit-offer'].conditions &&
+        req.session.data['edit-offer'].conditions.length) {
+        req.session.data['edit-offer'].conditions
           .filter(condition => condition !== '')
           .forEach(condition => {
             conditions.push(condition)
           })
-        }
+      }
 
       conditions = conditions.map(condition => {
         return {
           description: condition,
-          status: "Pending"
+          status: 'Pending'
         }
       })
 
@@ -316,14 +310,14 @@ module.exports = router => {
       // save standard conditions
       application.offer.standardConditions = []
 
-      if (req.session.data['edit-offer']['standard-conditions']
-        && req.session.data['edit-offer']['standard-conditions'].length) {
+      if (req.session.data['edit-offer']['standard-conditions'] &&
+        req.session.data['edit-offer']['standard-conditions'].length) {
         req.session.data['edit-offer']['standard-conditions']
           .forEach(condition => {
             application.offer.standardConditions.push({
               id: uuidv4(),
               description: condition,
-              status: "Pending"
+              status: 'Pending'
             })
           })
       }
@@ -331,13 +325,13 @@ module.exports = router => {
       // save further conditions
       application.offer.conditions = []
 
-      req.session.data['edit-offer']['conditions']
+      req.session.data['edit-offer'].conditions
         .filter(condition => condition != '')
         .forEach(condition => {
           application.offer.conditions.push({
             id: uuidv4(),
             description: condition,
-            status: "Pending"
+            status: 'Pending'
           })
         })
     }
@@ -387,5 +381,4 @@ module.exports = router => {
     delete req.session.data['edit-offer']
     res.redirect(`/applications/${req.params.applicationId}/offer`)
   })
-
 }

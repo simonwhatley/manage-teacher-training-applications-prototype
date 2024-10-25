@@ -20,7 +20,7 @@ const getSubjectItems = (selectedItems) => {
     items.push(item)
   })
 
-  items.sort((a,b) => {
+  items.sort((a, b) => {
     return a.text.localeCompare(b.text)
   })
 
@@ -130,9 +130,9 @@ const getUserItems = (users, assignedUsers = [], you = {}) => {
   let options = []
 
   // sort the users alphabetically
-  users.sort((a, b) => a.firstName.localeCompare(b.firstName)
-                        || a.lastName.localeCompare(b.lastName)
-                        || a.emailAddress.localeCompare(b.emailAddress))
+  users.sort((a, b) => a.firstName.localeCompare(b.firstName) ||
+                        a.lastName.localeCompare(b.lastName) ||
+                        a.emailAddress.localeCompare(b.emailAddress))
 
   users.forEach((user) => {
     const option = {}
@@ -144,7 +144,7 @@ const getUserItems = (users, assignedUsers = [], you = {}) => {
       option.text += ' (you)'
     }
 
-    const hasDuplicateName = users.filter(u => u.firstName === user.firstName && u.lastName === user.lastName).length > 1 ? true : false
+    const hasDuplicateName = users.filter(u => u.firstName === user.firstName && u.lastName === user.lastName).length > 1
 
     if (hasDuplicateName) {
       option.hint = {}
@@ -214,7 +214,7 @@ const getUserFullName = (users, assignedUserId) => {
 
 const getTrainingProviderItems = (providers, selectedProviders) => {
   return providers
-    .sort((a,b) => {
+    .sort((a, b) => {
       return a.name.localeCompare(b.name)
     })
     .map(org => {
@@ -228,7 +228,7 @@ const getTrainingProviderItems = (providers, selectedProviders) => {
 
 const getAccreditedBodyItems = (accreditedBodies, selectedAccreditedBodies) => {
   return accreditedBodies
-    .sort((a,b) => {
+    .sort((a, b) => {
       return a.name.localeCompare(b.name)
     })
     .map(org => {
@@ -254,7 +254,7 @@ const getLocationItems = (selectedItems) => {
     items.push(item)
   })
 
-  items.sort((a,b) => {
+  items.sort((a, b) => {
     return a.text.localeCompare(b.text)
   })
 
@@ -266,24 +266,24 @@ const sortApplications = (applications, sort) => {
 
   if (sort == 'Updated most recently') {
     newApplications = applications.sort((a, b) => {
-      let aEvents = a.events.items
-      let bEvents = b.events.items
-      return new Date(bEvents[bEvents.length-1].date) - new Date(aEvents[aEvents.length-1].date)
+      const aEvents = a.events.items
+      const bEvents = b.events.items
+      return new Date(bEvents[bEvents.length - 1].date) - new Date(aEvents[aEvents.length - 1].date)
     })
   } else if (sort == 'Updated least recently') {
     newApplications = applications.sort((a, b) => {
-      let aEvents = a.events.items
-      let bEvents = b.events.items
-      return new Date(aEvents[aEvents.length-1].date) - new Date(bEvents[bEvents.length-1].date)
+      const aEvents = a.events.items
+      const bEvents = b.events.items
+      return new Date(aEvents[aEvents.length - 1].date) - new Date(bEvents[bEvents.length - 1].date)
     })
   } else {
-    newApplications = newApplications.concat(applications.filter((app) => app.status == 'Received').sort(function(a, b) {
+    newApplications = newApplications.concat(applications.filter((app) => app.status == 'Received').sort(function (a, b) {
       return a.daysToRespond - b.daysToRespond
     }))
-    newApplications = newApplications.concat(applications.filter((app) => app.status == 'Shortlisted').sort(function(a, b) {
+    newApplications = newApplications.concat(applications.filter((app) => app.status == 'Shortlisted').sort(function (a, b) {
       return a.daysToRespond - b.daysToRespond
     }))
-    newApplications = newApplications.concat(applications.filter((app) => app.status == 'Interviewing').sort(function(a, b) {
+    newApplications = newApplications.concat(applications.filter((app) => app.status == 'Interviewing').sort(function (a, b) {
       return a.daysToRespond - b.daysToRespond
     }))
     newApplications = newApplications.concat(applications.filter((app) => app.status == 'Offered').sort((a, b) => {
@@ -299,13 +299,14 @@ const sortApplications = (applications, sort) => {
     newApplications = newApplications.concat(applications.filter((app) => app.status == 'Conditions not met'))
   }
   return newApplications
-
 }
 
 const getCheckboxValues = (name, data) => {
-  return name && (Array.isArray(name) ? name : [name].filter((name) => {
-    return name !== '_unchecked'
-  })) || data && (Array.isArray(data) ? data : [data])
+  return name && (Array.isArray(name)
+    ? name
+    : [name].filter((name) => {
+        return name !== '_unchecked'
+      })) || data && (Array.isArray(data) ? data : [data])
 }
 
 const removeFilter = (value, data) => {
@@ -319,12 +320,10 @@ const removeFilter = (value, data) => {
 }
 
 module.exports = router => {
-
   router.all('/applications', (req, res) => {
+    const sort = req.session.data.sort = req.query.sort || req.session.data.sort
 
-    var sort = req.session.data.sort = req.query.sort || req.session.data.sort
-
-    var filters = [
+    const filters = [
       'cycle',
       'status',
       'provider',
@@ -381,7 +380,6 @@ module.exports = router => {
 
     if (hasSearch) {
       apps = apps.filter((app) => {
-
         let candidateNameValid = true
         let applicationReferenceValid = true
         let matchesNoteValid = true
@@ -491,7 +489,7 @@ module.exports = router => {
         if (dateReceivedItems && dateReceivedItems.length) {
           dateReceivedItemValid = false
 
-          let submittedDate = DateTime.fromISO(app.submittedDate)
+          const submittedDate = DateTime.fromISO(app.submittedDate)
 
           // Received today
           if (dateReceivedItems.includes('Today')) {
@@ -520,7 +518,6 @@ module.exports = router => {
               dateReceivedItemValid = true
             }
           }
-
         }
 
         if (feedbackItems && feedbackItems.length) {
@@ -537,7 +534,6 @@ module.exports = router => {
               feedbackItemValid = true
             }
           }
-
         }
 
         if (noteItems && noteItems.length) {
@@ -552,19 +548,19 @@ module.exports = router => {
           }
         }
 
-        return cycleValid
-          && statusValid
-          && locationValid
-          && providerValid
-          && accreditedBodyValid
-          && studyModeValid
-          && subjectValid
-          && assignedUserValid
-          && unassignedUserValid
-          && daysLeftToMakeDecisionItemValid
-          && dateReceivedItemValid
-          && noteItemValid
-          && feedbackItemValid
+        return cycleValid &&
+          statusValid &&
+          locationValid &&
+          providerValid &&
+          accreditedBodyValid &&
+          studyModeValid &&
+          subjectValid &&
+          assignedUserValid &&
+          unassignedUserValid &&
+          daysLeftToMakeDecisionItemValid &&
+          dateReceivedItemValid &&
+          noteItemValid &&
+          feedbackItemValid
       })
     }
 
@@ -718,7 +714,6 @@ module.exports = router => {
           })
         })
       }
-
     }
 
     // TODO: clean up
@@ -732,10 +727,10 @@ module.exports = router => {
     // Put groups into ordered array
     // applications = flattenGroup(grouped)
 
-    let allApplications = applications = sortApplications(apps, sort)
+    const allApplications = applications = sortApplications(apps, sort)
 
     // Get the pagination data
-    let pagination = PaginationHelper.getPagination(applications, req.query.page)
+    const pagination = PaginationHelper.getPagination(applications, req.query.page)
 
     // Get a slice of the data to display
     applications = PaginationHelper.getDataByPage(applications, pagination.pageNumber)
@@ -865,5 +860,4 @@ module.exports = router => {
     req.session.data.assignedUser = null
     res.redirect('/applications')
   })
-
 }

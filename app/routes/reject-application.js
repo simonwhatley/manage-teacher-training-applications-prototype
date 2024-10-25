@@ -26,17 +26,17 @@ module.exports = router => {
     const application = req.session.data.applications.find(app => app.id === applicationId)
 
     ApplicationHelper.getUpcomingInterviews(application).forEach((interview) => {
-      ApplicationHelper.cancelInterview({ application, interview, cancellationReason: "Your application was unsuccessful." })
+      ApplicationHelper.cancelInterview({ application, interview, cancellationReason: 'Your application was unsuccessful.' })
     })
 
-    if (application.status == "Rejected") {
+    if (application.status == 'Rejected') {
       application.rejectedReasons = ApplicationHelper.getRejectReasons(req.session.data.rejection)
       application.rejectedFeedbackDate = new Date().toISOString()
       req.flash('success', content.giveFeedback.successMessage)
       ApplicationHelper.addEvent(application, {
-        "title": content.giveFeedback.event.title,
-        "user": "Ben Brown",
-        "date": new Date().toISOString()
+        title: content.giveFeedback.event.title,
+        user: 'Ben Brown',
+        date: new Date().toISOString()
       })
     } else {
       application.status = 'Rejected'
@@ -44,9 +44,9 @@ module.exports = router => {
       application.rejectedReasons = ApplicationHelper.getRejectReasons(req.session.data.rejection)
       req.flash('success', content.rejectApplication.successMessage)
       ApplicationHelper.addEvent(application, {
-        "title": content.rejectApplication.event.title,
-        "user": "Ben Brown",
-        "date": new Date().toISOString()
+        title: content.rejectApplication.event.title,
+        user: 'Ben Brown',
+        date: new Date().toISOString()
       })
     }
 

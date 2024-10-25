@@ -45,7 +45,7 @@ module.exports = router => {
     const assignedUsers = ApplicationHelper.getAssignedUsers(application, req.session.data.user.id, req.session.data.user.organisation.id)
 
     const events = application.events.items.map(item => {
-      let interview = null;
+      let interview = null
 
       // interview
       if (item.title == 'Interview set up') {
@@ -69,7 +69,7 @@ module.exports = router => {
 
       // note
       if (item.title == 'Note added' || item.title == 'Note updated') {
-        let note = application.notes.items.find(note => note.id === item.meta.note.id)
+        const note = application.notes.items.find(note => note.id === item.meta.note.id)
         if (note) {
           item.meta.note.exists = true
         } else {
@@ -82,12 +82,12 @@ module.exports = router => {
         item.assignedUsers = item.assignedUsers.filter(user => user.organisation.id === req.session.data.user.organisation.id)
       }
 
-      return item;
+      return item
     })
 
     res.render('applications/timeline/show', {
       application,
-      events: events,
+      events,
       conditions: ApplicationHelper.getConditions(application.offer),
       assignedUsers,
       otherApplications: ApplicationHelper.getOtherApplications(application, req.session.data.applications)
@@ -128,13 +128,13 @@ module.exports = router => {
     const applicationId = req.params.applicationId
     const { decision, option } = req.body
 
-    const data = req.session.data;
+    const data = req.session.data
     // Clear data from previous journeys
     delete data['further-conditions']
 
-    data["standard-conditions"] = [
-      "Fitness to train to teach check",
-      "Disclosure and Barring Service (DBS) check"
+    data['standard-conditions'] = [
+      'Fitness to train to teach check',
+      'Disclosure and Barring Service (DBS) check'
     ]
 
     if (decision === '1') {
@@ -145,5 +145,4 @@ module.exports = router => {
       res.redirect(`/applications/${applicationId}/reject`)
     }
   })
-
 }

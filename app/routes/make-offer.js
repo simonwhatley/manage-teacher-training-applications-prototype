@@ -4,18 +4,17 @@ const CourseHelper = require('../data/helpers/courses')
 const content = require('../data/content')
 
 module.exports = router => {
-
   router.get('/applications/:applicationId/offer/new', (req, res) => {
-    let application = req.session.data.applications.find(app => app.id === req.params.applicationId)
+    const application = req.session.data.applications.find(app => app.id === req.params.applicationId)
     let conditions
 
     // cleanse data gah
-    if (req.session.data['new-offer']
-      && req.session.data['new-offer']['conditions']) {
-      req.session.data['new-offer']['conditions'] = req.session.data['new-offer']['conditions'].filter(condition => condition !== '')
+    if (req.session.data['new-offer'] &&
+      req.session.data['new-offer'].conditions) {
+      req.session.data['new-offer'].conditions = req.session.data['new-offer'].conditions.filter(condition => condition !== '')
     }
 
-    conditions = req.session.data['new-offer']['conditions']
+    conditions = req.session.data['new-offer'].conditions
 
     let back = `/applications/${req.params.applicationId}/decision`
     if (req.query.referrer === 'course') {
@@ -30,7 +29,7 @@ module.exports = router => {
       application,
       conditions,
       actions: {
-        back: back,
+        back,
         cancel: `/applications/${req.params.applicationId}/offer/new/cancel`,
         save: `/applications/${req.params.applicationId}/offer/new`
       }
@@ -45,24 +44,24 @@ module.exports = router => {
     const application = req.session.data.applications.find(app => app.id === req.params.applicationId)
     let conditions = []
 
-    if (req.session.data['new-offer']
-      && req.session.data['new-offer']['standard-conditions']
-      && req.session.data['new-offer']['standard-conditions'].length) {
+    if (req.session.data['new-offer'] &&
+      req.session.data['new-offer']['standard-conditions'] &&
+      req.session.data['new-offer']['standard-conditions'].length) {
       conditions = conditions.concat(req.session.data['new-offer']['standard-conditions'])
     }
 
-    if (req.session.data['new-offer']['conditions']) {
-      req.session.data['new-offer']['conditions']
+    if (req.session.data['new-offer'].conditions) {
+      req.session.data['new-offer'].conditions
         .filter(condition => condition !== '')
         .forEach(condition => {
-        conditions.push(condition)
-      })
+          conditions.push(condition)
+        })
     }
 
     conditions = conditions.map(condition => {
       return {
         description: condition,
-        status: "Pending"
+        status: 'Pending'
       }
     })
 
@@ -106,7 +105,7 @@ module.exports = router => {
     const application = req.session.data.applications.find(app => app.id === req.params.applicationId)
 
     ApplicationHelper.getUpcomingInterviews(application).forEach((interview) => {
-      ApplicationHelper.cancelInterview({ application, interview, cancellationReason: "We made you an offer." })
+      ApplicationHelper.cancelInterview({ application, interview, cancellationReason: 'We made you an offer.' })
     })
 
     let course
@@ -134,27 +133,27 @@ module.exports = router => {
     application.offer.daysToDecline = ApplicationHelper.calculateDaysToDecline(application)
 
     // save standard conditions
-    if (req.session.data['new-offer']
-      && req.session.data['new-offer']['standard-conditions']
-      && req.session.data['new-offer']['standard-conditions'].length) {
+    if (req.session.data['new-offer'] &&
+      req.session.data['new-offer']['standard-conditions'] &&
+      req.session.data['new-offer']['standard-conditions'].length) {
       application.offer.standardConditions = req.session.data['new-offer']['standard-conditions'].map(condition => {
         return {
           id: uuidv4(),
           description: condition,
-          status: "Pending"
+          status: 'Pending'
         }
       })
     }
 
     // save further conditions
-    if (req.session.data['new-offer']['conditions']) {
-      let furtherConditions = req.session.data['new-offer']['conditions']
+    if (req.session.data['new-offer'].conditions) {
+      const furtherConditions = req.session.data['new-offer'].conditions
         .filter(condition => condition != '')
         .map(condition => {
           return {
             id: uuidv4(),
             description: c,
-            status: "Pending"
+            status: 'Pending'
           }
         })
 
@@ -230,7 +229,7 @@ module.exports = router => {
       application,
       courses: CourseHelper.getCourseRadioOptions(selectedCourse),
       actions: {
-        back: back,
+        back,
         cancel: `/applications/${req.params.applicationId}/offer/new/course/cancel`,
         save: `/applications/${req.params.applicationId}/offer/new/course`
       }
@@ -274,9 +273,9 @@ module.exports = router => {
       application,
       studyModes: CourseHelper.getCourseStudyModeRadioOptions(course.code, selectedStudyMode),
       actions: {
-        back: back,
+        back,
         cancel: `/applications/${req.params.applicationId}/offer/new/course/cancel`,
-        save: save
+        save
       }
     })
   })
@@ -311,7 +310,6 @@ module.exports = router => {
     }
 
     if (course.locations.length <= 1) {
-
       req.session.data['new-offer'].location = req.session.data.course.locations[0].id
 
       if (req.session.data.flow === 'change-offer') {
@@ -319,9 +317,7 @@ module.exports = router => {
       } else {
         res.redirect(`/applications/${req.params.applicationId}/offer/new/check?referrer=${req.query.referrer}`)
       }
-
     } else {
-
       let selectedLocation
       if (req.session.data['new-offer'] && req.session.data['new-offer'].location) {
         selectedLocation = req.session.data['new-offer'].location
@@ -345,18 +341,18 @@ module.exports = router => {
         application: req.session.data.applications.find(app => app.id === req.params.applicationId),
         locations: CourseHelper.getCourseLocationRadioOptions(course.code, selectedLocation),
         actions: {
-          back: back,
+          back,
           cancel: `/applications/${req.params.applicationId}/offer/new/course/cancel`,
-          save: save
+          save
         }
       })
     }
   })
 
   router.post('/applications/:applicationId/offer/new/location', (req, res) => {
-    if (!(req.session.data['new-offer']['standard-conditions']
-      || req.session.data['new-offer'].conditions)
-      || req.session.data.flow === 'change-offer') {
+    if (!(req.session.data['new-offer']['standard-conditions'] ||
+      req.session.data['new-offer'].conditions) ||
+      req.session.data.flow === 'change-offer') {
       res.redirect(`/applications/${req.params.applicationId}/offer/new?referrer=location`)
     } else {
       res.redirect(`/applications/${req.params.applicationId}/offer/new/check?referrer=location`)
@@ -379,8 +375,8 @@ module.exports = router => {
 
     delete req.session.data.flow
 
-    if (!(req.session.data['new-offer']['standard-conditions']
-      || req.session.data['new-offer'].conditions)) {
+    if (!(req.session.data['new-offer']['standard-conditions'] ||
+      req.session.data['new-offer'].conditions)) {
       res.redirect(`/applications/${req.params.applicationId}/offer/new`)
     } else {
       res.redirect(`/applications/${req.params.applicationId}/offer/new/check`)
@@ -392,5 +388,4 @@ module.exports = router => {
     delete req.session.data.flow
     res.redirect(`/applications/${req.params.applicationId}`)
   })
-
 }

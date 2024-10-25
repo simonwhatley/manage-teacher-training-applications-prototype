@@ -1,11 +1,11 @@
 const CycleHelper = require('../data/helpers/cycles')
 const { DateTime } = require('luxon')
-const _ = require('lodash');
-const user = require('../data/generators/user');
+const _ = require('lodash')
+const user = require('../data/generators/user')
 
-function getBreakdown(params) {
-  let organisation = params.organisation
-  let location = params.location
+function getBreakdown (params) {
+  const organisation = params.organisation
+  const location = params.location
 
   let orgType = 'provider'
   if (organisation.isAccreditedBody) {
@@ -26,16 +26,16 @@ function getBreakdown(params) {
       .filter(app => app.location && app.location.name == location.name)
   }
 
-  let received = applications.filter(app => app.status == 'Received')
-  let shortlisted = applications.filter(app => app.status == 'Shortlisted')
-  let interviewing = applications.filter(app => app.status == 'Interviewing')
+  const received = applications.filter(app => app.status == 'Received')
+  const shortlisted = applications.filter(app => app.status == 'Shortlisted')
+  const interviewing = applications.filter(app => app.status == 'Interviewing')
 
-  let offered = applications.filter(app => app.status == 'Offered')
-  let conditionsPending = applications.filter(app => app.status == 'Conditions pending')
-  let recruited = applications.filter(app => app.status == 'Recruited')
+  const offered = applications.filter(app => app.status == 'Offered')
+  const conditionsPending = applications.filter(app => app.status == 'Conditions pending')
+  const recruited = applications.filter(app => app.status == 'Recruited')
 
   return {
-    organisation: organisation,
+    organisation,
     location,
     received,
     shortlisted,
@@ -44,39 +44,36 @@ function getBreakdown(params) {
     conditionsPending,
     recruited
   }
-
 }
 
 module.exports = router => {
-
   router.get('/overview', (req, res) => {
-    let applications = req.session.data.applications.map(app => app).reverse()
+    const applications = req.session.data.applications.map(app => app).reverse()
 
-    let receivedTodayCount = applications.filter(app => {
+    const receivedTodayCount = applications.filter(app => {
       return DateTime.fromISO(app.submittedDate).diffNow('days').days >= -1
     }).length
 
-    let aboutToBeAutomaticallyRejectedCount = applications.filter((app) => {
+    const aboutToBeAutomaticallyRejectedCount = applications.filter((app) => {
       return app.daysToRespond < 5 && (app.status == 'Received' || app.status == 'Shortlisted' || app.status == 'Interviewing')
     }).length
 
-    let needsFeedbackCount = applications.filter((app)=> {
+    const needsFeedbackCount = applications.filter((app) => {
       return app.status == 'Rejected' && !app.rejectedReasons
     }).length
 
-    let deferredOffersReadyToConfirm = applications.filter((app)=> {
+    const deferredOffersReadyToConfirm = applications.filter((app) => {
       return app.status == 'Deferred' && app.cycle == CycleHelper.PREVIOUS_CYCLE.code
     }).length
 
-    let conditionsPending = applications.filter((app)=> {
+    const conditionsPending = applications.filter((app) => {
       return app.status == 'Conditions pending'
     }).length
 
-    let activeApplicationsSections = []
-    let userOrganisations = req.session.data.user.organisations
+    const activeApplicationsSections = []
+    const userOrganisations = req.session.data.user.organisations
     userOrganisations.forEach(userOrganisation => {
-
-      let activeApplicationsSection = {
+      const activeApplicationsSection = {
         organisation: userOrganisation,
         partnersTable: {
           items: []
@@ -112,7 +109,7 @@ module.exports = router => {
       // get partner data from relationships
       req.session.data.user.relationships.forEach(relationship => {
         // org 2 is always the partner
-        var organisation = relationship.org2
+        const organisation = relationship.org2
 
         activeApplicationsSection.partnersTable.items.push(getBreakdown({ organisation, applications }))
 
@@ -125,20 +122,13 @@ module.exports = router => {
       })
 
       activeApplicationsSection.partnersTable.items = _.uniqBy(activeApplicationsSection.partnersTable.items, function (item) {
-        return item.organisation.id;
-      });
+        return item.organisation.id
+      })
 
       activeApplicationsSections.push(activeApplicationsSection)
-
-
     })
 
-
-
-
-
     // dedupe
-
 
     res.render('overview', {
       boxes: {
@@ -151,5 +141,4 @@ module.exports = router => {
       activeApplicationsSections
     })
   })
-
 }

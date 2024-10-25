@@ -20,7 +20,6 @@ module.exports = router => {
       return note
     })
 
-
     res.render('applications/notes/index', {
       application,
       assignedUsers,
@@ -41,7 +40,7 @@ module.exports = router => {
     const applicationId = req.params.applicationId
     const application = req.session.data.applications.find(app => app.id === applicationId)
 
-    let note = {
+    const note = {
       id: uuidv4(),
       message: req.body.note,
       sender: req.session.data.user.firstName + ' ' + req.session.data.user.lastName,
@@ -95,7 +94,6 @@ module.exports = router => {
     req.flash('success', content.updateNote.successMessage)
     res.redirect(`/applications/${applicationId}/notes`)
   })
-
 
   router.get('/applications/:applicationId/notes/:noteId/delete', (req, res) => {
     const applicationId = req.params.applicationId

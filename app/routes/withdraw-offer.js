@@ -2,7 +2,6 @@ const ApplicationHelper = require('../data/helpers/application')
 const content = require('../data/content')
 
 module.exports = router => {
-
   router.get('/applications/:applicationId/offer/withdraw', (req, res) => {
     res.render('applications/offer/withdraw/index', {
       application: req.session.data.applications.find(app => app.id === req.params.applicationId)
@@ -28,10 +27,10 @@ module.exports = router => {
     req.flash('success', content.withdrawOffer.successMessage)
 
     ApplicationHelper.addEvent(application, {
-      "title": content.withdrawOffer.event.title,
-      "user": "Ben Brown",
-      "date": new Date().toISOString(),
-      "meta": {
+      title: content.withdrawOffer.event.title,
+      user: 'Ben Brown',
+      date: new Date().toISOString(),
+      meta: {
         offer: application.offer
       }
     })

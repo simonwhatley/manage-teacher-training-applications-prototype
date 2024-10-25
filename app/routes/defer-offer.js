@@ -1,7 +1,6 @@
 const content = require('../data/content')
 
 module.exports = router => {
-
   router.get('/applications/:applicationId/offer/defer/check', (req, res) => {
     res.render('applications/offer/defer/check', {
       application: req.session.data.applications.find(app => app.id === req.params.applicationId)
@@ -14,7 +13,7 @@ module.exports = router => {
     application.status = 'Deferred'
     application.events.items.push({
       date: new Date().toISOString(),
-      user: "Alicia Grenada",
+      user: 'Alicia Grenada',
       title: content.deferOffer.event.title,
       meta: {
         offer: application.offer
@@ -24,6 +23,4 @@ module.exports = router => {
     req.flash('success', content.deferOffer.successMessage)
     res.redirect(`/applications/${applicationId}/offer`)
   })
-
-
 }

@@ -2,12 +2,10 @@ const ApplicationHelper = require('../data/helpers/application')
 const content = require('../data/content')
 
 module.exports = router => {
-
   router.get('/applications/:applicationId/withdraw', (req, res) => {
     const applicationId = req.params.applicationId
     res.redirect(`/applications/${applicationId}/withdraw/reasons`)
   })
-
 
   router.get('/applications/:applicationId/withdraw/reasons', (req, res) => {
     const applicationId = req.params.applicationId
@@ -63,19 +61,17 @@ module.exports = router => {
     // let reason = req.session.data['withdraw-application'].reason
     // TODO change reason on cancel interview
     ApplicationHelper.getUpcomingInterviews(application).forEach((interview) => {
-      ApplicationHelper.cancelInterview({ application, interview, cancellationReason: "You withdrew your application." })
+      ApplicationHelper.cancelInterview({ application, interview, cancellationReason: 'You withdrew your application.' })
     })
 
     delete req.session.data['withdraw-application']
 
     ApplicationHelper.addEvent(application, {
-      "title": content.withdrawApplication.event.title,
-      "user": "Ben Brown",
-      "date": new Date().toISOString()
+      title: content.withdrawApplication.event.title,
+      user: 'Ben Brown',
+      date: new Date().toISOString()
     })
 
     res.redirect(`/applications/${applicationId}/feedback`)
   })
-
-
 }

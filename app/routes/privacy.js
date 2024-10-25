@@ -1,4 +1,4 @@
-const PrivacyHelper = require('../data/helpers/privacy');
+const PrivacyHelper = require('../data/helpers/privacy')
 
 module.exports = router => {
   router.get('/privacy', (req, res) => {
@@ -17,5 +17,4 @@ module.exports = router => {
       content: markdown.content
     })
   })
-
 }

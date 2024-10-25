@@ -4,7 +4,6 @@ const CourseHelper = require('../data/helpers/courses')
 const content = require('../data/content')
 
 module.exports = router => {
-
   router.get('/applications/:applicationId/course/edit/provider', (req, res) => {
     let selectedProvider
     if (req.session.data['edit-course'] && req.session.data['edit-course'].provider) {
@@ -21,7 +20,7 @@ module.exports = router => {
       application: req.session.data.applications.find(app => app.id === req.params.applicationId),
       providers: CourseHelper.getProviderRadioOptions(selectedProvider),
       actions: {
-        back: back,
+        back,
         cancel: `/applications/${req.params.applicationId}/course/edit/cancel`,
         save: `/applications/${req.params.applicationId}/course/edit/provider`
       }
@@ -46,18 +45,18 @@ module.exports = router => {
       back += '/course/edit/provider'
     }
 
-    let providerId;
+    let providerId
     if (req.session.data['edit-course'] && req.session.data['edit-course'].provider) {
       providerId = req.session.data['edit-course'].provider
     }
 
-    let courses = CourseHelper.getCourseRadioOptions(selectedCourse, providerId)
+    const courses = CourseHelper.getCourseRadioOptions(selectedCourse, providerId)
 
     res.render('applications/course/course', {
       application: req.session.data.applications.find(app => app.id === req.params.applicationId),
       courses,
       actions: {
-        back: back,
+        back,
         cancel: `/applications/${req.params.applicationId}/course/edit/cancel`,
         save: `/applications/${req.params.applicationId}/course/edit/course`
       }
@@ -103,9 +102,9 @@ module.exports = router => {
       application,
       studyModes: CourseHelper.getCourseStudyModeRadioOptions(course.code, selectedStudyMode),
       actions: {
-        back: back,
+        back,
         cancel: `/applications/${req.params.applicationId}/course/edit/cancel`,
-        save: save
+        save
       }
     })
   })
@@ -140,10 +139,8 @@ module.exports = router => {
     }
 
     if (course.locations.length <= 1) {
-
       req.session.data['edit-course'].location = req.session.data.course.locations[0].id
       res.redirect(`/applications/${req.params.applicationId}/course/edit/check?referrer=${req.query.referrer}`)
-
     } else {
       let selectedLocation
       if (req.session.data['edit-course'] && req.session.data['edit-course'].location) {
@@ -164,7 +161,7 @@ module.exports = router => {
         application,
         locations: CourseHelper.getCourseLocationRadioOptions(course.code, selectedLocation),
         actions: {
-          back: back,
+          back,
           cancel: `/applications/${req.params.applicationId}/course/edit/cancel`,
           save: `/applications/${req.params.applicationId}/course/edit/location?referrer=${req.query.referrer}`
         }
@@ -226,7 +223,7 @@ module.exports = router => {
       location,
       upcomingInterviews,
       actions: {
-        back: back,
+        back,
         cancel: `/applications/${req.params.applicationId}/course/edit/cancel`,
         save: `/applications/${req.params.applicationId}/course/edit/check`
       }
@@ -234,7 +231,7 @@ module.exports = router => {
   })
 
   router.post('/applications/:applicationId/course/edit/check', (req, res) => {
-    let application = req.session.data.applications.find(app => app.id === req.params.applicationId)
+    const application = req.session.data.applications.find(app => app.id === req.params.applicationId)
 
     if (req.session.data['edit-course'].course) {
       const course = CourseHelper.getCourse(req.session.data['edit-course'].course)
@@ -285,5 +282,4 @@ module.exports = router => {
     delete req.session.data.referrer
     res.redirect(`/applications/${req.params.applicationId}`)
   })
-
 }

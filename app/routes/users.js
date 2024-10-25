@@ -2,8 +2,8 @@ const ApplicationHelper = require('../data/helpers/application')
 const content = require('../data/content')
 const { v4: uuidv4 } = require('uuid')
 
-function getOrganisationPermission(org, relationships) {
-  var permissions = {
+function getOrganisationPermission (org, relationships) {
+  const permissions = {
     applicableOrgs: {
       setupInterviews: [],
       makeDecisions: [],
@@ -20,8 +20,8 @@ function getOrganisationPermission(org, relationships) {
   relationships.filter(relationship => {
     return relationship.org1.id === org.id || relationship.org2.id === org.id
   }).forEach(relationship => {
-    var orgKey = relationship.org1.id == org.id ? 'org2' : 'org1';
-    let permissionsKey = relationship.org1.id == org.id ? 'org1Permissions' : 'org2Permissions';
+    const orgKey = relationship.org1.id == org.id ? 'org2' : 'org1'
+    const permissionsKey = relationship.org1.id == org.id ? 'org1Permissions' : 'org2Permissions'
 
     if (relationship[permissionsKey].setupInterviews) {
       permissions.applicableOrgs.setupInterviews.push(relationship[orgKey])
@@ -46,16 +46,14 @@ function getOrganisationPermission(org, relationships) {
     } else {
       permissions.nonApplicableOrgs.viewDiversityInformation.push(relationship[orgKey])
     }
-
   })
   return permissions
 }
 
 module.exports = router => {
-
   router.get('/organisation-settings/:orgId/users', (req, res) => {
-    let org = req.session.data.organisations.find(org => org.id == req.params.orgId)
-    let users = req.session.data.users.filter(user => {
+    const org = req.session.data.organisations.find(org => org.id == req.params.orgId)
+    const users = req.session.data.users.filter(user => {
       return user.organisation.id == req.params.orgId
     })
 
@@ -68,7 +66,7 @@ module.exports = router => {
   })
 
   router.get('/organisation-settings/:orgId/users/new', (req, res) => {
-    let org = req.session.data.user.organisations.find(org => req.params.orgId == org.id)
+    const org = req.session.data.user.organisations.find(org => req.params.orgId == org.id)
     res.render('organisation-settings/users/new/index', {
       org
     })
@@ -79,8 +77,8 @@ module.exports = router => {
   })
 
   router.get('/organisation-settings/:orgId/users/new/permissions', (req, res) => {
-    let org = req.session.data.user.organisations.find(org => req.params.orgId == org.id)
-    let orgPermissions = getOrganisationPermission(org, req.session.data.relationships)
+    const org = req.session.data.user.organisations.find(org => req.params.orgId == org.id)
+    const orgPermissions = getOrganisationPermission(org, req.session.data.relationships)
 
     res.render('organisation-settings/users/new/permissions', {
       org,
@@ -93,17 +91,16 @@ module.exports = router => {
   })
 
   router.get('/organisation-settings/:orgId/users/new/check', (req, res) => {
-    let org = req.session.data.user.organisations.find(org => req.params.orgId == org.id)
+    const org = req.session.data.user.organisations.find(org => req.params.orgId == org.id)
     res.render('organisation-settings/users/new/check', {
       org
     })
   })
 
   router.post('/organisation-settings/:orgId/users/new/check', (req, res) => {
+    const data = req.session.data.newuser
 
-    let data = req.session.data.newuser
-
-    let user = {}
+    const user = {}
     user.id = uuidv4()
     user.firstName = data['first-name']
     user.lastName = data['last-name']
@@ -118,7 +115,7 @@ module.exports = router => {
       user.permissions.setupInterviews = data.permissions.indexOf('setupInterviews') > -1
       user.permissions.makeDecisions = data.permissions.indexOf('makeDecisions') > -1
       user.permissions.viewSafeguardingInformation = data.permissions.indexOf('viewSafeguardingInformation') > -1
-      user.permissions.viewDiversityInformation= data.permissions.indexOf('viewDiversityInformation') > -1
+      user.permissions.viewDiversityInformation = data.permissions.indexOf('viewDiversityInformation') > -1
     }
 
     req.session.data.users.push(user)
@@ -132,19 +129,19 @@ module.exports = router => {
   // Details
 
   router.get('/organisation-settings/:orgId/users/:userId', (req, res) => {
-    let user = req.session.data.users.find(user => user.id == req.params.userId)
-    let org = req.session.data.organisations.find(org => org.id == req.params.orgId)
+    const user = req.session.data.users.find(user => user.id == req.params.userId)
+    const org = req.session.data.organisations.find(org => org.id == req.params.orgId)
     res.render('organisation-settings/users/show', { user, org, permissions: getOrganisationPermission(org, req.session.data.relationships) })
   })
 
   // Edit permissions
 
   router.get('/organisation-settings/:orgId/users/:userId/permissions/edit/permissions', (req, res) => {
-    let user = req.session.data.users.find(user => user.id == req.params.userId)
-    let org = req.session.data.organisations.find(org => req.params.orgId == org.id)
-    let orgPermissions = getOrganisationPermission(org, req.session.data.relationships)
+    const user = req.session.data.users.find(user => user.id == req.params.userId)
+    const org = req.session.data.organisations.find(org => req.params.orgId == org.id)
+    const orgPermissions = getOrganisationPermission(org, req.session.data.relationships)
 
-    let data = req.session.data.editpermissions
+    const data = req.session.data.editpermissions
 
     if (!data || !data.permissions) {
       // get from user object
@@ -182,8 +179,8 @@ module.exports = router => {
   })
 
   router.get('/organisation-settings/:orgId/users/:userId/permissions/edit/check', (req, res) => {
-    let user = req.session.data.users.find(user => user.id == req.params.userId)
-    let org = req.session.data.organisations.find(org => req.params.orgId == org.id)
+    const user = req.session.data.users.find(user => user.id == req.params.userId)
+    const org = req.session.data.organisations.find(org => req.params.orgId == org.id)
     res.render('organisation-settings/users/edit-permissions/check', {
       user,
       org
@@ -191,9 +188,9 @@ module.exports = router => {
   })
 
   router.post('/organisation-settings/:orgId/users/:userId/permissions/edit/check', (req, res) => {
-    var user = req.session.data.users.find(user => user.id == req.params.userId)
+    const user = req.session.data.users.find(user => user.id == req.params.userId)
 
-    var data = req.session.data.editpermissions
+    let data = req.session.data.editpermissions
 
     if (!user.permissions) {
       user.permissions = {}
@@ -205,7 +202,7 @@ module.exports = router => {
       user.permissions.setupInterviews = data.permissions.indexOf('setupInterviews') > -1
       user.permissions.makeDecisions = data.permissions.indexOf('makeDecisions') > -1
       user.permissions.viewSafeguardingInformation = data.permissions.indexOf('viewSafeguardingInformation') > -1
-      user.permissions.viewDiversityInformation= data.permissions.indexOf('viewDiversityInformation') > -1
+      user.permissions.viewDiversityInformation = data.permissions.indexOf('viewDiversityInformation') > -1
     } else {
       user.permissions = {}
     }
@@ -226,7 +223,7 @@ module.exports = router => {
       req.session.data.applications,
       req.params.userId,
       req.params.orgId,
-      ['Received','Interviewing','Offered','Conditions pending'],
+      ['Received', 'Interviewing', 'Offered', 'Conditions pending'],
       true
     )
 
@@ -234,7 +231,6 @@ module.exports = router => {
   })
 
   router.post('/organisation-settings/:orgId/users/:userId/delete', (req, res) => {
-
     // delete
     req.session.data.users = req.session.data.users.filter(user => user.id !== req.params.userId)
 
@@ -251,25 +247,23 @@ module.exports = router => {
   })
 
   router.get('/account/personal-details', (req, res) => {
-    var user = req.session.data.users[0]
+    const user = req.session.data.users[0]
 
     res.render('account/personal-details', { user })
   })
 
   router.get('/account/permissions', (req, res) => {
-    let user = req.session.data.user
+    const user = req.session.data.user
 
-    let orgs = user.organisations.map(org => {
+    const orgs = user.organisations.map(org => {
       // add permissions in for each org
 
       return {
-        org: org,
+        org,
         permissions: getOrganisationPermission(org, req.session.data.relationships)
       }
-
     })
 
     res.render('account/permissions', { user, orgs })
   })
-
 }

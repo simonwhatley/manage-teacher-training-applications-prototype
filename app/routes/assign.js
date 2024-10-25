@@ -9,9 +9,9 @@ const parseUsers = (users, assignedUsers = [], you = {}) => {
   let options = []
 
   // sort the users alphabetically
-  users.sort((a, b) => a.firstName.localeCompare(b.firstName)
-                        || a.lastName.localeCompare(b.lastName)
-                        || a.emailAddress.localeCompare(b.emailAddress))
+  users.sort((a, b) => a.firstName.localeCompare(b.firstName) ||
+                        a.lastName.localeCompare(b.lastName) ||
+                        a.emailAddress.localeCompare(b.emailAddress))
 
   // parse all users into options
   users.forEach((user, i) => {
@@ -23,7 +23,7 @@ const parseUsers = (users, assignedUsers = [], you = {}) => {
       option.text += ' (you)'
     }
 
-    const hasDuplicateName = users.filter(u => u.firstName === user.firstName && u.lastName === user.lastName).length > 1 ? true : false
+    const hasDuplicateName = users.filter(u => u.firstName === user.firstName && u.lastName === user.lastName).length > 1
 
     if (hasDuplicateName) {
       option.hint = {}
@@ -53,7 +53,6 @@ const parseUsers = (users, assignedUsers = [], you = {}) => {
 }
 
 module.exports = router => {
-
   router.get('/applications/:applicationId/assign', (req, res) => {
     const applicationId = req.params.applicationId
     const application = req.session.data.applications.find(app => app.id === applicationId)
@@ -92,7 +91,7 @@ module.exports = router => {
 
     // boolean used to check if application has been previously assigned
     // to someone in current user's organisation
-    const hasPreviousAssignedUsers = (currentAssignedUsers && currentAssignedUsers.length > 0) ? true : false
+    const hasPreviousAssignedUsers = !!((currentAssignedUsers && currentAssignedUsers.length > 0))
 
     // get all the assigned user IDs that have been submitted
     const assignedUserIds = req.session.data.assignedUsers
@@ -154,7 +153,7 @@ module.exports = router => {
     // or if there was previously assigned users (for when they're removed)
     // i.e., don't flash a message if there hasn't be a change
     // if ((assignedUserIds && assignedUserIds.length) || hasPreviousAssignedUsers) {
-      req.flash('success', eventTitle)
+    req.flash('success', eventTitle)
     // }
 
     // get the referrer for routing
@@ -164,7 +163,6 @@ module.exports = router => {
     delete req.session.data.assignedUsers
     delete req.session.data.referrer
 
-    res.redirect(`${referrer}`);
+    res.redirect(`${referrer}`)
   })
-
 }

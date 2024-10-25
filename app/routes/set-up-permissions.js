@@ -1,7 +1,6 @@
-const _ = require('lodash');
+const _ = require('lodash')
 
 module.exports = router => {
-
   /*
     Returns a structure that looks like this:
 
@@ -10,12 +9,11 @@ module.exports = router => {
       partners: [{id, name}, ...]
     }, ...]
   */
-  function getUserRelationships(params) {
+  function getUserRelationships (params) {
     return params.userOrgs.map(org => {
+      const item = { org, partners: [] }
 
-      let item = { org: org, partners: [] };
-
-      let orgRelationships = params.orgRelationships.filter(relationship => {
+      const orgRelationships = params.orgRelationships.filter(relationship => {
         return relationship.org1.id == org.id
       })
 
@@ -28,7 +26,6 @@ module.exports = router => {
       })
 
       return item
-
     })
     // At the moment I am not depuping relationships.
     // meaning, if the user belongs to, for example, the SCITT and SD
@@ -38,13 +35,12 @@ module.exports = router => {
     // function references, but there's no relationship for it.
     // So instead, I will just filter() out any items that don't have any partners
     // if we ever dedupe properly, we can kill this filter.
-    .filter(item => item.partners.length > 0)
+      .filter(item => item.partners.length > 0)
   }
 
   router.get('/onboard', (req, res) => {
-
-    let userOrgs = req.session.data.user.organisations
-    let relationships = _.groupBy(req.session.data.relationships, function(relationship){
+    const userOrgs = req.session.data.user.organisations
+    const relationships = _.groupBy(req.session.data.relationships, function (relationship) {
       return relationship.org1.id
     })
 
@@ -59,11 +55,11 @@ module.exports = router => {
   })
 
   router.get('/onboard/check', (req, res) => {
-    let userOrgs = req.session.data.user.organisations
-    let orgRelationships = req.session.data.relationships
-    let lastRelationshipId = req.session.data.relationships[req.session.data.relationships.length - 1].id
+    const userOrgs = req.session.data.user.organisations
+    const orgRelationships = req.session.data.relationships
+    const lastRelationshipId = req.session.data.relationships[req.session.data.relationships.length - 1].id
 
-    let relationships = getUserRelationships({
+    const relationships = getUserRelationships({
       userOrgs,
       orgRelationships
     })
@@ -78,10 +74,8 @@ module.exports = router => {
     res.render('onboard/confirmation')
   })
 
-
   router.get('/onboard/:relationshipId', (req, res) => {
-
-    let relationship = req.session.data.relationships.filter(relationship => {
+    const relationship = req.session.data.relationships.filter(relationship => {
       return relationship.id == req.params.relationshipId
     })[0]
 
@@ -95,7 +89,7 @@ module.exports = router => {
     // save relationship permissions
 
     Object.entries(req.session.data.orgpermissions).forEach(item => {
-      const [key, value] = item;
+      const [key, value] = item
       const relationshipId = parseInt(key.split('a')[1], 10)
       const relationship = req.session.data.relationships.find(relationship => relationship.id == relationshipId)
 
@@ -111,19 +105,17 @@ module.exports = router => {
       }
     })
 
-
     res.redirect('/onboard/confirmation')
   })
 
   router.post('/onboard/:relationshipId', (req, res) => {
-
     if (req.body.referrer == 'check') {
       console.log(1)
       res.redirect('/onboard/check')
     } else {
-      let nextRelationshipId = parseInt(req.params.relationshipId, 10) + 1;
+      const nextRelationshipId = parseInt(req.params.relationshipId, 10) + 1
 
-      let relationship = req.session.data.relationships.filter(relationship => {
+      const relationship = req.session.data.relationships.filter(relationship => {
         return relationship.id == nextRelationshipId
       })[0]
 
@@ -134,7 +126,5 @@ module.exports = router => {
         res.redirect('/onboard/check')
       }
     }
-
   })
-
 }

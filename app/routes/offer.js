@@ -2,7 +2,6 @@ const ApplicationHelper = require('../data/helpers/application')
 const CourseHelper = require('../data/helpers/courses')
 
 module.exports = router => {
-
   router.get('/applications/:applicationId/offer', (req, res) => {
     const applicationId = req.params.applicationId
     const application = req.session.data.applications.find(app => app.id === applicationId)
@@ -17,5 +16,4 @@ module.exports = router => {
       assignedUsers
     })
   })
-
 }

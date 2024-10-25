@@ -1,4 +1,4 @@
-const GuidanceHelper = require('../data/helpers/guidance');
+const GuidanceHelper = require('../data/helpers/guidance')
 
 module.exports = router => {
   router.get('/how-to-use-this-service', (req, res) => {
@@ -17,5 +17,4 @@ module.exports = router => {
       content: markdown.content
     })
   })
-
 }

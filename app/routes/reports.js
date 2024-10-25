@@ -61,8 +61,8 @@ const writeSexData = (organisation, applications, cycleName) => {
     const data = {}
     data.sex = item.title
     data.receivedNumber = item.counts.received
-    data.recruitedNumber = item.counts['Recruited']
-    data.recruitedPercent = item.rates['Recruited']
+    data.recruitedNumber = item.counts.Recruited
+    data.recruitedPercent = item.rates.Recruited
     records.push(data)
   })
 
@@ -105,8 +105,8 @@ const writeDisabilityReponseCountsData = (organisation, applications, cycleName)
     const data = {}
     data.disability = item.title
     data.receivedNumber = item.counts.received
-    data.recruitedNumber = item.counts['Recruited']
-    data.recruitedPercent = item.rates['Recruited']
+    data.recruitedNumber = item.counts.Recruited
+    data.recruitedPercent = item.rates.Recruited
     records.push(data)
   })
 
@@ -151,8 +151,8 @@ const writeDisabilityData = (organisation, applications, cycleName) => {
     data.disability = item.title
     data.description = item.description
     data.receivedNumber = item.counts.received
-    data.recruitedNumber = item.counts['Recruited']
-    data.recruitedPercent = item.rates['Recruited']
+    data.recruitedNumber = item.counts.Recruited
+    data.recruitedPercent = item.rates.Recruited
     records.push(data)
   })
 
@@ -197,8 +197,8 @@ const writeEthnicityData = (organisation, applications, cycleName) => {
     data.ethnicGroup = parent.title
     data.ethnicBackground = ''
     data.receivedNumber = parent.counts.received
-    data.recruitedNumber = parent.counts['Recruited']
-    data.recruitedPercent = parent.rates['Recruited']
+    data.recruitedNumber = parent.counts.Recruited
+    data.recruitedPercent = parent.rates.Recruited
 
     records.push(data)
 
@@ -208,8 +208,8 @@ const writeEthnicityData = (organisation, applications, cycleName) => {
         data.ethnicGroup = parent.title
         data.ethnicBackground = child.title
         data.receivedNumber = child.counts.received
-        data.recruitedNumber = child.counts['Recruited']
-        data.recruitedPercent = child.rates['Recruited']
+        data.recruitedNumber = child.counts.Recruited
+        data.recruitedPercent = child.rates.Recruited
         records.push(data)
       })
     }
@@ -254,8 +254,8 @@ const writeAgeData = (organisation, applications, cycleName) => {
     const data = {}
     data.age = item.title
     data.receivedNumber = item.counts.received
-    data.recruitedNumber = item.counts['Recruited']
-    data.recruitedPercent = item.rates['Recruited']
+    data.recruitedNumber = item.counts.Recruited
+    data.recruitedPercent = item.rates.Recruited
     records.push(data)
   })
 
@@ -276,7 +276,7 @@ const writeDiversityReadMe = (organisation, applications, cycleName) => {
 
   const candidateCount = applications.filter(app => app.provider === organisation.name).length
   const questionnaireCount = applications.filter(app => app.personalDetails.diversityQuestionnaireAnswered === 'Yes').length
-  const questionnairePercentage = Math.round((questionnaireCount/candidateCount) * 100)
+  const questionnairePercentage = Math.round((questionnaireCount / candidateCount) * 100)
 
   const filePath = downloadDirectoryPath + fileName
 
@@ -289,11 +289,9 @@ const writeDiversityReadMe = (organisation, applications, cycleName) => {
   content += 'How candidates are asked about their disabilities\n\n'
   content += 'Candidates who say that they have a disability are asked about the type of disability. They can select more than one type.\n\n'
 
-
   fs.writeFile(filePath, content, err => {
     if (err) {
       console.error(err)
-      return
     }
   })
 
@@ -301,7 +299,6 @@ const writeDiversityReadMe = (organisation, applications, cycleName) => {
 }
 
 module.exports = router => {
-
   router.get('/reports', (req, res) => {
     const organisations = req.session.data.user.organisations
 
@@ -370,7 +367,7 @@ module.exports = router => {
 
     csv.writeRecords(records)
       .then(() => {
-        res.download(filePath,fileName)
+        res.download(filePath, fileName)
       })
   })
 
@@ -400,16 +397,16 @@ module.exports = router => {
     headers.push({ id: 'course', title: 'Course' })
     headers.push({ id: 'code', title: 'Course code' })
     headers.push({ id: 'provider', title: 'Partner organisation' })
-    headers.push({ id: 'applications_total', title: 'Total applications'})
-    headers.push({ id: 'before_offer_percentage', title: 'Before offer made (applications withdrawn) - percentage'})
-    headers.push({ id: 'before_offer_number', title: 'Before offer made (applications withdrawn) - number'})
+    headers.push({ id: 'applications_total', title: 'Total applications' })
+    headers.push({ id: 'before_offer_percentage', title: 'Before offer made (applications withdrawn) - percentage' })
+    headers.push({ id: 'before_offer_number', title: 'Before offer made (applications withdrawn) - number' })
     // headers.push({ id: 'offers_total_percentage', title: 'Offers total - percentage'})
-    headers.push({ id: 'offers_total_number', title: 'Total offers'})
-    headers.push({ id: 'during_offer_percentage', title: 'While offer being considered (offers declined and applications withdrawn) - percentage'})
-    headers.push({ id: 'during_offer_number', title: 'While offer being considered (offers declined and applications withdrawn) - number'})
-    headers.push({ id: 'accepted_offers_total_number', title: 'Total accepted offers'})
-    headers.push({ id: 'after_offer_percentage', title: 'After offer accepted (applications withdrawn) - percentage'})
-    headers.push({ id: 'after_offer_number', title: 'After offer accepted (applications withdrawn) - number'})
+    headers.push({ id: 'offers_total_number', title: 'Total offers' })
+    headers.push({ id: 'during_offer_percentage', title: 'While offer being considered (offers declined and applications withdrawn) - percentage' })
+    headers.push({ id: 'during_offer_number', title: 'While offer being considered (offers declined and applications withdrawn) - number' })
+    headers.push({ id: 'accepted_offers_total_number', title: 'Total accepted offers' })
+    headers.push({ id: 'after_offer_percentage', title: 'After offer accepted (applications withdrawn) - percentage' })
+    headers.push({ id: 'after_offer_number', title: 'After offer accepted (applications withdrawn) - number' })
 
     const csv = csvWriter({
       path: filePath,
@@ -448,7 +445,7 @@ module.exports = router => {
     // write the CSV file and send to browser
     csv.writeRecords(records)
       .then(() => {
-        res.download(filePath,fileName)
+        res.download(filePath, fileName)
       })
   })
 
@@ -491,7 +488,7 @@ module.exports = router => {
     const candidateCount = applications.length
     const recruitedCount = applications.filter(app => app.status === 'Recruited').length
     const questionnaireCount = applications.filter(app => app.personalDetails.diversityQuestionnaireAnswered === 'Yes').length
-    const questionnairePercentage = Math.round((questionnaireCount/candidateCount) * 100)
+    const questionnairePercentage = Math.round((questionnaireCount / candidateCount) * 100)
 
     const ethnicityData = ReportHelper.getEthnicityData(applications)
     const ageData = ReportHelper.getAgeData(applications)
@@ -535,7 +532,7 @@ module.exports = router => {
     fileName += DateTime.now().toFormat('yyyy-LL-dd_HH-mm-ss')
     fileName += '.zip'
 
-    console.log(fileName);
+    console.log(fileName)
 
     const filePath = downloadDirectoryPath + fileName
 
@@ -603,5 +600,4 @@ module.exports = router => {
       organisation
     })
   })
-
 }

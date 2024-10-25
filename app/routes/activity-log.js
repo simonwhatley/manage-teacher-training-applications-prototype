@@ -1,58 +1,58 @@
 const CycleHelper = require('../data/helpers/cycles')
 const SystemHelper = require('../data/helpers/system')
 const PaginationHelper = require('../data/helpers/pagination')
-const _ = require("lodash")
+const _ = require('lodash')
 const { DateTime } = require('luxon')
 
-function getActivity(applications, userOrganisationId) {
+function getActivity (applications, userOrganisationId) {
   let activity = []
 
   applications.forEach(application => {
     const events = application.events.items
       .map(item => {
-      let interview = null
-      // interview
-      if (item.title == 'Interview set up') {
-        interview = application.interviews.items.find(interview => interview.id === item.meta.interviewId)
-        if (interview) {
-          item.meta.interviewExists = true
-        } else {
-          item.meta.interviewExists = false
+        let interview = null
+        // interview
+        if (item.title == 'Interview set up') {
+          interview = application.interviews.items.find(interview => interview.id === item.meta.interviewId)
+          if (interview) {
+            item.meta.interviewExists = true
+          } else {
+            item.meta.interviewExists = false
+          }
         }
-      }
 
-      // interview
-      if (item.title == 'Interview updated') {
-        interview = application.interviews.items.find(interview => interview.id === item.meta.interviewId)
-        if (interview) {
-          item.meta.interviewExists = true
-        } else {
-          item.meta.interviewExists = false
+        // interview
+        if (item.title == 'Interview updated') {
+          interview = application.interviews.items.find(interview => interview.id === item.meta.interviewId)
+          if (interview) {
+            item.meta.interviewExists = true
+          } else {
+            item.meta.interviewExists = false
+          }
         }
-      }
 
-      // note
-      if (item.title == 'Note added' || item.title == 'Note updated') {
-        let note = application.notes.items.find(note => note.id === item.meta.note.id)
-        if (note) {
-          item.meta.note.exists = true
-        } else {
-          item.meta.note.exists = false
+        // note
+        if (item.title == 'Note added' || item.title == 'Note updated') {
+          const note = application.notes.items.find(note => note.id === item.meta.note.id)
+          if (note) {
+            item.meta.note.exists = true
+          } else {
+            item.meta.note.exists = false
+          }
         }
-      }
 
-      // get assigned users for the user's organisation
-      if (item.title === 'User assigned' || item.title === 'Users assigned' || item.title === 'Assigned users updated') {
-        item.assignedUsers = item.assignedUsers.filter(user => user.organisation.id === userOrganisationId)
-      }
+        // get assigned users for the user's organisation
+        if (item.title === 'User assigned' || item.title === 'Users assigned' || item.title === 'Assigned users updated') {
+          item.assignedUsers = item.assignedUsers.filter(user => user.organisation.id === userOrganisationId)
+        }
 
-      return item;
-    }).map(event => {
-      return {
-        application,
-        event
-      }
-    })
+        return item
+      }).map(event => {
+        return {
+          application,
+          event
+        }
+      })
     activity = activity.concat(events)
   })
 
@@ -63,13 +63,13 @@ function getActivity(applications, userOrganisationId) {
   return activity
 }
 
-function groupByDate(data) {
+function groupByDate (data) {
   return _.groupBy(data, (item) => {
     const itemDate = DateTime.fromISO(item.event.date)
     const groupDate = DateTime.fromObject({
       day: itemDate.day,
       month: itemDate.month,
-      year: itemDate.year,
+      year: itemDate.year
     })
     return groupDate.toString()
   })
@@ -100,7 +100,7 @@ module.exports = router => {
     activity = groupByDate(activity)
 
     res.render('activity/index', {
-      activity: activity,
+      activity,
       // pagination: pagination,
       now: SystemHelper.now()
     })

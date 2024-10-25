@@ -2,49 +2,48 @@ const PaginationHelper = require('../data/helpers/pagination')
 const ApplicationHelper = require('../data/helpers/application')
 const SystemHelper = require('../data/helpers/system')
 const content = require('../data/content')
-const _ = require('lodash');
+const _ = require('lodash')
 const { DateTime } = require('luxon')
 const { v4: uuidv4 } = require('uuid')
 
-function getTimeObject(time) {
-  var hours;
-  var mins;
-  var isAm = time.indexOf('am') > -1;
+function getTimeObject (time) {
+  let hours
+  let mins
+  const isAm = time.indexOf('am') > -1
   if (isAm) {
-
     time = time.split('am')[0].trim()
-    if (time.indexOf(":") > -1) {
-      hours = time.split(":")[0]
-      mins = time.split(":")[1]
+    if (time.indexOf(':') > -1) {
+      hours = time.split(':')[0]
+      mins = time.split(':')[1]
     } else {
       hours = time
-      mins = "00"
+      mins = '00'
     }
 
     // if they selected 12am
-    if (hours == "12") {
-      hours = "00"
+    if (hours == '12') {
+      hours = '00'
     }
   } else {
     time = time.split('pm')[0].trim()
-    if (time.indexOf(":") > -1) {
-      hours = time.split(":")[0]
-      mins = time.split(":")[1]
+    if (time.indexOf(':') > -1) {
+      hours = time.split(':')[0]
+      mins = time.split(':')[1]
     } else {
       hours = time
-      mins = "00"
+      mins = '00'
     }
 
     // convert to 24 hour only if not 12, if it's 12pm it's fine as 12
-    if (hours != "12") {
-      hours = parseInt(hours, 10) + 12;
+    if (hours != '12') {
+      hours = parseInt(hours, 10) + 12
     }
   }
 
-  return {hours, mins}
+  return { hours, mins }
 }
 
-function getInterviews(applications) {
+function getInterviews (applications) {
   let interviews = []
   applications = applications
     .filter(app => {
@@ -55,7 +54,7 @@ function getInterviews(applications) {
   applications.forEach(app => {
     const ints = app.interviews.items.map(item => {
       return {
-        app: app,
+        app,
         interview: item
       }
     })
@@ -69,15 +68,15 @@ function getInterviews(applications) {
   return interviews
 }
 
-function groupInterviewsByDate(interviews) {
+function groupInterviewsByDate (interviews) {
   return _.groupBy(interviews, (interview) => {
-    var interviewDate = DateTime.fromISO(interview.interview.date);
-    var groupDate = DateTime.fromObject({
+    const interviewDate = DateTime.fromISO(interview.interview.date)
+    const groupDate = DateTime.fromObject({
       day: interviewDate.day,
       month: interviewDate.month,
-      year: interviewDate.year,
+      year: interviewDate.year
     })
-    return groupDate.toString();
+    return groupDate.toString()
   })
 }
 
@@ -86,14 +85,14 @@ module.exports = router => {
     // remove the search keywords if present to reset the search
     delete req.session.data.keywords
 
-    let now = SystemHelper.now()
+    const now = SystemHelper.now()
 
     let interviews = getInterviews(req.session.data.applications).filter(interview => {
       return DateTime.fromISO(interview.interview.date) >= DateTime.fromISO(now)
     })
 
     // Get the pagination data
-    let pagination = PaginationHelper.getPagination(interviews, req.query.page, req.query.limit)
+    const pagination = PaginationHelper.getPagination(interviews, req.query.page, req.query.limit)
 
     interviews = PaginationHelper.getDataByPage(interviews, req.query.page, req.query.limit)
     interviews = groupInterviewsByDate(interviews)
@@ -106,11 +105,11 @@ module.exports = router => {
   })
 
   router.get('/interviews/past', (req, res) => {
-    let now = SystemHelper.now()
+    const now = SystemHelper.now()
     let interviews = getInterviews(req.session.data.applications).filter(interview => {
       return DateTime.fromISO(interview.interview.date) < DateTime.fromISO(now)
     }).reverse()
-    let pagination = PaginationHelper.getPagination(interviews, req.query.page, req.query.limit)
+    const pagination = PaginationHelper.getPagination(interviews, req.query.page, req.query.limit)
     interviews = PaginationHelper.getDataByPage(interviews, req.query.page, req.query.limit)
     interviews = groupInterviewsByDate(interviews)
     res.render('interviews/past', {
@@ -119,7 +118,6 @@ module.exports = router => {
     })
   })
 
-
   router.get('/applications/:applicationId/interviews', (req, res) => {
     const applicationId = req.params.applicationId
     const application = req.session.data.applications.find(app => app.id === applicationId)
@@ -127,18 +125,17 @@ module.exports = router => {
 
     const now = SystemHelper.now()
 
-    let upcomingInterviews = [];
-    let pastInterviews = [];
+    let upcomingInterviews = []
+    let pastInterviews = []
 
-    if (application.status == "Received" || application.status == "Interviewing") {
+    if (application.status == 'Received' || application.status == 'Interviewing') {
       upcomingInterviews = ApplicationHelper.getUpcomingInterviews(application)
 
       pastInterviews = application.interviews.items.filter(interview => {
-        return DateTime.fromISO(interview.date) < now;
+        return DateTime.fromISO(interview.date) < now
       })
-
     } else {
-      pastInterviews = application.interviews.items;
+      pastInterviews = application.interviews.items
     }
 
     res.render('applications/interviews/index', {
@@ -173,17 +170,16 @@ module.exports = router => {
   })
 
   router.post('/applications/:applicationId/interviews/new/check', (req, res) => {
-
     const applicationId = req.params.applicationId
     const application = req.session.data.applications.find(app => app.id === applicationId)
 
-    application.interviews.items = application.interviews.items || [];
+    application.interviews.items = application.interviews.items || []
 
-    const id = uuidv4();
+    const id = uuidv4()
 
-    const time = getTimeObject(req.session.data.interview.time);
+    const time = getTimeObject(req.session.data.interview.time)
 
-    const date = DateTime.local(parseInt(req.session.data.interview.date.year, 10), parseInt(req.session.data.interview.date.month, 10), parseInt(req.session.data.interview.date.day, 10), parseInt(time.hours, 10), parseInt(time.mins, 10));
+    const date = DateTime.local(parseInt(req.session.data.interview.date.year, 10), parseInt(req.session.data.interview.date.month, 10), parseInt(req.session.data.interview.date.day, 10), parseInt(time.hours, 10), parseInt(time.mins, 10))
 
     const interview = {
       id,
@@ -197,7 +193,7 @@ module.exports = router => {
 
     application.events.items.push({
       title: content.createInterview.event.title,
-      user: "Angela Mode",
+      user: 'Angela Mode',
       date: new Date().toISOString(),
       meta: {
         interviewId: id,
@@ -212,7 +208,6 @@ module.exports = router => {
 
     req.flash('success', content.createInterview.successMessage)
     res.redirect(`/applications/${applicationId}/interviews`)
-
   })
 
   router.get('/applications/:applicationId/interviews/:interviewId/edit', (req, res) => {
@@ -220,10 +215,10 @@ module.exports = router => {
     const interviewId = req.params.interviewId
     const application = req.session.data.applications.find(app => app.id === applicationId)
 
-    let interview;
+    let interview
 
     if (req.session.data.interview) {
-      let time = getTimeObject(req.session.data.interview.time)
+      const time = getTimeObject(req.session.data.interview.time)
       interview = req.session.data.interview
       interview.date = DateTime.local(parseInt(req.session.data.interview.date.year, 10), parseInt(req.session.data.interview.date.month, 10), parseInt(req.session.data.interview.date.day, 10), parseInt(time.hours, 10), parseInt(time.mins, 10))
     } else {
@@ -252,15 +247,14 @@ module.exports = router => {
   })
 
   router.post('/applications/:applicationId/interviews/:interviewId/edit/check', (req, res) => {
-
     const applicationId = req.params.applicationId
     const interviewId = req.params.interviewId
     const application = req.session.data.applications.find(app => app.id === applicationId)
     const interview = application.interviews.items.find(interview => interview.id === interviewId)
 
-    var time = getTimeObject(req.session.data.interview.time);
+    const time = getTimeObject(req.session.data.interview.time)
 
-    var date = DateTime.local(parseInt(req.session.data.interview.date.year, 10), parseInt(req.session.data.interview.date.month, 10), parseInt(req.session.data.interview.date.day, 10), parseInt(time.hours, 10), parseInt(time.mins, 10));
+    const date = DateTime.local(parseInt(req.session.data.interview.date.year, 10), parseInt(req.session.data.interview.date.month, 10), parseInt(req.session.data.interview.date.day, 10), parseInt(time.hours, 10), parseInt(time.mins, 10))
 
     interview.date = date.toISO()
     interview.details = req.session.data.interview.details
@@ -269,7 +263,7 @@ module.exports = router => {
 
     application.events.items.push({
       title: content.updateInterview.event.title,
-      user: "Angela Mode",
+      user: 'Angela Mode',
       date: new Date().toISOString(),
       meta: {
         interviewId: interview.id,
@@ -281,7 +275,6 @@ module.exports = router => {
 
     req.flash('success', content.updateInterview.successMessage)
     res.redirect(`/applications/${applicationId}/interviews`)
-
   })
 
   router.get('/applications/:applicationId/interviews/:interviewId/delete', (req, res) => {
@@ -332,8 +325,5 @@ module.exports = router => {
     } else {
       res.redirect(`/applications/${req.params.applicationId}`)
     }
-
   })
-
-
 }
