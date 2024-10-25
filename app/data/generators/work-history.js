@@ -10,7 +10,7 @@ module.exports = (submittedDate) => {
   // get a date previously to the application submitted date
   let endDate = DateHelper.getPastDate(submittedDate, 30, 150)
 
-  if(answer === 'yes' && count > 0) {
+  if (answer === 'yes' && count > 0) {
     for (var i = 0; i < count; i++) {
 
       // get an end date that is prior to the previous start date item

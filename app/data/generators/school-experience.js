@@ -3,7 +3,7 @@ const DateHelper = require('../helpers/dates');
 
 module.exports = (submittedDate) => {
   const hasExperience = faker.helpers.arrayElement([true, false])
-  if(hasExperience) {
+  if (hasExperience) {
     const count = faker.number.int({ min: 1, max: 4 })
     const items = []
 

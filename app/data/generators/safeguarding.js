@@ -5,7 +5,7 @@ module.exports = () => {
 
   let details;
 
-  if(response) {
+  if (response) {
     details = "I have an offence from a job I held in 2002."
   }
 

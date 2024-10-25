@@ -88,10 +88,10 @@ exports.hasMetAllConditions = (offer) => {
 }
 
 exports.deleteCondition = (application, conditionId) => {
-  if(application.offer.standardConditions) {
+  if (application.offer.standardConditions) {
     application.offer.standardConditions = application.offer.standardConditions.filter(c => c.id != conditionId)
   }
-  if(application.offer.conditions) {
+  if (application.offer.conditions) {
     application.offer.conditions = application.offer.conditions.filter(c => c.id != conditionId)
   }
 }
@@ -105,7 +105,7 @@ exports.calculateDeclineDate = (application) => {
 }
 
 exports.calculateDaysToDecline = (application) => {
-  if(application.status != 'Offered') {
+  if (application.status != 'Offered') {
     return null;
   }
   let now = SystemHelper.now();

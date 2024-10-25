@@ -13,7 +13,7 @@ module.exports = () => {
     }
   }
 
-  if(withdrawal.feedback.reason == 'Other') {
+  if (withdrawal.feedback.reason == 'Other') {
     withdrawal.feedback['other-reason-details'] = faker.lorem.paragraph()
   }
 

@@ -137,7 +137,7 @@ module.exports = (params) => {
 
   date = DateHelper.getFutureDate(date)
 
-  if(params.notes.items.length > 0) {
+  if (params.notes.items.length > 0) {
     // to align dates
     params.notes.items[0].date = date
 
@@ -246,7 +246,7 @@ module.exports = (params) => {
   } else if (params.status === 'Declined') {
     date = DateHelper.getFutureDate(date)
 
-    if(faker.helpers.arrayElement([true, false])) {
+    if (faker.helpers.arrayElement([true, false])) {
       events.items.push({
         title: 'Offer automatically declined',
         date: date,
@@ -287,7 +287,7 @@ module.exports = (params) => {
   }
 
   if (params.status === 'Recruited') {
-    if(conditions.length) {
+    if (conditions.length) {
       date = DateHelper.getFutureDate(date)
       events.items.push({
         title: 'Offer accepted',

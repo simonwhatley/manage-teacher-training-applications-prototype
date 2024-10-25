@@ -33,7 +33,7 @@ module.exports = () => {
     'We rejected this candidate last year but they’ve gained some relevant experience since then. Worth a second look, I think.'
   ])
 
-  if(faker.helpers.arrayElement([true, false])) {
+  if (faker.helpers.arrayElement([true, false])) {
     notes.items = [{
       id: faker.string.uuid(),
       message: message,

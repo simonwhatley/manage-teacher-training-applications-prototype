@@ -5,7 +5,7 @@ module.exports = () => {
 
   let details;
 
-  if(response) {
+  if (response) {
     details = "I need wheelchair access."
   }
 

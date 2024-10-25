@@ -26,7 +26,7 @@ function getInterview(params) {
 
   if (params.status === 'Interviewing') {
     interview.date = faker.helpers.arrayElement([past, future, now, now.plus({days: 1})])
-    if(faker.helpers.arrayElement(["has interviews", ""]) == "has interviews") {
+    if (faker.helpers.arrayElement(["has interviews", ""]) == "has interviews") {
       return interview
     }
   } else {
@@ -39,19 +39,19 @@ function getInterview(params) {
 module.exports = (params) => {
   const interviews = { items: [] }
 
-  if(params.status === 'Received') {
+  if (params.status === 'Received') {
     return interviews
   }
 
   let interview1 = getInterview(params);
 
-  if(interview1) {
+  if (interview1) {
     interviews.items.push(interview1)
   }
 
   let interview2 = getInterview(params);
 
-  if(interview2) {
+  if (interview2) {
     interviews.items.push(interview2)
   }
 

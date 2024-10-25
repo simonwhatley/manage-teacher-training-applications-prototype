@@ -10,7 +10,7 @@ exports.getProviderRadioOptions = (selectedItem) => {
   const providers = []
 
   user.organisations.forEach((org) => {
-    if(org.isAccreditedBody) {
+    if (org.isAccreditedBody) {
       let partners = user.relationships.map(relationship => relationship.org2)
       partners.forEach((partner) => {
         providers.push(partner)
@@ -41,7 +41,7 @@ exports.getCourseRadioOptions = (selectedItem, trainingProviderId) => {
 
   let courses = require('../courses')
 
-  if(trainingProviderId) {
+  if (trainingProviderId) {
     courses = courses.filter((course) => {
       return course.trainingProvider.id == trainingProviderId
     })

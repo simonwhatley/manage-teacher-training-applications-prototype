@@ -5,7 +5,7 @@ module.exports = () => {
 
   let details;
 
-  if(response) {
+  if (response) {
     details = faker.helpers.arrayElement([
       'I have employment commitments',
       'I’ll be travelling a long way to get to the interview',

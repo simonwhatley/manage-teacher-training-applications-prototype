@@ -6,7 +6,7 @@ function buildReasons(params) {
     categories: []
   }
 
-  if(params.qualifications) {
+  if (params.qualifications) {
     reasons.categories.push('Qualifications')
 
     reasons['qualifications-reasons'] = [
@@ -15,18 +15,18 @@ function buildReasons(params) {
       'Other'
     ]
 
-    if(reasons['qualifications-reasons'].find(item => 'Degree does not meet course requirements')) {
+    if (reasons['qualifications-reasons'].find(item => 'Degree does not meet course requirements')) {
       reasons['qualifications-reasons-degree-does-not-meet-course-requirements'] = faker.lorem.paragraph(1)
     }
 
 
-    if(reasons['qualifications-reasons'].find(item => 'Other')) {
+    if (reasons['qualifications-reasons'].find(item => 'Other')) {
       reasons['qualifications-reasons-other'] = faker.lorem.paragraph(1)
     }
 
   }
 
-  if(params.personalStatement) {
+  if (params.personalStatement) {
     reasons.categories.push('Personal statement')
 
     reasons['personal-statement-reasons'] = [
@@ -34,11 +34,11 @@ function buildReasons(params) {
       'Other'
     ]
 
-    if(reasons['personal-statement-reasons'].find(item => 'Quality of writing')) {
+    if (reasons['personal-statement-reasons'].find(item => 'Quality of writing')) {
       reasons['personal-statement-reasons-quality-of-writing'] = faker.lorem.paragraph(1)
     }
 
-    if(reasons['personal-statement-reasons'].find(item => 'Other')) {
+    if (reasons['personal-statement-reasons'].find(item => 'Other')) {
       reasons['personal-statement-reasons-other'] = faker.lorem.paragraph(1)
     }
 
