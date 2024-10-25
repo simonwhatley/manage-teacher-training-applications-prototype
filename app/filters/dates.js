@@ -189,8 +189,8 @@ filters.sortDateArrays = (arr, reversed, attr) => {
     let y = (attr) ? b[attr] : b
 
     // Convert arrays of 3 to date objects
-    x = (_.isArray(x) && (x.length == 3)) ? filters.arrayToDateObject(x) : x
-    y = (_.isArray(y) && (y.length == 3)) ? filters.arrayToDateObject(y) : y
+    x = (_.isArray(x) && (x.length === 3)) ? filters.arrayToDateObject(x) : x
+    y = (_.isArray(y) && (y.length === 3)) ? filters.arrayToDateObject(y) : y
 
     if (x < y) {
       return reversed ? 1 : -1

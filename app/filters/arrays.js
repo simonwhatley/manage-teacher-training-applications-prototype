@@ -13,7 +13,6 @@ filters.combineArrays = (arr1 = [], arr2 = []) => {
 }
 
 filters.isArray = arr => {
-  const isArray = _.isArray(arr)
   return _.isArray(arr)
 }
 
@@ -28,7 +27,7 @@ filters.isArray = arr => {
 
   {% set array = ['a','b','c'] | push('d') %}
 
-  array == ['a','b','c','d']
+  array === ['a','b','c','d']
 
 */
 
@@ -57,7 +56,7 @@ filters.removeEmpty = items => {
 
   // Handle strings
   if (_.isString(items)) {
-    if (items != null && items !== '') return items
+    if (items !== null && items !== '') return items
     else return
   }
 
@@ -125,10 +124,10 @@ const joinArray = (array, options = {}) => {
   if (!_.isArray(array)) return
 
   // Don't output anything if no array or items
-  if (!array || array.length == 0) return // return nothing if no items
+  if (!array || array.length === 0) return // return nothing if no items
 
   // No delimiters if only one item
-  if (array.length == 1) {
+  if (array.length === 1) {
     // console.log(array[0])
     return options.prepend + array[0] + options.append // just return item
   }
@@ -169,7 +168,7 @@ filters.joinAsSentences = (items) => filters.joinArray(items, { delimiter: '. ',
 
 filters.removeArrayItem = (array, itemToRemove) => {
   if (_.isArray(array)) {
-    return filteredItems = array.filter(item => item != itemToRemove)
+    return filteredItems = array.filter(item => item !== itemToRemove)
   } else return array
 }
 
