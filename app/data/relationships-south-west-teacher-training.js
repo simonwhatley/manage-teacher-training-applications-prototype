@@ -1,6 +1,6 @@
 const OrgHelper = require('./helpers/organisation')
-let relationships = []
-let userOrg = OrgHelper.findOrg("South West Teacher Training")
+const relationships = []
+const userOrg = OrgHelper.findOrg('South West Teacher Training')
 
 relationships.push({
   id: 1,
@@ -10,7 +10,7 @@ relationships.push({
     viewSafeguardingInformation: false,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Exeter Consortium"),
+  org2: OrgHelper.findOrg('Exeter Consortium'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: false,

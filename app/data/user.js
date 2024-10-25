@@ -4,12 +4,12 @@ const users = require('./users.json')
 const relationships = require('./relationships-oxford-university')
 
 // set up user orgs
-let userOrgs = [];
+const userOrgs = []
 // userOrgs.push(OrgHelper.findOrg('The Millais Alliance'))
 userOrgs.push(OrgHelper.findOrg('Oxford University'))
 
 // create user object
-let user = users[0] // we know the first one is the test participant
+const user = users[0] // we know the first one is the test participant
 user.organisations = userOrgs
 
 // put relationships onto the user

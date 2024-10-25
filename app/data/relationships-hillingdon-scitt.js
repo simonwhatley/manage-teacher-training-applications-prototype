@@ -1,6 +1,6 @@
 const OrgHelper = require('./helpers/organisation')
-let relationships = []
-let userOrg = OrgHelper.findOrg("Hillingdon SCITT")
+const relationships = []
+const userOrg = OrgHelper.findOrg('Hillingdon SCITT')
 
 relationships.push({
   id: 1,
@@ -10,7 +10,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Bishop Ramsey CE School"),
+  org2: OrgHelper.findOrg('Bishop Ramsey CE School'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -25,7 +25,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Castlebar School"),
+  org2: OrgHelper.findOrg('Castlebar School'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -40,7 +40,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Teach West London Teaching School Hub"),
+  org2: OrgHelper.findOrg('Teach West London Teaching School Hub'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -55,7 +55,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Harrow First"),
+  org2: OrgHelper.findOrg('Harrow First'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -70,7 +70,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Cranford Community College"),
+  org2: OrgHelper.findOrg('Cranford Community College'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -85,7 +85,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Woodfield School"),
+  org2: OrgHelper.findOrg('Woodfield School'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -100,7 +100,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Hillingdon Primary School (The Elliot Foundation Teaching School)"),
+  org2: OrgHelper.findOrg('Hillingdon Primary School (The Elliot Foundation Teaching School)'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,

@@ -1,6 +1,6 @@
 const OrgHelper = require('./helpers/organisation')
 const relationships = []
-const userOrg = OrgHelper.findOrg("Ignite Teaching School")
+const userOrg = OrgHelper.findOrg('Ignite Teaching School')
 
 const partners = [
   'Suffolk and Norfolk Secondary SCITT',

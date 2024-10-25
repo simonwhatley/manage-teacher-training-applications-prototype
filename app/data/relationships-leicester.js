@@ -1,6 +1,6 @@
 const OrgHelper = require('./helpers/organisation')
-let relationships = []
-let userOrg = OrgHelper.findOrg("University of Leicester")
+const relationships = []
+const userOrg = OrgHelper.findOrg('University of Leicester')
 
 relationships.push({
   id: 1,
@@ -10,7 +10,7 @@ relationships.push({
     viewSafeguardingInformation: false,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Ashlawn Teaching School"),
+  org2: OrgHelper.findOrg('Ashlawn Teaching School'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: false,
@@ -25,7 +25,7 @@ relationships.push({
     viewSafeguardingInformation: false,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("The Beauchamp Lionheart Training Partnership"),
+  org2: OrgHelper.findOrg('The Beauchamp Lionheart Training Partnership'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -40,7 +40,7 @@ relationships.push({
     viewSafeguardingInformation: false,
     viewDiversityInformation: false
   },
-  org2: OrgHelper.findOrg("President Kennedy Teaching School Alliance"),
+  org2: OrgHelper.findOrg('President Kennedy Teaching School Alliance'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -55,7 +55,7 @@ relationships.push({
     viewSafeguardingInformation: false,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Southam Teaching Alliance"),
+  org2: OrgHelper.findOrg('Southam Teaching Alliance'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,

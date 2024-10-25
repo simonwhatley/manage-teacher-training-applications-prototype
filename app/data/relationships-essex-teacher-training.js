@@ -1,6 +1,6 @@
 const OrgHelper = require('./helpers/organisation')
-let relationships = []
-let userOrg = OrgHelper.findOrg("Essex Teacher Training")
+const relationships = []
+const userOrg = OrgHelper.findOrg('Essex Teacher Training')
 
 relationships.push({
   id: 1,
@@ -10,7 +10,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Academies Enterprise Trust: Eastern"),
+  org2: OrgHelper.findOrg('Academies Enterprise Trust: Eastern'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -25,7 +25,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Eastwood Park Academy Trust"),
+  org2: OrgHelper.findOrg('Eastwood Park Academy Trust'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -40,7 +40,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: false
   },
-  org2: OrgHelper.findOrg("Endeavour TSA"),
+  org2: OrgHelper.findOrg('Endeavour TSA'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -55,7 +55,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Harlow Teacher Training Partnership"),
+  org2: OrgHelper.findOrg('Harlow Teacher Training Partnership'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -70,7 +70,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Merrylands Teacher Training Partnership"),
+  org2: OrgHelper.findOrg('Merrylands Teacher Training Partnership'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -85,7 +85,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("ORTU Trust (Gable Hall)"),
+  org2: OrgHelper.findOrg('ORTU Trust (Gable Hall)'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -100,7 +100,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Paradigm Trust: Old Ford Primary Academy and Ipswich Academy"),
+  org2: OrgHelper.findOrg('Paradigm Trust: Old Ford Primary Academy and Ipswich Academy'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -115,7 +115,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Romford Teacher Training Partnership (formerly Parklands Infants)"),
+  org2: OrgHelper.findOrg('Romford Teacher Training Partnership (formerly Parklands Infants)'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -130,7 +130,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("St Thomas More’s Catholic Primary School, Colchester"),
+  org2: OrgHelper.findOrg('St Thomas More’s Catholic Primary School, Colchester'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -145,7 +145,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Woodside Academy"),
+  org2: OrgHelper.findOrg('Woodside Academy'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -160,7 +160,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Zengage Teacher Training Essex"),
+  org2: OrgHelper.findOrg('Zengage Teacher Training Essex'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,

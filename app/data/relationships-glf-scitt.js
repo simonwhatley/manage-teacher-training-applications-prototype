@@ -1,6 +1,6 @@
 const OrgHelper = require('./helpers/organisation')
 const relationships = []
-const userOrg = OrgHelper.findOrg("GLF School’s Teacher Training")
+const userOrg = OrgHelper.findOrg('GLF School’s Teacher Training')
 
 const partners = [
   'GLF School’s Teacher Training',

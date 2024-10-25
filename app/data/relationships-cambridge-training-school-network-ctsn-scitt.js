@@ -1,6 +1,6 @@
 const OrgHelper = require('./helpers/organisation')
-let relationships = []
-let userOrg = OrgHelper.findOrg("Cambridge Training School Network, CTSN SCITT")
+const relationships = []
+const userOrg = OrgHelper.findOrg('Cambridge Training School Network, CTSN SCITT')
 
 relationships.push({
   id: 1,
@@ -10,7 +10,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("The Lark Teaching School Alliance"),
+  org2: OrgHelper.findOrg('The Lark Teaching School Alliance'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -25,7 +25,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Barrow CEVC Primary School"),
+  org2: OrgHelper.findOrg('Barrow CEVC Primary School'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -40,7 +40,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("The Cambridge Training School Network Partnership, CTSN"),
+  org2: OrgHelper.findOrg('The Cambridge Training School Network Partnership, CTSN'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -55,7 +55,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Anglian Gateway Teaching Schools Alliance"),
+  org2: OrgHelper.findOrg('Anglian Gateway Teaching Schools Alliance'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -70,7 +70,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Morris Teaching School Alliance"),
+  org2: OrgHelper.findOrg('Morris Teaching School Alliance'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -85,7 +85,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Cambridge & Suffolk Schools Alliance (CASSA)"),
+  org2: OrgHelper.findOrg('Cambridge & Suffolk Schools Alliance (CASSA)'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -100,7 +100,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Catalyst Teaching School Alliance"),
+  org2: OrgHelper.findOrg('Catalyst Teaching School Alliance'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -115,7 +115,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Unity Teaching School Hub"),
+  org2: OrgHelper.findOrg('Unity Teaching School Hub'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -130,7 +130,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Saffron Walden County High School"),
+  org2: OrgHelper.findOrg('Saffron Walden County High School'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,

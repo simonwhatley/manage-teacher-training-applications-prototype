@@ -1,6 +1,6 @@
 const OrgHelper = require('./helpers/organisation')
-let relationships = []
-let userOrg = OrgHelper.findOrg("Endeavour TSA")
+const relationships = []
+const userOrg = OrgHelper.findOrg('Endeavour TSA')
 
 relationships.push({
   id: 1,
@@ -10,7 +10,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("Essex Teacher Training"),
+  org2: OrgHelper.findOrg('Essex Teacher Training'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -25,7 +25,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("University College London"),
+  org2: OrgHelper.findOrg('University College London'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -40,7 +40,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("University of Birmingham"),
+  org2: OrgHelper.findOrg('University of Birmingham'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -55,7 +55,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("University of Derby"),
+  org2: OrgHelper.findOrg('University of Derby'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -70,7 +70,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("University of East Anglia"),
+  org2: OrgHelper.findOrg('University of East Anglia'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
@@ -85,7 +85,7 @@ relationships.push({
     viewSafeguardingInformation: true,
     viewDiversityInformation: true
   },
-  org2: OrgHelper.findOrg("University of Greenwich"),
+  org2: OrgHelper.findOrg('University of Greenwich'),
   org2Permissions: {
     makeDecisions: true,
     viewSafeguardingInformation: true,
